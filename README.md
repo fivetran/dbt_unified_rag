@@ -1,8 +1,5 @@
 
 <p align="center">
-    <a alt="License"
-        href="https://github.com/fivetran/dbt_package_name_here/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
     <a alt="dbt-core">
         <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<2.0.0-orange.svg" /></a>
     <a alt="Maintained?">
@@ -11,7 +8,7 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# dbt_unified_rag dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
+# Unified Rag dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
 
 ## What does this dbt package do?
 

@@ -11,6 +11,7 @@ with ticket_document as (
 ), final as (
     select
         cast(ticket_document.ticket_id as {{ dbt.type_string() }}) as document_id,
+        ticket_document.url_reference,
         'zendesk' as platform,
         ticket_document.source_relation,
         grouped.most_recent_chunk_update,

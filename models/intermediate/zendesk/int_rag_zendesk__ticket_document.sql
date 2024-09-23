@@ -11,11 +11,12 @@ with tickets as (
 ), ticket_details as (
     select
         tickets.ticket_id,
+        tickets.url as url_reference,
         tickets.source_relation,
-        tickets.subject AS ticket_name,
+        tickets.subject as ticket_name,
         {{ unified_rag.coalesce_cast(["users.name", "'UNKNOWN'"], dbt.type_string()) }} as user_name,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
-        tickets.created_at AS created_on,
+        tickets.created_at as created_on,
         {{ unified_rag.coalesce_cast(["tickets.status", "'UNKNOWN'"], dbt.type_string()) }} as status,
         {{ unified_rag.coalesce_cast(["tickets.priority", "'UNKNOWN'"], dbt.type_string()) }} as priority
     from tickets
@@ -29,6 +30,7 @@ with tickets as (
     select
         ticket_id,
         source_relation,
+        url_reference,
         {{ dbt.concat([
             "'# Ticket : '", "ticket_name", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",

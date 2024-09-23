@@ -22,6 +22,7 @@
         "select \n" ~
         "   " ~ dbt_utils.generate_surrogate_key(unique_key_fields) ~ "as unique_id, \n" ~
         "   document_id, \n" ~
+        "   url_reference, \n" ~
         "   platform, \n" ~
         "   source_relation, \n" ~
         "   most_recent_chunk_update, \n" ~

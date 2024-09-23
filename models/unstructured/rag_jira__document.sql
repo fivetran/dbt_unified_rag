@@ -1,5 +1,6 @@
 select
     1 as document_id,
+    'url-here' as url_reference,
     'jira' as platform,
     '' as source_relation,
     current_timestamp() as most_recent_chunk_update,

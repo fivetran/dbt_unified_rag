@@ -1,3 +1,4 @@
+{{ config(enabled=var('rag__using_zendesk', True)) }}
 
 with base as (
 
@@ -8,7 +9,7 @@ with base as (
             schema_variable='rag_zendesk_schema', 
             default_database=target.database,
             default_schema='rag_zendesk',
-            default_variable='ticket_comment',
+            default_variable='zendesk_ticket_comment',
             union_schema_variable='rag_zendesk_union_schemas',
             union_database_variable='rag_zendesk_union_databases'
         )

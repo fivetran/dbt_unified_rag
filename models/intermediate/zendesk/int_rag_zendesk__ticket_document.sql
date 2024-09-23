@@ -1,3 +1,5 @@
+{{ config(enabled=var('rag__using_zendesk', True)) }}
+
 with tickets as (
     select *
     from {{ ref('stg_rag_zendesk__ticket') }}

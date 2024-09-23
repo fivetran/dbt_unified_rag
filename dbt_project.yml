@@ -7,4 +7,12 @@ version: '0.0.1'
 
 vars:
   unified_rag:
-    ticket: "{{ source('rag_zendesk', 'ticket') }}"
+    ## Zendesk Sources
+    zendesk_ticket: "{{ source('rag_zendesk', 'ticket') }}"
+    zendesk_ticket_comment: "{{ source('rag_zendesk', 'ticket_comment') }}"
+    zendesk_user: "{{ source('rag_zendesk', 'user') }}"
+
+    ## Jira Sources
+    jira_issue: "{{ source('rag_jira', 'issue') }}"
+    jira_comment: "{{ source('rag_jira', 'comment') }}"
+    jira_user: "{{ source('rag_jira', 'user') }}"

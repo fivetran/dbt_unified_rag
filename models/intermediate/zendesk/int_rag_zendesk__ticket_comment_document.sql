@@ -1,3 +1,5 @@
+{{ config(enabled=var('rag__using_zendesk', True)) }}
+
 with ticket_comments as (
     select *
     from {{ ref('stg_rag_zendesk__ticket_comment') }}
@@ -19,8 +21,8 @@ with ticket_comments as (
     left join users
         on ticket_comments.user_id = users.user_id
         and ticket_comments.source_relation = users.source_relation
-    -- where not coalesce(ticket_comments._fivetran_deleted, False)
-    --     and not coalesce(users._fivetran_deleted, False)
+    where not coalesce(ticket_comments._fivetran_deleted, False)
+        and not coalesce(users._fivetran_deleted, False)
 
 ), comment_markdowns as (
     select

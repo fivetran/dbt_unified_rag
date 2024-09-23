@@ -1,6 +1,8 @@
+{{ config(enabled=var('rag__using_zendesk', True)) }}
+
 with filtered_comment_documents as (
     select *
-    from {{ ref('int_zendesk__ticket_comment_document') }}
+    from {{ ref('int_rag_zendesk__ticket_comment_document') }}
 ),
 
 grouped_comment_documents as (
@@ -22,6 +24,7 @@ select
     ticket_id,
     source_relation,
     cast({{ dbt_utils.safe_divide('floor(cumulative_length - 1)', var('zendesk_max_tokens', 5000)) }} as {{ dbt.type_int() }}) as chunk_index,
+    max(comment_time) as most_recent_chunk_update,
     {{ dbt.listagg(
         measure="comment_markdown",
         delimiter_text="'\\n\\n---\\n\\n'",

@@ -30,6 +30,7 @@ final as (
     from issue_document
     join grouped
         on grouped.issue_id = issue_document.issue_id
+        and grouped.source_relation = issue_document.source_relation
 )
 
 select *

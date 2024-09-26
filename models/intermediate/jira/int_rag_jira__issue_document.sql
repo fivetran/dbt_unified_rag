@@ -3,6 +3,7 @@
 with issues as (
 
     select *,
+        --specify the jira subdomain value in your `dbt_project.yml` to generate the proper link to your issue (for our purposes, it would be 'fivetraninc') to generate proper Fivetran Jira links.
         {% if var('jira_subdomain', default=None) %}
         '{{ var("jira_subdomain") }}' as jira_subdomain_value
         {% endif %}
@@ -34,9 +35,8 @@ issue_details as (
     select
         issues.issue_id,
         issues.issue_name,
-        --specify the jira subdomain to generate the proper link to your issue (for our purposes, it would be 'fivetran' to generate proper fivetran Jira links)
         {% if var('jira_subdomain', default=None) %}
-            {{ dbt.concat(["'https://'", "jira_subdomain_value", "'.atlassian.net/browse/'", "issues.issue_id"]) }} as url_reference,
+            {{ dbt.concat(["'https://'", "jira_subdomain_value", "'.atlassian.net/browse/'", "issues.issue_key"]) }} as url_reference,
         {% else %}
             cast(null as {{ dbt.type_string() }}) as url_reference,
         {% endif %}

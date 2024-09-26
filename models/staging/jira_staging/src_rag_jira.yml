@@ -108,3 +108,33 @@ sources:
             description: The user's timezone, as defined in their settings.
           - name: username
             description: Account username.
+
+      - name: priority
+        identifier: "{{ var('rag_jira_priority_identifier', 'priority')}}"
+        description: Table of issue priority levels (global).
+        config:
+          enabled: "{{ var('jira_using_priorities', true) }}"
+        columns:
+          - name: id
+            description: Unique ID of the priority level.
+          - name: description
+            description: Description of the priority level.
+          - name: name
+            description: Name of the priority as it appears in the UI.
+
+      - name: status
+        identifier: "{{ var('rag_jira_status_identifier', 'status')}}"
+        description: Table of project-level statuses (which may have the same umbrella `status_category`).
+        columns:
+          - name: id
+            description: Unique ID of the project status.
+          - name: description
+            description: >
+              Description of the project status. Different projects may all have a status called "Backlog", but their definitions 
+              of "backlog" may differ.
+          - name: name
+            description: Title of the status.
+          - name: status_category_id
+            description: Foreign key referencing the ID of the `status_category` that this project status falls under.
+
+

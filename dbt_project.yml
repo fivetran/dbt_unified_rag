@@ -16,3 +16,5 @@ vars:
     jira_issue: "{{ source('rag_jira', 'issue') }}"
     jira_comment: "{{ source('rag_jira', 'comment') }}"
     jira_user: "{{ source('rag_jira', 'user') }}"
+    jira_status: "{{ source('rag_jira', 'status') }}"
+    jira_priority: "{{ source('rag_jira', 'priority') }}"

@@ -1,3 +1,4 @@
+# !! THIS IS A WORK IN PROGRESS. PLEASE WAIT UNTIL THE OFFICIAL RELEASE TO USE !!
 
 <p align="center">
     <a alt="dbt-core">

@@ -12,12 +12,10 @@
 
 ## What does this dbt package do?
 
-The main focus of the package is to transform the core object tables into analytics-ready models, including:
-<!--section="package_name_here_model"-->
+<!--section="unified_rag_transformation_model"-->
+The main focus of this dbt package is to generate a uni
 
-> This package does not apply freshness tests to source data due to the variability of survey cadences.
 
-<!--section="package_name_here_model"-->
 The following table provides a detailed list of all models materialized within this package by default. 
 > TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_package_name_here/#!/overview/package_name_here).
 

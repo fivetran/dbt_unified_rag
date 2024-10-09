@@ -1,0 +1,4 @@
+id,_fivetran_synced,author_id,body,created,is_public,issue_id,update_author_id,updated
+1,2020-11-12 12:20:53.148,1a,Hello,2020-11-10 19:19:41.224,true,10011,1a,2020-11-10 19:19:41.224
+2,2020-11-10 19:21:48.619,1a,To Do to In Progress 6 days 22 hours 26 minutes ago In Progress to Done 3 days 16 hours 34 minutes ago,2020-11-07 02:45:38.717,true,10011,1a,2020-11-07 02:45:38.717
+3,2020-11-10 19:21:48.618,1a,Joined Sample Sprint 2 7 days 9 hours 10 minutes ago,2020-11-07 02:45:38.717,true,10011,1a,2020-11-07 02:45:38.717

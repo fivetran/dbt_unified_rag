@@ -20,9 +20,9 @@ The main focus of this dbt package is to generate a uni
 The following table provides a detailed list of all models materialized within this package by default. 
 > TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_package_name_here/#!/overview/package_name_here).
 
-| **model**                 | **description**                                                                                                    |
+| **table**                 | **description**                                                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [model_here]()  | Model description   |
+| [rag__unified_document]()  | Model description   |
 <!--section-end-->
 
 ## How do I use the dbt package?
@@ -38,7 +38,7 @@ Include the following package_display_name package version in your `packages.yml
 > TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yml
 packages:
-  - package: fivetran/package_name_here
+  - package: fivetran/unified_rag
     version: [">=0.1.0", "<0.2.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 

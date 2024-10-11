@@ -1,4 +1,4 @@
-{{ config(enabled=fivetran_utils.enabled_vars(['rag_hubspot_sales_enabled','rag_hubspot_engagement_enabled','rag_hubspot_engagement_note_enabled'])) }}
+{{ config(enabled=(var('rag__using_hubspot', True)) }}
 
 with base as (
     

@@ -29,3 +29,10 @@ vars:
     hubspot_contact: "{{ source('rag_hubspot', 'contact') }}"
     hubspot_deal: "{{ source('rag_hubspot', 'deal') }}"
     hubspot_owner: "{{ source('rag_hubspot', 'owner') }}"
+    
+models:
+  unified_rag:
+    intermediate:
+      +materialized: ephemeral
+    staging:
+      +materialized: view

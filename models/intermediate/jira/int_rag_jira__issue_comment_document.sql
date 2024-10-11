@@ -59,10 +59,10 @@ truncated_comments as (
         issue_id,
         source_relation,
         comment_time,
-        case when comment_tokens > {{ var('jira_max_tokens', 5000) }} then left(comment_markdown, {{ var('jira_max_tokens', 5000) }} * 4)  -- approximate 4 characters per token
+        case when comment_tokens > {{ var('document_max_tokens', 5000) }} then left(comment_markdown, {{ var('document_max_tokens', 5000) }} * 4)  -- approximate 4 characters per token
             else comment_markdown
             end as comment_markdown,
-        case when comment_tokens > {{ var('jira_max_tokens', 5000) }} then {{ var('jira_max_tokens', 5000) }}
+        case when comment_tokens > {{ var('document_max_tokens', 5000) }} then {{ var('document_max_tokens', 5000) }}
             else comment_tokens
             end as comment_tokens
     from comments_tokens

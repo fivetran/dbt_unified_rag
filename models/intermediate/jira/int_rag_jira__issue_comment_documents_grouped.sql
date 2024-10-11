@@ -25,7 +25,7 @@ grouped_comment_documents as (
 select 
     issue_id,
     source_relation,
-    cast({{ dbt_utils.safe_divide('floor(cumulative_length - 1)', var('jira_max_tokens', 5000)) }} as {{ dbt.type_int() }}) as chunk_index,
+    cast({{ dbt_utils.safe_divide('floor(cumulative_length - 1)', var('document_max_tokens', 5000)) }} as {{ dbt.type_int() }}) as chunk_index,
     max(comment_time) as most_recent_chunk_update,
     {{ dbt.listagg(
         measure="comment_markdown",

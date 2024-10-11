@@ -106,6 +106,12 @@ vars:
 ```
 
 ### (Optional) Step 5: Additional configurations
+#### Customizing Chunk Size for Vectorization
+The `rag__unified_document` and upstream platform specific `*__document` models were developed to limit approximate chunk sizes to 5,000 tokens, optimized for OpenAI models. However, you can adjust this limit by setting the max_tokens variable in your `dbt_project.yml`:
+```yml
+vars:
+    document_max_tokens: 5000 # Default value
+```
 
 #### Changing the Build Schema
 By default this package will build the Unified RAG staging models within a schema titled (<target_schema> + `_stg_unified_rag`) and the Unified RAG final models within a schema titled (<target_schema> + `unified_rag`) in your target database. If this is not where you want your modeled Unified RAG data to be written to, add the following configuration to your `dbt_project.yml` file:

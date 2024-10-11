@@ -6,12 +6,30 @@ version: '0.1.0'
 profile: "integration_tests"
 
 vars:
+  rag_hubspot_schema: "rag_integration_tests_1"
   rag_zendesk_schema: "rag_integration_tests_1"
   rag_jira_schema: "rag_integration_tests_1"
 
   rag__using_jira: True
   rag__using_zendesk: True
+  rag__using_hubspot: true
 
+  rag_jira_comment_identifier: jira_comment
+  rag_jira_issue_identifier: jira_issue
+  rag_jira_user_identifier: jira_user
+  rag_jira_priority_identifier: jira_priority
+  rag_jira_status_identifier: jira_status
+  rag_zendesk_ticket_identifier: zendesk_ticket
+  rag_zendesk_ticket_comment_identifier: zendesk_ticket_comment
+  rag_zendesk_user_identifier: zendesk_user
+  rag_hubspot_engagement_note_identifier: hubspot_engagement_note
+  rag_hubspot_engagement_email_identifier: hubspot_engagement_email
+  rag_hubspot_engagement_company_identifier: hubspot_engagement_company
+  rag_hubspot_engagement_contact_identifier: hubspot_engagement_contact
+  rag_hubspot_engagement_deal_identifier: hubspot_engagement_deal
+  rag_hubspot_hubspot_company_identifier: hubspot_company
+  rag_hubspot_contact_identifier: hubspot_contact
+  rag_hubspot_owner_identifier: hubspot_owner
   rag_jira_comment_identifier: "jira_comment"
   rag_jira_issue_identifier: "jira_issue"
   rag_jira_user_identifier: "jira_user"

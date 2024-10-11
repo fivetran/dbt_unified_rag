@@ -11,7 +11,7 @@
     )
 }}
 
-{%- set enabled_variables = ['rag__using_jira', 'rag__using_zendesk'] -%}
+{%- set enabled_variables = ['rag__using_jira', 'rag__using_zendesk', 'rag__using_hubspot'] -%}
 {%- set queries = [] -%}
 
 {% for platform in enabled_variables %}

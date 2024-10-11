@@ -1,0 +1,236 @@
+sources:
+  - name: rag_hubspot
+    schema: "{{var ('rag_hubspot_schema', 'hubspot')}}"
+    database: "{% if target.type != 'spark'%}{{ var('rag_hubspot_database', target.database) }}{% endif %}"
+    loader: fivetran
+    loaded_at_field: _fivetran_synced
+
+    tables:
+      - name: engagement_note
+        identifier: "{{ var('rag_hubspot_engagement_note_identifier', 'engagement_note')}}"
+        description: Each record represents a NOTE engagement event.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_engagement_enabled', true) and var('rag_hubspot_engagement_note_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: body
+            description: The body of the note. The body has a limit of 65536 characters.
+          - name: engagement_id
+            description: The ID of the engagement.
+          - name: property_hs_createdate
+            description: >
+              This field marks the note's time of creation and determines where the note sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: timestamp
+            description: > 
+              This field marks the note's time of occurrence and determines where the note sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: property_hubspot_owner_id
+            description: > 
+              The ID of the owner associated with the note. This field determines the user listed as the note creator on the record timeline.
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: property_hubspot_team_id
+            description: >
+              The ID of the team associated with the note. This field determines the team listed as the note creator on the record timeline.
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version.
+
+      - name: engagement_email
+        identifier: "{{ var('rag_hubspot_engagement_email_identifier', 'engagement_email')}}"
+        description: Each record represents an EMAIL engagement event.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_engagement_enabled', true) and var('rag_hubspot_engagement_email_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: engagement_id
+            description: The ID of the engagement.
+          - name: property_hs_createdate
+            description: >
+              This field marks the email's time of creation and determines where the email sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: timestamp
+            description: > 
+              This field marks the email's time of occurrence and determines where the email sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: property_hubspot_owner_id
+            description: > 
+              The ID of the owner associated with the email. This field determines the user listed as the email creator on the record timeline.
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
+          - name: property_hubspot_team_id
+            description: >
+              The ID of the team associated with the email. This field determines the team listed as the email creator on the record timeline.
+
+              PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version.
+
+      - name: engagement_company
+        identifier: "{{ var('rag_hubspot_engagement_company_identifier', 'engagement_company')}}"
+        description: Each record represents a 'link' between a company and an engagement.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_engagement_enabled', true) and var('rag_hubspot_engagement_company_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: company_id
+            description: The ID of the related company.
+          - name: engagement_id
+            description: The ID of the related engagement.
+
+      - name: engagement_deal
+        identifier: "{{ var('rag_hubspot_engagement_deal_identifier', 'engagement_deal')}}"
+        description: Each record represents a 'link' between a deal and an engagement.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_engagement_enabled', true) and var('rag_hubspot_engagement_deal_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: deal_id
+            description: The ID of the related contact.
+          - name: engagement_id
+            description: The ID of the related engagement.
+
+      - name: engagement_contact
+        identifier: "{{ var('rag_hubspot_engagement_contact_identifier', 'engagement_contact')}}" 
+        description: Each record represents a 'link' between a contact and an engagement.
+        config:
+          enabled: "{{ var('hubspot_sales_enabled', true) and var('hubspot_engagement_enabled', true) and var('hubspot_engagement_contact_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: contact_id
+            description: The ID of the related contact.
+          - name: engagement_id
+            description: The ID of the related engagement.        
+
+      - name: company
+        identifier: "{{ var('rag_hubspot_company_identifier', 'company')}}"
+        description: Each record represents a company in Hubspot.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_company_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: id
+            description: The ID of the company.
+          - name: portal_id
+            description: '{{ doc("portal_id") }}'
+          - name: is_deleted
+            description: '{{ doc("is_deleted") }}'
+          - name: property_name
+            description: The name of the company.
+          - name: property_description
+            description: A short statement about the company's mission and goals.
+          - name: property_createdate
+            description: The date the company was added to your account.
+          - name: property_industry
+            description: The type of business the company performs.
+          - name: property_address
+            description: The street address of the company.
+          - name: property_address_2
+            description: Additional address information for the company.
+          - name: property_city
+            description: The city where the company is located.
+          - name: property_state
+            description: The state where the company is located.
+          - name: property_country
+            description: The country where the company is located.
+          - name: property_annualrevenue
+            description: The actual or estimated annual revenue of the company.
+
+      - name: deal
+        identifier: "{{ var('rag_hubspot_deal_identifier', 'deal')}}"
+        description: Each record represents a deal in Hubspot.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_deal_enabled', true) }}"
+        columns:
+          - name: deal_id
+            description: The ID of the deal.
+          - name: is_deleted
+            description: Whether the record was deleted.
+          - name: portal_id
+            description: '{{ doc("portal_id") }}'
+          - name: deal_pipeline_id
+            description: The ID of the deal's pipeline.
+          - name: deal_pipeline_stage_id
+            description: The ID of the deal's pipeline stage.
+          - name: owner_id
+            description: The ID of the deal's owner. 
+          - name: property_dealname
+            description: The name you have given this deal.
+          - name: property_description
+            description: A brief description of the deal.
+          - name: property_amount
+            description: The total value of the deal in the deal's currency.
+          - name: property_closedate
+            description: The day the deal is expected to close, or was closed.
+          - name: property_createdate
+            description: The date the deal was created. This property is set automatically by HubSpot.
+
+      - name: contact
+        identifier: "{{ var('rag_hubspot_contact_identifier', 'contact')}}"
+        freshness:
+          warn_after: {count: 84, period: hour}
+          error_after: {count: 168, period: hour}
+        description: Each record represents a contact in Hubspot.
+        config:
+          enabled: "{{ var('rag_hubspot_marketing_enabled', true) and var('rag_hubspot_contact_enabled', true) }}"
+        columns:
+          - name: _fivetran_deleted
+            description: '{{ doc("_fivetran_deleted") }}'
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: id
+            description: The ID of the contact.
+          - name: property_email_1
+            description: The email address of the contact.
+          - name: property_company
+            description: The name of the contact's company.
+          - name: property_firstname
+            description: The contact's first name.
+          - name: property_lastname
+            description: The contact's last name.
+          - name: property_email
+            description: The contact's email.
+          - name: property_createdate
+            description: The date that the contact was created in your HubSpot account.
+          - name: property_jobtitle
+            description: The contact's job title.
+          - name: property_annualrevenue
+            description: The contact's annual company revenue.
+          - name: property_hs_calculated_merged_vids
+            description: >
+              List of mappings representing contact IDs that have been merged into the contact at hand.
+              Format: <merged_contact_id>:<merged_at_in_epoch_time>;<second_merged_contact_id>:<merged_at_in_epoch_time>
+              This field has replaced the `CONTACT_MERGE_AUDIT` table, which was deprecated by the Hubspot v3 CRM API.
+
+      - name: owner
+        identifier: "{{ var('rag_hubspot_owner_identifier', 'owner')}}"
+        description: Each record represents an owner/user in Hubspot.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_owner_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: created_at
+            description: A timestamp for when the owner was created.
+          - name: email
+            description: The email address of the owner.
+          - name: first_name
+            description: The first name of the owner.
+          - name: last_name
+            description: The last name of the owner.
+          - name: owner_id
+            description: The ID of the owner.
+          - name: portal_id
+            description: '{{ doc("portal_id") }}'
+          - name: type
+            description: The type of owner.
+          - name: updated_at
+            description: Timestamp representing when the owner was last updated.

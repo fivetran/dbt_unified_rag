@@ -9,16 +9,16 @@ with filtered_comment_documents as (
 grouped_comment_documents as (
     
     select 
-      issue_id,
-      source_relation,
-      comment_markdown,
-      comment_tokens,
-      comment_time,
-      sum(comment_tokens) over (
-        partition by issue_id 
-        order by comment_time
-        rows between unbounded preceding and current row
-      ) as cumulative_length
+        issue_id,
+        source_relation,
+        comment_markdown,
+        comment_tokens,
+        comment_time,
+        sum(comment_tokens) over (
+            partition by issue_id 
+            order by comment_time
+            rows between unbounded preceding and current row
+        ) as cumulative_length
     from filtered_comment_documents
 )
 

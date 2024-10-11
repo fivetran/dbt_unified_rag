@@ -18,3 +18,20 @@ vars:
     jira_user: "{{ source('rag_jira', 'user') }}"
     jira_status: "{{ source('rag_jira', 'status') }}"
     jira_priority: "{{ source('rag_jira', 'priority') }}"
+
+    # Hubspot Sources
+    hubspot_engagement_note: "{{ source('rag_hubspot', 'engagement_note') }}"
+    hubspot_engagement_email: "{{ source('rag_hubspot', 'engagement_email') }}"
+    hubspot_engagement_company: "{{ source('rag_hubspot', 'engagement_company') }}"
+    hubspot_engagement_contact: "{{ source('rag_hubspot', 'engagement_contact') }}"
+    hubspot_engagement_deal: "{{ source('rag_hubspot', 'engagement_deal') }}"
+    hubspot_company: "{{ source('rag_hubspot', 'company') }}"
+    hubspot_contact: "{{ source('rag_hubspot', 'contact') }}"
+    hubspot_deal: "{{ source('rag_hubspot', 'deal') }}"
+    hubspot_owner: "{{ source('rag_hubspot', 'owner') }}"
+
+    rag_hubspot__deal_pass_through_columns: []
+    rag_hubspot__contact_pass_through_columns: []
+    rag_hubspot__company_pass_through_columns: []
+    rag_hubspot__ticket_pass_through_columns: []
+    rag_hubspot__pass_through_all_columns: false

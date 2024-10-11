@@ -1,6 +1,9 @@
-# !! THIS IS A WORK IN PROGRESS. PLEASE WAIT UNTIL THE OFFICIAL RELEASE TO USE !!
+# 🚧 THIS IS A WORK IN PROGRESS 🚧
 
 <p align="center">
+    <a alt="License"
+        href="https://github.com/fivetran/dbt_unified_rag/blob/main/LICENSE">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
     <a alt="dbt-core">
         <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<2.0.0-orange.svg" /></a>
     <a alt="Maintained?">
@@ -9,20 +12,26 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Unified Rag dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
+# Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
 
 ## What does this dbt package do?
 
 <!--section="unified_rag_transformation_model"-->
-The main focus of this dbt package is to generate a uni
-
+The main focus of this dbt package is to generate an end model and [Cortex Search Service](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview) (for Snowflake destinations only) which contains the below relevant unstructured document data to be used for Retrieval Augmented Generation (RAG) applications leveraging Large Language Models (LLMs):
+- [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot): Deals
+- [Jira](https://fivetran.com/docs/connectors/applications/jira): Issues
+- [Zendesk](https://fivetran.com/docs/connectors/applications/zendesk): Tickets  
 
 The following table provides a detailed list of all models materialized within this package by default. 
-> TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_package_name_here/#!/overview/package_name_here).
+> TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_unified_rag/#!/overview/package_name_here).
 
-| **table**                 | **description**                                                                                                    |
+| **Table**                 | **Description**                                                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [rag__unified_document]()  | Model description   |
+| [rag__unified_document]()  | Each record represents a chunk of text from, prepared for vectorization. It includes fields for use in NLP workflows.   |
+
+Additionally, for **Snowflake** destinations, a [Cortex Search Service](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview) will be generated in the destination. The Cortex Search Service uses the results of the `rag__unified_document` and enables Snowflake users to take advantage of low-latency, high quality "fuzzy" search over their data for use in RAG applications leveraging LLMs.
+| **Snowflake Cortex Search Service**                 | **Description**                                                                                                    |
+| [rag__unified_embedding]()  |  Generates a Snowflake Cortex Search service via the [embedding_generation](https://github.com/fivetran/dbt_unified_rag/blob/main/macros/embedding_generation.sql) macro as a post-hook for Snowflake destinations. This Cortex Search Service is currently configured with a target lag of 1 day. Please be aware that this search service will refresh automatically once a day.  |
 <!--section-end-->
 
 ## How do I use the dbt package?
@@ -30,8 +39,12 @@ The following table provides a detailed list of all models materialized within t
 ### Step 1: Prerequisites
 To use this dbt package, you must have the following:
 
-- At least one Fivetran package_display_name connector syncing data into your destination.
-- A **BigQuery**, **Snowflake**, **Redshift**, **Databricks**, or **PostgreSQL** destination.
+- At least one of the below support Fivetran connectors syncing data into your destination.
+    - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot) (specifically deals)
+    - [Jira](https://fivetran.com/docs/connectors/applications/jira)
+    - [Zendesk Support](https://fivetran.com/docs/connectors/applications/zendesk)
+- A **Snowflake**, **BigQuery**, **Redshift**, **Databricks**, or **PostgreSQL** destination.
+    - Please note, the Cortex Search Service will only be generated for Snowflake destinations.
 
 ### Step 2: Install the package
 Include the following package_display_name package version in your `packages.yml` file:
@@ -44,44 +57,63 @@ packages:
 
 ### Step 3: Define database and schema variables
 #### Single connector
-By default, this package runs using your destination and the `package_name_here` schema. If this is not where your package_display_name data is (for example, if your package_display_name schema is named `package_name_here_fivetran`), add the following configuration to your root `dbt_project.yml` file:
+By default, this package looks for your ad platform data in your target database. If this is not where your app platform data is stored, add the relevant `<connector>_database` variables to your `dbt_project.yml` file (see below).
 
 ```yml
 # dbt_project.yml
 
 vars:
-    package_name_here_database: your_database_name
-    package_name_here_schema: your_schema_name
+    rag_hubspot_schema: hubspot
+    rag_hubspot_database: your_database_name
+
+    rag_jira_schema: jira
+    rag_jira_database: your_database_name
+
+    rag_zendesk_schema: zendesk
+    rag_zendesk_database: your_database_name
 ```
 #### Union multiple connectors
-If you have multiple package_display_name connectors in Fivetran and want to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `package_name_here_union_schemas` OR `package_name_here_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
+If you have multiple supported connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
 
 ```yml
 # dbt_project.yml
 
 vars:
-    package_name_here_union_schemas: ['package_name_here_usa','package_name_here_canada'] # use this if the data is in different schemas/datasets of the same database/project
-    package_name_here_union_databases: ['package_name_here_usa','package_name_here_canada'] # use this if the data is in different databases/projects but uses the same schema name
+    rag_hubspot_union_schemas: ['hubspot_rag_test_one', 'hubspot_rag_test_two']
+    rag_hubspot_union_databases: ['hubspot_rag_test_one', 'hubspot_rag_test_two']
+
+    rag_jira_union_schemas: ['jira_rag_test_one', 'jira_rag_test_two']
+    rag_jira_union_databases: ['jira_rag_test_one', 'jira_rag_test_two']
+
+    rag_zendesk_union_schemas: ['zendesk_rag_test_one', 'zendesk_rag_test_two']
+    rag_zendesk_union_databases: ['zendesk_rag_test_one', 'zendesk_rag_test_two']
 ```
 
 The native `source.yml` connection set up in the package will not function when the union schema/database feature is utilized. Although the data will be correctly combined, you will not observe the sources linked to the package models in the Directed Acyclic Graph (DAG). This happens because the package includes only one defined `source.yml`.
 
 To connect your multiple schema/database sources to the package models, follow the steps outlined in the [Union Data Defined Sources Configuration](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source) section of the Fivetran Utils documentation for the union_data macro. This will ensure a proper configuration and correct visualization of connections in the DAG.
 
+### Step 4: Enabling/Disabling Models
+This package takes into consideration that not every account will have leverage every supported connector type. If you do not leverage all of the supported connector types, you are able to disable the respective dependent models using the below variables in your `dbt_project.yml`.
+
+```yml
+vars:
+    rag__using_hubspot: False # by default this is assumed to be True
+    rag__using_jira: False # by default this is assumed to be True
+    rag__using_zendesk: False # by default this is assumed to be True
+```
 
 ### (Optional) Step 5: Additional configurations
 
 #### Changing the Build Schema
-By default this package will build the package_display_name staging models within a schema titled (<target_schema> + `_stg_package_name_here`) and the package_display_name final models within a schema titled (<target_schema> + `_package_name_here`) in your target database. If this is not where you want your modeled qualtrics data to be written to, add the following configuration to your `dbt_project.yml` file:
+By default this package will build the Unified RAG staging models within a schema titled (<target_schema> + `_stg_unified_rag`) and the Unified RAG final models within a schema titled (<target_schema> + `unified_rag`) in your target database. If this is not where you want your modeled Unified RAG data to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
-# dbt_project.yml
-
 models:
-  package_name_here:
-    +schema: my_new_schema_name # leave blank for just the target_schema
-    staging:
+    unified_rag:
         +schema: my_new_schema_name # leave blank for just the target_schema
+        staging:
+            +schema: my_new_schema_name # leave blank for just the target_schema
 ```
 
 #### Change the source table references
@@ -93,7 +125,7 @@ If an individual source table has a different name than the package expects, add
 # dbt_project.yml
 
 vars:
-    package_name_here_<default_source_table_name>_identifier: your_table_name 
+    rag_<default_source_table_name>_identifier: your_table_name 
 ```
 </details>
 

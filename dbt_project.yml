@@ -18,3 +18,10 @@ vars:
     jira_user: "{{ source('rag_jira', 'user') }}"
     jira_status: "{{ source('rag_jira', 'status') }}"
     jira_priority: "{{ source('rag_jira', 'priority') }}"
+
+models:
+  unified_rag:
+    intermediate:
+      +materialized: ephemeral
+    staging:
+      +materialized: view

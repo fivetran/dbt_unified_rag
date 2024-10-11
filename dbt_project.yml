@@ -29,9 +29,3 @@ vars:
     hubspot_contact: "{{ source('rag_hubspot', 'contact') }}"
     hubspot_deal: "{{ source('rag_hubspot', 'deal') }}"
     hubspot_owner: "{{ source('rag_hubspot', 'owner') }}"
-
-    rag_hubspot__deal_pass_through_columns: []
-    rag_hubspot__contact_pass_through_columns: []
-    rag_hubspot__company_pass_through_columns: []
-    rag_hubspot__ticket_pass_through_columns: []
-    rag_hubspot__pass_through_all_columns: false

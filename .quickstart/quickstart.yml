@@ -1,0 +1,27 @@
+dbt_versions: '>=1.3.0 <2.0.0'
+
+multi_connector_config:
+    hubspot:
+      database_key: rag_hubspot_database
+      union_schema_key: rag_hubspot_union_schemas
+      model_variable: rag__using_hubspot
+    jira:
+      database_key: rag_jira_database
+      union_schema_key: rag_jira_union_schemas
+      model_variable: rag__using_jira
+    zendesk:
+      database_key: rag_zendesk_database
+      union_schema_key: rag_zendesk_union_schemas
+      model_variable: rag__using_zendesk
+
+destination_configurations:
+  databricks:
+    dispatch:
+      - macro_namespace: dbt_utils
+        search_order:
+          - spark_utils
+          - dbt_utils
+
+public_models: [
+  "rag__unified_document"
+]

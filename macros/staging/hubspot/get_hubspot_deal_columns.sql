@@ -15,8 +15,6 @@
     {"name": "property_createdate", "datatype": dbt.type_timestamp(), "alias": "created_date"}
 ] %}
 
-{{ fivetran_utils.add_pass_through_columns(columns, var('rag_hubspot__deal_pass_through_columns')) }}
-
 {{ return(columns) }}
 
 {% endmacro %}

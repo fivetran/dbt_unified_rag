@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: rag__unified_document
+    description: Each record represents a HubSpot Deal, enriched with data about it's relevant engagement notes, company, contact, and owner information.
+    columns:
+      - name: unique_id
+        description: Unique identifier of the table represented as a combination of document_id, platform, and source_relation fields.
+      - name: document_id
+        description: Identifier of the base object which the unstructured data is associated (ie. Zendesk ticket_id, Jira issue_id, and HubSpot deal_id).
+      - name: url_reference
+        description: URL reference to the respective base object.
+      - name: platform
+        description: Record identifying the respective upstream connector type (ie. HubSpot, Jira, Zendesk).
+      - name: most_recent_chunk_update
+        description: Timestamp indicating the most recent update to the overall chunk.
+      - name: chunk_index
+        description: The index of the chunk associated with the `document_id`.
+      - name: chunk_tokens_approximate
+        description: Approximate number of tokens for the chunk, assuming 4 characters per token.
+      - name: chunk
+        description: The text of the chunk.
+      - name: source_relation
+        description: The source of the record if the unioning functionality is being used. If it is not this field will be empty.

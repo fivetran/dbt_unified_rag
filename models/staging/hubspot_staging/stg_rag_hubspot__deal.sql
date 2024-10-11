@@ -1,4 +1,4 @@
-{{ config(enabled=(var('rag__using_hubspot', True)) }}
+{{ config(enabled=var('rag__using_hubspot', True)) }}
 
 with base as (
     

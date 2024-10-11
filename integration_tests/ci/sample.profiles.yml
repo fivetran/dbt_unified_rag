@@ -2,6 +2,10 @@
 # HEY! This file is used in the dbt package integrations tests with Buildkite.
 # You should __NEVER__ check credentials into version control. Thanks for reading :)
 
+config:
+    send_anonymous_usage_stats: False
+    use_colors: True
+
 integration_tests:
   target: redshift
   outputs:
@@ -12,13 +16,13 @@ integration_tests:
       pass: "{{ env_var('CI_REDSHIFT_DBT_PASS') }}"
       dbname: "{{ env_var('CI_REDSHIFT_DBT_DBNAME') }}"
       port: 5439
-      schema: rag_integration_tests
+      schema: rag_integration_tests_1
       threads: 8
     bigquery:
       type: bigquery
       method: service-account-json
       project: 'dbt-package-testing'
-      schema: rag_integration_tests
+      schema: rag_integration_tests_1
       threads: 8
       keyfile_json: "{{ env_var('GCLOUD_SERVICE_KEY') | as_native }}"
     snowflake:
@@ -29,7 +33,7 @@ integration_tests:
       role: "{{ env_var('CI_SNOWFLAKE_DBT_ROLE') }}"
       database: "{{ env_var('CI_SNOWFLAKE_DBT_DATABASE') }}"
       warehouse: "{{ env_var('CI_SNOWFLAKE_DBT_WAREHOUSE') }}"
-      schema: rag_integration_tests
+      schema: rag_integration_tests_1
       threads: 8
     postgres:
       type: postgres
@@ -38,13 +42,13 @@ integration_tests:
       pass: "{{ env_var('CI_POSTGRES_DBT_PASS') }}"
       dbname: "{{ env_var('CI_POSTGRES_DBT_DBNAME') }}"
       port: 5432
-      schema: rag_integration_tests
+      schema: rag_integration_tests_1
       threads: 8
     databricks:
       catalog: "{{ env_var('CI_DATABRICKS_DBT_CATALOG') }}"
       host: "{{ env_var('CI_DATABRICKS_DBT_HOST') }}"
       http_path: "{{ env_var('CI_DATABRICKS_DBT_HTTP_PATH') }}"
-      schema: rag_integration_tests
+      schema: rag_integration_tests_1
       threads: 2
       token: "{{ env_var('CI_DATABRICKS_DBT_TOKEN') }}"
       type: databricks

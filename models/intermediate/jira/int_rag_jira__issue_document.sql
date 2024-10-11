@@ -2,10 +2,10 @@
 
 with issues as (
 
-    select *,
+    select *
         --specify the jira subdomain value in your `dbt_project.yml` to generate the proper link to your issue (for our purposes, it would be 'fivetraninc') to generate proper Fivetran Jira links.
         {% if var('jira_subdomain', default=None) %}
-        '{{ var("jira_subdomain") }}' as jira_subdomain_value
+        ,'{{ var("jira_subdomain") }}' as jira_subdomain_value
         {% endif %}
     from {{ ref('stg_rag_jira__issue') }}
 ), 

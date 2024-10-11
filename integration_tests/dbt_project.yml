@@ -1,25 +1,25 @@
 config-version: 2
 
-name: 'rag_integration_tests'
+name: "rag_integration_tests"
 version: '0.1.0'
 
-profile: 'integration_tests'
+profile: "integration_tests"
 
 vars:
-  zendesk_schema: rag_integration_tests
-  jira_schema: rag_integration_tests
+  rag_zendesk_schema: "rag_integration_tests_1"
+  rag_jira_schema: "rag_integration_tests_1"
 
-  rag__using_jira: true
-  rag__using_zendesk: true
+  rag__using_jira: True
+  rag__using_zendesk: True
 
-  rag_jira_comment_identifier: jira_comment
-  rag_jira_issue_identifier: jira_issue
-  rag_jira_user_identifier: jira_user
-  rag_jira_priority_identifier: jira_priority
-  rag_jira_status_identifier: jira_status
-  rag_zendesk_ticket_identifier: zendesk_ticket
-  rag_zendesk_ticket_comment_identifier: zendesk_ticket_comment
-  rag_zendesk_user_identifier: zendesk_user
+  rag_jira_comment_identifier: "jira_comment"
+  rag_jira_issue_identifier: "jira_issue"
+  rag_jira_user_identifier: "jira_user"
+  rag_jira_priority_identifier: "jira_priority"
+  rag_jira_status_identifier: "jira_status"
+  rag_zendesk_ticket_identifier: "zendesk_ticket"
+  rag_zendesk_ticket_comment_identifier: "zendesk_ticket_comment"
+  rag_zendesk_user_identifier: "zendesk_user"
 
 seeds:
   rag_integration_tests:
@@ -28,18 +28,18 @@ seeds:
       _fivetran_synced: timestamp
     jira_comment:
       +column_types:
-        id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
         created: timestamp
-        issue_id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        issue_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
         updated: timestamp
         _fivetran_synced: timestamp
     jira_issue:
       +column_types:
-        id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
         created: timestamp
         work_ratio: float
         resolved: timestamp
-        assignee: "{{ 'string' if target.name in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
+        assignee: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
         _fivetran_synced: timestamp
     zendesk_ticket:
       +column_types:
@@ -72,7 +72,3 @@ seeds:
         last_login_at: timestamp
         updated_at: timestamp
         phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-
-dispatch:
-  - macro_namespace: dbt_utils
-    search_order: ['spark_utils', 'dbt_utils']

@@ -1,0 +1,88 @@
+config-version: 2
+
+name: 'rag_integration_tests'
+version: '0.1.0'
+
+profile: 'integration_tests'
+
+vars:
+  zendesk_schema: rag_integration_tests
+  jira_schema: rag_integration_tests
+  hubspot_schema: rag_integration_tests
+
+  rag__using_jira: true
+  rag__using_zendesk: true
+  rag__using_hubspot: true
+
+  rag_jira_comment_identifier: jira_comment
+  rag_jira_issue_identifier: jira_issue
+  rag_jira_user_identifier: jira_user
+  rag_jira_priority_identifier: jira_priority
+  rag_jira_status_identifier: jira_status
+  rag_zendesk_ticket_identifier: zendesk_ticket
+  rag_zendesk_ticket_comment_identifier: zendesk_ticket_comment
+  rag_zendesk_user_identifier: zendesk_user
+  rag_hubspot_engagement_note_identifier: hubspot_engagement_note
+  rag_hubspot_engagement_email_identifier: hubspot_engagement_email
+  rag_hubspot_engagement_company_identifier: hubspot_engagement_company
+  rag_hubspot_engagement_contact_identifier: hubspot_engagement_contact
+  rag_hubspot_engagement_deal_identifier: hubspot_engagement_deal
+  rag_hubspot_hubspot_company_identifier: hubspot_company
+  rag_hubspot_contact_identifier: hubspot_contact
+  rag_hubspot_owner_identifier: hubspot_owner
+
+seeds:
+  rag_integration_tests:
+    +quote_columns: "{{ true if target.type == 'redshift' else false }}"
+    +column_types:
+      _fivetran_synced: timestamp
+    jira_comment:
+      +column_types:
+        id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        created: timestamp
+        issue_id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        updated: timestamp
+        _fivetran_synced: timestamp
+    jira_issue:
+      +column_types:
+        id: "{{ 'int64' if target.name == 'bigquery' else 'bigint' }}"
+        created: timestamp
+        work_ratio: float
+        resolved: timestamp
+        assignee: "{{ 'string' if target.name in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
+        _fivetran_synced: timestamp
+    zendesk_ticket:
+      +column_types:
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        created_at: timestamp
+        due_at: timestamp
+        updated_at: timestamp
+        assignee_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        brand_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        external_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        forum_topic_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        group_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        organization_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        problem_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        requester_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        submitter_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        ticket_form_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+    zendesk_ticket_comment:
+      +column_types:
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        user_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        created: timestamp
+    zendesk_user:
+      +column_types:
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        external_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        locale_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        organization_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
+        created_at: timestamp
+        last_login_at: timestamp
+        updated_at: timestamp
+        phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ['spark_utils', 'dbt_utils']

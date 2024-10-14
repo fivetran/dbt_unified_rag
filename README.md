@@ -114,7 +114,7 @@ vars:
 ```
 
 #### Changing the Build Schema
-By default this package will build the Unified RAG staging models within a schema titled (<target_schema> + `_stg_unified_rag`) and the Unified RAG final models within a schema titled (<target_schema> + `unified_rag`) in your target database. If this is not where you want your modeled Unified RAG data to be written to, add the following configuration to your `dbt_project.yml` file:
+By default this package will build the Unified RAG staging models within a schema titled (<target_schema> + `_unified_rag_source`) and the Unified RAG final models within a schema titled (<target_schema> + `_unified_rag`) in your target database. If this is not where you want your modeled Unified RAG data to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
 models:
@@ -127,7 +127,7 @@ models:
 #### Change the source table references
 If an individual source table has a different name than the package expects, add the table name as it appears in your destination to the respective variable:
 
-> IMPORTANT: See this project's [`dbt_project.yml`](https://github.com/fivetran/dbt_package_name_here/blob/main/dbt_project.yml) variable declarations to see the expected names.
+> IMPORTANT: See this project's [`dbt_project.yml`](https://github.com/fivetran/dbt_unified_rag/blob/main/dbt_project.yml) variable declarations to see the expected names.
 
 ```yml
 # dbt_project.yml
@@ -160,7 +160,7 @@ packages:
 ```
 ## How is this package maintained and can I contribute?
 ### Package Maintenance
-The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/package_name_here/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_package_name_here/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/dbt_unified_rag/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_unified_rag/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
 
 ### Contributions
 A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions.
@@ -168,6 +168,5 @@ A small team of analytics engineers at Fivetran develops these dbt packages. How
 We highly encourage and welcome contributions to this package. Check out [this dbt Discourse article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package.
 
 ## Are there any resources available?
-- If you have questions or want to reach out for help, refer to the [GitHub Issue](https://github.com/fivetran/dbt_package_name_here/issues/new/choose) section to find the right avenue of support for you.
+- If you have questions or want to reach out for help, refer to the [GitHub Issue](https://github.com/fivetran/dbt_unified_rag/issues/new/choose) section to find the right avenue of support for you.
 - If you want to provide feedback to the dbt package team at Fivetran or want to request a new dbt package, fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
-- Have questions or want to be part of the community discourse? Create a post in the [Fivetran community](https://community.fivetran.com/t5/user-group-for-dbt/gh-p/dbt-user-group) and our team along with the community can join in on the discussion.

@@ -31,9 +31,11 @@ vars:
     
 models:
   unified_rag:
+    +schema: unified_rag
     intermediate:
       +materialized: ephemeral
     unstructured:
       +materialized: view
     staging:
       +materialized: view
+      +schema: unified_rag_source

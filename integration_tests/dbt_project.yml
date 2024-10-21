@@ -14,14 +14,6 @@ vars:
   rag__using_zendesk: True
   rag__using_hubspot: True
 
-  rag_jira_comment_identifier: jira_comment
-  rag_jira_issue_identifier: jira_issue
-  rag_jira_user_identifier: jira_user
-  rag_jira_priority_identifier: jira_priority
-  rag_jira_status_identifier: jira_status
-  rag_zendesk_ticket_identifier: zendesk_ticket
-  rag_zendesk_ticket_comment_identifier: zendesk_ticket_comment
-  rag_zendesk_user_identifier: zendesk_user
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"
   rag_hubspot_engagement_email_identifier: "hubspot_engagement_email"
   rag_hubspot_engagement_company_identifier: "hubspot_engagement_company"

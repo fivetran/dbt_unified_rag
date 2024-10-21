@@ -43,21 +43,6 @@ steps:
     commands: |
       bash .buildkite/scripts/run_models.sh bigquery
 
-  - label: ":amazon-redshift: Run Tests - Redshift"
-    key: "run_dbt_redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_models.sh redshift
-
   - label: ":databricks: Run Tests - Databricks"
     key: "run_dbt_databricks"
     plugins:

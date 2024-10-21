@@ -1,3 +1,5 @@
+# Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
+
 <p align="center">
     <a alt="License"
         href="https://github.com/fivetran/dbt_unified_rag/blob/main/LICENSE">
@@ -9,8 +11,6 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
-
-# Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
 
 ## What does this dbt package do?
 
@@ -43,8 +43,9 @@ To use this dbt package, you must have the following:
     - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot) (specifically deals)
     - [Jira](https://fivetran.com/docs/connectors/applications/jira)
     - [Zendesk Support](https://fivetran.com/docs/connectors/applications/zendesk)
-- A **Snowflake**, **BigQuery**, **Redshift**, **Databricks**, or **PostgreSQL** destination.
+- A **Snowflake**, **BigQuery**, **Databricks**, or **PostgreSQL** destination.
     - Please note, the Cortex Search Service will only be generated for Snowflake destinations.
+    - Redshift destinations are not currently supported due to the stringent character limitations within string datatypes. If you would like Redshift destinations to be supported, please comment within our logged [Feature Request](https://github.com/fivetran/dbt_unified_rag/issues/3).
 
 ### Step 2: Install the package
 Include the following package_display_name package version in your `packages.yml` file:

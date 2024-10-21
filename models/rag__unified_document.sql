@@ -1,8 +1,8 @@
 {{
     config(
         materialized='table' if unified_rag.is_databricks_sql_warehouse() else 'incremental',
-        partition_by = {'field': 'most_recent_chunk_update', 'data_type': 'date', 'granularity': 'month'}
-            if target.type not in ['spark', 'databricks'] else ['most_recent_chunk_update'],
+        partition_by = {'field': 'update_date', 'data_type': 'date'}
+            if target.type not in ['spark', 'databricks'] else ['update_date'],
         cluster_by = ['unique_id'],
         unique_key='unique_id',
         incremental_strategy = 'insert_overwrite' if target.type in ('bigquery', 'databricks', 'spark') else 'delete+insert',
@@ -26,6 +26,7 @@
         "   platform, \n" ~
         "   source_relation, \n" ~
         "   most_recent_chunk_update, \n" ~
+        "   cast(most_recent_chunk_update as date) as update_date, \n" ~
         "   chunk_index, \n" ~
         "   chunk_tokens_approximate, \n" ~
         "   chunk \n" ~
@@ -33,7 +34,7 @@
 
         {% if is_incremental() %}
             {% set select_statement = select_statement ~
-        "\n where most_recent_chunk_update >= (select max(most_recent_chunk_update) from " ~ this ~ ")" %}
+        "\n where cast(most_recent_chunk_update as date) >= (select max(update_date) from " ~ this ~ ")" %}
         {% endif %}
 
         {% do queries.append(select_statement) -%}

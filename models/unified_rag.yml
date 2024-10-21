@@ -6,6 +6,9 @@ models:
     columns:
       - name: unique_id
         description: Unique identifier of the table represented as a combination of document_id, platform, and source_relation fields.
+        tests:
+          - unique
+          - not_null
       - name: document_id
         description: Identifier of the base object which the unstructured data is associated (ie. Zendesk ticket_id, Jira issue_id, and HubSpot deal_id).
       - name: url_reference
@@ -14,6 +17,8 @@ models:
         description: Record identifying the respective upstream connector type (ie. HubSpot, Jira, Zendesk).
       - name: most_recent_chunk_update
         description: Timestamp indicating the most recent update to the overall chunk.
+      - name: update_date
+        description: Truncated date of the most_recent_chunk_update field used for incremental and partition logic.
       - name: chunk_index
         description: The index of the chunk associated with the `document_id`.
       - name: chunk_tokens_approximate

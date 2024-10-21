@@ -53,7 +53,7 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: [">=0.1.0", "<0.2.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: 0.1.0-a1
 ```
 
 ### Step 3: Define database and schema variables

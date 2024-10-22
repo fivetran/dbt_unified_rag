@@ -48,7 +48,7 @@ engagement_deals as (
     from {{ ref('stg_rag_hubspot__engagement_deal') }}
 ),
 
-engagement_details as (
+engagement_detail_prep as (
 
     select
         deals.deal_id,
@@ -83,6 +83,21 @@ engagement_details as (
         on engagement_deals.engagement_id = engagement_notes.engagement_id
         and engagement_deals.source_relation = engagement_notes.source_relation
 ), 
+
+engagement_details as (
+    select
+        deal_id,
+        deal_name,
+        url_reference,
+        created_on,
+        source_relation,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct engagement_type", delimiter="', '") }} as engagement_type,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct contact_name", delimiter="', '") }} as contact_name,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct created_by", delimiter="', '") }} as created_by,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct company_name", delimiter="', '") }} as company_name
+    from engagement_detail_prep
+    group by 1,2,3,4,5
+),
 
 engagement_markdown as (
 

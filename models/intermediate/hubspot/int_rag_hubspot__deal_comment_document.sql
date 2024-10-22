@@ -45,7 +45,7 @@ engagement_emails as (
         engagement_email.email_to_email,
         engagement_email.email_cc_email,
         engagement_email.email_from_email as commenter_email,
-        contacts.contact_name as commenter_name
+        {{ fivetran_utils.string_agg(field_to_agg="contacts.contact_name", delimiter="','") }} as commenter_name
     from {{ ref('stg_rag_hubspot__engagement_email') }} engagement_email
     left join engagement_contacts
         on engagement_email.engagement_id = engagement_contacts.engagement_id 
@@ -53,6 +53,7 @@ engagement_emails as (
     left join contacts 
         on engagement_contacts.contact_id = contacts.contact_id
         and engagement_contacts.source_relation = contacts.source_relation
+    {{ dbt_utils.group_by(12)}}
 ),
 
 engagement_notes as ( 
@@ -178,3 +179,4 @@ truncated_comments as (
 
 select *
 from truncated_comments
+where comment_markdown is not null

@@ -6,8 +6,7 @@
         cluster_by = ['unique_id'],
         unique_key='unique_id',
         incremental_strategy = 'insert_overwrite' if target.type in ('bigquery', 'databricks', 'spark') else 'delete+insert',
-        file_format='delta' if unified_rag.is_databricks_sql_warehouse() else 'parquet',
-        post_hook=["{{ unified_rag.search_generation(this,'rag__unified_search') }}"] if target.type == 'snowflake' else []
+        file_format='delta' if unified_rag.is_databricks_sql_warehouse() else 'parquet'
     )
 }}
 

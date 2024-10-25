@@ -2,7 +2,7 @@
 
 ## Bug Fixes
 - For Snowflake destinations, we have removed the post-hook from the `rag__unified_document` which generated the `rag__unified_search` Cortex Search Service. 
-    - While the Search Service worked when deployed locally, there were issues identified when deploying and running via Fivetran Quickstart. In order to ensure Snowflake users are still able to take advantage of the `rag__unified_document` end model, we have removed the search service from execution until we are able to verify it works as expected on all supported orchestration methods.
+    - While the Search Service worked when deployed locally, there were issues identified when deploying and running via Fivetran Quickstart. In order to ensure Snowflake users are still able to take advantage of the `rag__unified_document` end model, we have removed the Search Service from execution until we are able to verify it works as expected on all supported orchestration methods.
 
 # dbt_unified_rag v0.1.0-a1
 

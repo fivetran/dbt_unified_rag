@@ -15,7 +15,7 @@
 ## What does this dbt package do?
 
 <!--section="unified_rag_transformation_model"-->
-The main focus of this dbt package is to generate an end model and which contains the below relevant unstructured document data to be used for Retrieval Augmented Generation (RAG) applications leveraging Large Language Models (LLMs):
+The main focus of this dbt package is to generate an end model that contains the below relevant unstructured document data to be used for Retrieval Augmented Generation (RAG) applications leveraging Large Language Models (LLMs):
 - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot): Deals
 - [Jira](https://fivetran.com/docs/connectors/applications/jira): Issues
 - [Zendesk](https://fivetran.com/docs/connectors/applications/zendesk): Tickets  

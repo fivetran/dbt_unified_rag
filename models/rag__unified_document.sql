@@ -3,11 +3,10 @@
         materialized='table' if unified_rag.is_databricks_sql_warehouse() else 'incremental',
         partition_by = {'field': 'update_date', 'data_type': 'date'}
             if target.type not in ['spark', 'databricks'] else ['update_date'],
-        cluster_by = ['unique_id'],
+        cluster_by = ['update_date'],
         unique_key='unique_id',
         incremental_strategy = 'insert_overwrite' if target.type in ('bigquery', 'databricks', 'spark') else 'delete+insert',
-        file_format='delta' if unified_rag.is_databricks_sql_warehouse() else 'parquet',
-        post_hook=["{{ unified_rag.search_generation(this,'rag__unified_search') }}"] if target.type == 'snowflake' else []
+        file_format='delta'
     )
 }}
 

@@ -6,7 +6,7 @@
         cluster_by = ['unique_id'],
         unique_key='unique_id',
         incremental_strategy = 'insert_overwrite' if target.type in ('bigquery', 'databricks', 'spark') else 'delete+insert',
-        file_format='delta' if unified_rag.is_databricks_sql_warehouse() else 'parquet'
+        file_format='delta'
     )
 }}
 

@@ -3,6 +3,19 @@
 ## Bug Fixes
 - For Snowflake destinations, we have removed the post-hook from the `rag__unified_document` which generated the `rag__unified_search` Cortex Search Service. 
     - While the Search Service worked when deployed locally, there were issues identified when deploying and running via Fivetran Quickstart. In order to ensure Snowflake users are still able to take advantage of the `rag__unified_document` end model, we have removed the Search Service from execution until we are able to verify it works as expected on all supported orchestration methods.
+    - If you would like, you can generate your own Snowflake Cortex Search Service by following the [Create Cortex Search Service](https://docs.snowflake.com/en/sql-reference/sql/create-cortex-search) guidelines provided by Snowflake. For additional assistance, you can structure your Cortex Search Service off of the below query to effectively leverage the `rag__unified_document` generated from this data model.
+    ```sql
+    -- Cortex Search Service created using the rag__unified_document model
+    
+    create cortex search service if not exists <your_schema>.<your_new_search_service_name>
+        on chunk
+        attributes unique_id
+        warehouse = <your_warehouse>
+        target_lag = '1 days' --You can specify this to your liking
+        as (
+            select * from rag__unified_document
+        )
+    ```
 
 # dbt_unified_rag v0.1.0-a1
 

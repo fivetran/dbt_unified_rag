@@ -1,5 +1,7 @@
 # dbt_unified_rag v0.1.0-a2
 
+[PR #7](https://github.com/fivetran/dbt_unified_rag/pull/7) includes the following updates: 
+
 ## Bug Fixes
 - For Snowflake destinations, we have removed the post-hook from the `rag__unified_document` which generated the `rag__unified_search` Cortex Search Service. 
     - While the Search Service worked when deployed locally, there were issues identified when deploying and running via Fivetran Quickstart. In order to ensure Snowflake users are still able to take advantage of the `rag__unified_document` end model, we have removed the Search Service from execution until we are able to verify it works as expected on all supported orchestration methods.
@@ -16,6 +18,9 @@
             select * from rag__unified_document
         )
     ```
+
+## Under the Hood
+- Adjusted the `cluster_by` configuration within the `dbt__unified_rag` to cluster by the `update_date` (previously `unique_id`) for improved Snowflake performance.
 
 # dbt_unified_rag v0.1.0-a1
 

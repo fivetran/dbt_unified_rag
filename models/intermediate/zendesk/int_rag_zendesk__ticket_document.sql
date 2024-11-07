@@ -11,7 +11,7 @@ with tickets as (
 ), ticket_details as (
     select
         tickets.ticket_id,
-        tickets.url as url_reference,
+        replace(replace(cast(tickets.url as {{ dbt.type_string() }}), '/api/v2/tickets/', '/agent/tickets/'), '.json', '') as url_reference,
         tickets.source_relation,
         tickets.subject as ticket_name,
         {{ unified_rag.coalesce_cast(["users.name", "'UNKNOWN'"], dbt.type_string()) }} as user_name,

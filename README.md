@@ -1,4 +1,4 @@
-# Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
+# GenAI Ready dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
 
 <p align="center">
     <a alt="License"

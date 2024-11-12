@@ -4,6 +4,7 @@
 ## Bug Fix (`--full-refresh` required when upgrading)
 - Updated the `url` logic in `stg_rag_zendesk__ticket` to provide the proper clickable URL to Zendesk tickets. This way, the `url_reference` in the `rag__unified_document` properly generates a hyperlink for Zendesk documents.
     - As this is updating underlying data flowing into the incremental model, a full refresh is required.
+    
 # dbt_unified_rag v0.1.0-a2
 
 [PR #7](https://github.com/fivetran/dbt_unified_rag/pull/7) includes the following updates: 

@@ -18,6 +18,11 @@ companies as (
     from {{ ref('stg_rag_hubspot__company') }}
 ), 
 
+engagements as (
+    select *
+    from {{ ref('stg_rag_hubspot__engagement') }}
+),
+
 engagement_companies as (
 
     select *
@@ -64,15 +69,18 @@ engagement_detail_prep as (
     left join engagement_deals
         on deals.deal_id = engagement_deals.deal_id
         and deals.source_relation = engagement_deals.source_relation
+    left join engagements
+        on engagement_deals.engagement_id = engagement.engagement_id
+        and engagement_deals.source_relation = engagement.source_relation
     left join engagement_contacts
-        on engagement_deals.engagement_id = engagement_contacts.engagement_id 
-        and engagement_deals.source_relation = engagement_contacts.source_relation
+        on engagement.engagement_id = engagement_contacts.engagement_id 
+        and engagement.source_relation = engagement_contacts.source_relation
+    left join engagement_companies
+        on engagement.engagement_id = engagement_companies.engagement_id 
+        and engagement.source_relation = engagement_companies.source_relation
     left join contacts 
         on engagement_contacts.contact_id = contacts.contact_id
         and engagement_contacts.source_relation = contacts.source_relation
-    left join engagement_companies
-        on engagement_deals.engagement_id = engagement_companies.engagement_id 
-        and engagement_deals.source_relation = engagement_companies.source_relation
     left join companies
         on engagement_companies.company_id = companies.company_id
         and engagement_companies.source_relation = companies.source_relation

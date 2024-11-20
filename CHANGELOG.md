@@ -1,4 +1,9 @@
 # dbt_unified_rag v0.1.0-a3
+
+- Added `stg_rag_hubspot__engagement` model as part of the hubspot staging models.
+- Updates `int_rag_hubspot__deal_document` to adjust the method that `hubspot_engagement_*` models are joined by leveraging the `hubspot__engagement` table as the intermediary joining table for the `engagement_contact` and `engagement_company` tables.
+
+# dbt_unified_rag v0.1.0-a3
 [PR #9](https://github.com/fivetran/dbt_unified_rag/pull/9) includes the following updates: 
 
 ## Bug Fix (`--full-refresh` required when upgrading)

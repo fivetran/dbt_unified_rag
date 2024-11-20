@@ -2,7 +2,7 @@ config-version: 2
 require-dbt-version: [">=1.3.0", "<2.0.0"]
 
 name: 'unified_rag'
-version: '0.1.0'
+version: '0.2.0'
 
 vars:
   unified_rag:
@@ -19,6 +19,7 @@ vars:
     jira_priority: "{{ source('rag_jira', 'priority') }}"
 
     # Hubspot Sources
+    hubspot_engagement: "{{ source('rag_hubspot', 'engagement') }}"
     hubspot_engagement_note: "{{ source('rag_hubspot', 'engagement_note') }}"
     hubspot_engagement_email: "{{ source('rag_hubspot', 'engagement_email') }}"
     hubspot_engagement_company: "{{ source('rag_hubspot', 'engagement_company') }}"

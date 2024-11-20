@@ -6,6 +6,41 @@ sources:
     loaded_at_field: _fivetran_synced
 
     tables:
+      - name: engagement
+        identifier: "{{ var('rag_hubspot_engagement_identifier', 'engagement')}}"
+        description: Each record represents an engagement
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_engagement_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: active
+            description: >
+              Whether the engagement is currently being shown in the UI.
+
+              PLEASE NOTE: This field will not be populated for connectors utilizing the HubSpot v3 API version. This field will be deprecated in a future release.
+          - name: created_at
+            description: >
+              A timestamp representing when the engagement was created.
+
+              PLEASE NOTE: This field will not be populated for connectors utilizing the HubSpot v3 API version. This field will be deprecated in a future release.
+          - name: id
+            description: The ID of the engagement.
+          - name: owner_id
+            description: >
+              The ID of the engagement's owner.
+
+              PLEASE NOTE: This field will not be populated for connectors utilizing the HubSpot v3 API version. This field will be deprecated in a future release.
+          - name: portal_id
+            description: '{{ doc("portal_id") }}'
+          - name: timestamp
+            description: >
+              A timestamp in representing the time that the engagement should appear in the timeline.
+
+              PLEASE NOTE: This field will not be populated for connectors utilizing the HubSpot v3 API version. This field will be deprecated in a future release.
+          - name: type
+            description: One of NOTE, EMAIL, TASK, MEETING, or CALL, the type of the engagement.
+
       - name: engagement_note
         identifier: "{{ var('rag_hubspot_engagement_note_identifier', 'engagement_note')}}"
         description: Each record represents a NOTE engagement event.

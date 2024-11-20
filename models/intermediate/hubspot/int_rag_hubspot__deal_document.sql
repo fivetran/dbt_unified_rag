@@ -70,14 +70,14 @@ engagement_detail_prep as (
         on deals.deal_id = engagement_deals.deal_id
         and deals.source_relation = engagement_deals.source_relation
     left join engagements
-        on engagement_deals.engagement_id = engagement.engagement_id
-        and engagement_deals.source_relation = engagement.source_relation
+        on engagement_deals.engagement_id = engagements.engagement_id
+        and engagement_deals.source_relation = engagements.source_relation
     left join engagement_contacts
-        on engagement.engagement_id = engagement_contacts.engagement_id 
-        and engagement.source_relation = engagement_contacts.source_relation
+        on engagements.engagement_id = engagement_contacts.engagement_id 
+        and engagements.source_relation = engagement_contacts.source_relation
     left join engagement_companies
-        on engagement.engagement_id = engagement_companies.engagement_id 
-        and engagement.source_relation = engagement_companies.source_relation
+        on engagements.engagement_id = engagement_companies.engagement_id 
+        and engagements.source_relation = engagement_companies.source_relation
     left join contacts 
         on engagement_contacts.contact_id = contacts.contact_id
         and engagement_contacts.source_relation = contacts.source_relation

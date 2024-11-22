@@ -42,6 +42,7 @@ final as (
         owner_id,
         source_relation,
         portal_id,
+        engagement_type,
         is_active
     from fields  
 )  

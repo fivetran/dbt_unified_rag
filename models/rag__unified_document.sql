@@ -16,7 +16,7 @@
 {% for platform in enabled_variables %}
     {% if var(platform) == true -%}
         {%- set platform_name = platform | replace('rag__using_', '') -%}
-        {%- set unique_key_fields = ['document_id', 'platform', 'source_relation'] -%}
+        {%- set unique_key_fields = ['document_id', 'platform', 'chunk_index', 'source_relation'] -%}
         {% set select_statement = (
         "select \n" ~
         "   " ~ dbt_utils.generate_surrogate_key(unique_key_fields) ~ "as unique_id, \n" ~

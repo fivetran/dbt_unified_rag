@@ -5,7 +5,7 @@ models:
     description: Each record represents a chunk of text prepared for semantic-search and additional fields for use in LLM workflows.
     columns:
       - name: unique_id
-        description: Unique identifier of the table represented as a combination of document_id, platform, and source_relation fields.
+        description: Unique identifier of the table represented as a combination of document_id, platform, chunk_index, and source_relation fields.
         tests:
           - unique
           - not_null

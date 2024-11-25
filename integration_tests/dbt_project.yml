@@ -6,9 +6,9 @@ version: '0.1.0-a4'
 profile: "integration_tests"
 
 vars:
-  rag_hubspot_schema: "rag_integration_tests_1"
-  rag_zendesk_schema: "rag_integration_tests_1"
-  rag_jira_schema: "rag_integration_tests_1"
+  rag_hubspot_schema: "rag_integration_tests_2"
+  rag_zendesk_schema: "rag_integration_tests_2"
+  rag_jira_schema: "rag_integration_tests_2"
 
   rag__using_jira: True
   rag__using_zendesk: True

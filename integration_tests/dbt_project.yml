@@ -1,7 +1,7 @@
 config-version: 2
 
 name: "rag_integration_tests"
-version: '0.2.0'
+version: '0.1.0-a4'
 
 profile: "integration_tests"
 
@@ -33,7 +33,7 @@ vars:
   rag_zendesk_ticket_comment_identifier: "zendesk_ticket_comment"
   rag_zendesk_user_identifier: "zendesk_user"
 
-  document_max_tokens: 2000
+  document_max_tokens: 50
 
 seeds:
   rag_integration_tests:

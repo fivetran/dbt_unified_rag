@@ -1,4 +1,4 @@
-# dbt_unified_rag v0.2.0
+# dbt_unified_rag v0.1.0-a4
 
 ## Breaking Changes
 - Added the hubspot `engagement` table to the package and made the following updates:

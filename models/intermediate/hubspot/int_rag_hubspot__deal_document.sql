@@ -35,18 +35,6 @@ engagement_contacts as (
     from {{ ref('stg_rag_hubspot__engagement_contact') }}
 ),
 
-engagement_emails as (
-
-    select *
-    from {{ ref('stg_rag_hubspot__engagement_email') }} 
-),
-
-engagement_notes as (
-
-    select *
-    from {{ ref('stg_rag_hubspot__engagement_note') }}
-),
-
 engagement_deals as (
 
     select *

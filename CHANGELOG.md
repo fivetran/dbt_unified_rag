@@ -6,7 +6,7 @@
     - Updated `int_rag_hubspot__deal_document` to adjust the method that `hubspot_engagement_*` models are joined by leveraging the `hubspot__engagement` table as the intermediary joining table for the `engagement_contact` and `engagement_company` tables.
     - Updated `int_rag_hubspot__deal_document` to retrieve `engagement_type` from the hubspot `engagement` table as opposed to the `engagement_emails` and `engagement_notes` tables. As such, removes their respective references as they are no longer used in this model.
 
-## Under the Hood
+## Bug Fix (`--full-refresh` required when upgrading)
 - Updated the unique key in `rag__unified_document` to include `chunk_index`. Previously, the unique key was a combination of only `document_id`, `platform`, and `source_relation`, which was potentially inaccurate if there were multiple chunks associated with a document.
 
 # dbt_unified_rag v0.1.0-a3

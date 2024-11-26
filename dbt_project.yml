@@ -38,5 +38,5 @@ models:
     unstructured:
       +materialized: view
     staging:
-      +materialized: table
+      +materialized: view
       +schema: unified_rag_source

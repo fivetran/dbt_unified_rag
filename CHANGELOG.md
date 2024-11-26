@@ -1,7 +1,7 @@
 # dbt_unified_rag v0.1.0-a4
 
 ## Breaking Changes
-- Added the hubspot `engagement` table to the package and made the following updates:
+- Added the hubspot `engagement` source table to the package and made the following updates:
     - Added `stg_rag_hubspot__engagement` model as part of the hubspot staging models.
     - Updated `int_rag_hubspot__deal_document` to adjust the method that `hubspot_engagement_*` models are joined by leveraging the `hubspot__engagement` table as the intermediary joining table for the `engagement_contact` and `engagement_company` tables.
     - Updated `int_rag_hubspot__deal_document` to retrieve `engagement_type` from the hubspot `engagement` table as opposed to the `engagement_emails` and `engagement_notes` tables. As such, removes their respective references as they are no longer used in this model.

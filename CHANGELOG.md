@@ -1,5 +1,5 @@
 # dbt_unified_rag v0.1.0-a4
-[PR #13](https://github.com/fivetran/dbt_unified_rag/pull/7) includes the following updates: 
+[PR #13](https://github.com/fivetran/dbt_unified_rag/pull/13) includes the following updates: 
 
 ## Breaking Changes
 - Added the hubspot `engagement` source table to the package and made the following updates:

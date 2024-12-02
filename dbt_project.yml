@@ -19,6 +19,7 @@ vars:
     jira_priority: "{{ source('rag_jira', 'priority') }}"
 
     # Hubspot Sources
+    hubspot_engagement: "{{ source('rag_hubspot', 'engagement') }}"
     hubspot_engagement_note: "{{ source('rag_hubspot', 'engagement_note') }}"
     hubspot_engagement_email: "{{ source('rag_hubspot', 'engagement_email') }}"
     hubspot_engagement_company: "{{ source('rag_hubspot', 'engagement_company') }}"

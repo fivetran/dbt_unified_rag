@@ -6,14 +6,15 @@ version: '0.1.0'
 profile: "integration_tests"
 
 vars:
-  rag_hubspot_schema: "rag_integration_tests_1"
-  rag_zendesk_schema: "rag_integration_tests_1"
-  rag_jira_schema: "rag_integration_tests_1"
+  rag_hubspot_schema: "rag_integration_tests_4"
+  rag_zendesk_schema: "rag_integration_tests_4"
+  rag_jira_schema: "rag_integration_tests_4"
 
   rag__using_jira: True
   rag__using_zendesk: True
   rag__using_hubspot: True
 
+  rag_hubspot_engagement_identifier: "hubspot_engagement"
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"
   rag_hubspot_engagement_email_identifier: "hubspot_engagement_email"
   rag_hubspot_engagement_company_identifier: "hubspot_engagement_company"
@@ -32,7 +33,7 @@ vars:
   rag_zendesk_ticket_comment_identifier: "zendesk_ticket_comment"
   rag_zendesk_user_identifier: "zendesk_user"
 
-  document_max_tokens: 2000
+  document_max_tokens: 50
 
 seeds:
   rag_integration_tests:
@@ -98,6 +99,9 @@ seeds:
         _fivetran_synced: timestamp
         property_closedate: timestamp
         property_createdate: timestamp
+    hubspot_engagement:
+      +column_types:
+        id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
     hubspot_engagement_company:
       +column_types:
         engagement_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"

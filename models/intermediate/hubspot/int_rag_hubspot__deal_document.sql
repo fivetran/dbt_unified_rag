@@ -18,6 +18,11 @@ companies as (
     from {{ ref('stg_rag_hubspot__company') }}
 ), 
 
+engagements as (
+    select *
+    from {{ ref('stg_rag_hubspot__engagement') }}
+),
+
 engagement_companies as (
 
     select *
@@ -28,18 +33,6 @@ engagement_contacts as (
 
     select *
     from {{ ref('stg_rag_hubspot__engagement_contact') }}
-),
-
-engagement_emails as (
-
-    select *
-    from {{ ref('stg_rag_hubspot__engagement_email') }} 
-),
-
-engagement_notes as (
-
-    select *
-    from {{ ref('stg_rag_hubspot__engagement_note') }}
 ),
 
 engagement_deals as (
@@ -53,7 +46,7 @@ engagement_detail_prep as (
     select
         deals.deal_id,
         deals.deal_name,
-        {{ unified_rag.coalesce_cast(["engagement_emails.engagement_type", "engagement_notes.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
+        {{ unified_rag.coalesce_cast(["engagements.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
         {{ dbt.concat(["'https://app.hubspot.com/contacts'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
         deals.source_relation,
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,
@@ -64,24 +57,21 @@ engagement_detail_prep as (
     left join engagement_deals
         on deals.deal_id = engagement_deals.deal_id
         and deals.source_relation = engagement_deals.source_relation
+    left join engagements
+        on engagement_deals.engagement_id = engagements.engagement_id
+        and engagement_deals.source_relation = engagements.source_relation
     left join engagement_contacts
-        on engagement_deals.engagement_id = engagement_contacts.engagement_id 
-        and engagement_deals.source_relation = engagement_contacts.source_relation
+        on engagements.engagement_id = engagement_contacts.engagement_id 
+        and engagements.source_relation = engagement_contacts.source_relation
+    left join engagement_companies
+        on engagements.engagement_id = engagement_companies.engagement_id 
+        and engagements.source_relation = engagement_companies.source_relation
     left join contacts 
         on engagement_contacts.contact_id = contacts.contact_id
         and engagement_contacts.source_relation = contacts.source_relation
-    left join engagement_companies
-        on engagement_deals.engagement_id = engagement_companies.engagement_id 
-        and engagement_deals.source_relation = engagement_companies.source_relation
     left join companies
         on engagement_companies.company_id = companies.company_id
         and engagement_companies.source_relation = companies.source_relation
-    left join engagement_emails
-        on engagement_deals.engagement_id = engagement_emails.engagement_id
-        and engagement_deals.source_relation = engagement_emails.source_relation
-    left join engagement_notes
-        on engagement_deals.engagement_id = engagement_notes.engagement_id
-        and engagement_deals.source_relation = engagement_notes.source_relation
 ), 
 
 engagement_details as (

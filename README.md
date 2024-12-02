@@ -1,6 +1,6 @@
 # Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
 
-<p align="center">
+<p align="left">
     <a alt="License"
         href="https://github.com/fivetran/dbt_unified_rag/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
@@ -46,7 +46,7 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: 0.1.0-a3
+    version: 0.1.0-a4
 ```
 
 ### Step 3: Define database and schema variables

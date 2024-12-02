@@ -1,3 +1,18 @@
+# dbt_unified_rag v0.1.0-a4
+
+## Breaking Changes
+- Added the hubspot `engagement` source table to the package and made the following updates:
+    - Added `stg_rag_hubspot__engagement` model as part of the hubspot staging models and updated relevant documentation.
+    - Updated `int_rag_hubspot__deal_document` joins so that `stg_rag_hubspot__engagement` table joins first over the `stg_rag_hubspot__engagement_contact` and `stg_rag_hubspot__engagement_company` tables to bring in all necessary engagement records.
+    - Updated `int_rag_hubspot__deal_document` to retrieve `engagement_type` from the hubspot `engagement` table, as opposed to the `engagement_email` and `engagement_note` tables. As such, removes their respective references as they are no longer used in this model.
+
+## Bug Fix (`--full-refresh` required when upgrading)
+- Updated the `unique_id` in `rag__unified_document` to include `chunk_index`. Previously, the unique key was a combination of only `document_id`, `platform`, and `source_relation`, which was potentially inaccurate if there were multiple chunks associated with a document.
+
+## Under the Hood
+- Updated the *hubspot_x* seed data and *get_hubspot_x_columns* macros with the new `category` field where relevant.
+- Updated missing field descriptions in the Hubspot documentation.
+
 # dbt_unified_rag v0.1.0-a3
 [PR #9](https://github.com/fivetran/dbt_unified_rag/pull/9) includes the following updates: 
 

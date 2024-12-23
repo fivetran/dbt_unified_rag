@@ -1,3 +1,5 @@
+version: 2
+
 sources:
   - name: rag_hubspot
     schema: "{{ var('rag_hubspot_schema', 'hubspot') }}"

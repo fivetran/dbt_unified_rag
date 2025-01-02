@@ -11,6 +11,9 @@ models:
           - not_null
       - name: document_id
         description: Identifier of the base object which the unstructured data is associated (ie. Zendesk ticket_id, Jira issue_id, and HubSpot deal_id).
+      - name: title
+        description: Title of the base object which the unstructured data is associated to.
+      - name: platform
       - name: url_reference
         description: URL reference to the respective base object.
       - name: platform

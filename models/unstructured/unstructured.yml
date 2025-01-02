@@ -6,6 +6,8 @@ models:
     columns:
       - name: document_id
         description: Equivalent to deal_id.
+      - name: title
+        description: The title of the respective HubSpot deal.
       - name: url_reference
         description: URL reference to the respective deal in HubSpot.
       - name: platform
@@ -26,6 +28,8 @@ models:
     columns:
       - name: document_id
         description: Equivalent to issue_id.
+      - name: title
+        description: The title of the respective Jira issue.
       - name: url_reference
         description: URL reference to the respective Jira Issue.
       - name: platform
@@ -46,6 +50,8 @@ models:
     columns:
       - name: document_id
         description: Equivalent to ticket_id.
+      - name: title
+        description: The subject of the respective Zendesk ticket.
       - name: url_reference
         description: URL reference to the respective Zendesk Ticket.
       - name: platform

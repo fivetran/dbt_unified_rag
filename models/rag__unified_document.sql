@@ -19,8 +19,9 @@
         {%- set unique_key_fields = ['document_id', 'platform', 'chunk_index', 'source_relation'] -%}
         {% set select_statement = (
         "select \n" ~
-        "   " ~ dbt_utils.generate_surrogate_key(unique_key_fields) ~ "as unique_id, \n" ~
+        "   " ~ dbt_utils.generate_surrogate_key(unique_key_fields) ~ " as unique_id, \n" ~
         "   document_id, \n" ~
+        "   title, \n" ~ 
         "   url_reference, \n" ~
         "   platform, \n" ~
         "   source_relation, \n" ~
@@ -44,4 +45,4 @@
     {{ queries | join(' union all ') }}
 {%- else -%}
     {{ queries[0] }}
-{%- endif -%}
+{%- endif %}

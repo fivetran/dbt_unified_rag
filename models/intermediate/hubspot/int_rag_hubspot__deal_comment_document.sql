@@ -41,7 +41,7 @@ engagement_emails as (
         engagement_email.owner_id,
         engagement_email.team_id,
         engagement_email.body,
-        engagement_email.email_subject,
+        engagement_email.title,
         engagement_email.email_to_email,
         engagement_email.email_cc_email,
         engagement_email.email_from_email as commenter_email,
@@ -81,11 +81,11 @@ email_comment_details as (
         engagement_deals.engagement_id as deal_comment_id,
         engagement_deals.deal_id, 
         engagement_deals.source_relation,
-        deals.deal_name,
+        deals.title as deal_name_title,
         {{ unified_rag.coalesce_cast(["engagement_emails.commenter_email", "'UNKNOWN'"], dbt.type_string()) }} as commenter_email,
         {{ unified_rag.coalesce_cast(["engagement_emails.commenter_name", "'UNKNOWN'"], dbt.type_string()) }} as commenter_name,
         engagement_emails.created_timestamp as comment_time,
-        engagement_emails.email_subject,
+        engagement_emails.title,
         engagement_emails.body as comment_body
     from deals
     left join engagement_deals
@@ -102,7 +102,7 @@ note_comment_details as (
         engagement_deals.engagement_id as deal_comment_id,
         deals.deal_id, 
         deals.source_relation,
-        deals.deal_name,
+        deals.title as deal_name_title,
         {{ unified_rag.coalesce_cast(["engagement_notes.owner_email", "'UNKNOWN'"], dbt.type_string()) }} as commenter_email,
         {{ unified_rag.coalesce_cast(["engagement_notes.owner_name", "'UNKNOWN'"], dbt.type_string()) }} as commenter_name,
         engagement_notes.created_timestamp as comment_time,
@@ -126,7 +126,7 @@ comment_markdowns as (
         comment_time,
         cast(
             {{ dbt.concat([ 
-                "'Email subject:'", "email_subject", "'\\n'",
+                "'Email subject:'", "title", "'\\n'",
                 "'### message from '", "commenter_name", "' ('", "commenter_email", "')\\n'",
                 "'##### sent @ '", "comment_time", "'\\n'",
                 "comment_body"

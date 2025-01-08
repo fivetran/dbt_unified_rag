@@ -26,6 +26,17 @@ The following table provides a detailed list of all models materialized within t
 | **Table**                 | **Description**                                                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [rag__unified_document](https://fivetran.github.io/dbt_unified_rag/#!/model/model.unified_rag.rag__unified_document)  | Each record represents a chunk of text prepared for semantic-search and additional fields for use in LLM workflows.   |
+
+### Materialized Models
+
+Each Quickstart transformation job run materializes the following model counts for each selected connector. The total model count represents all staging, intermediate, and final models, materialized as `view`, `table`, or `incremental`:
+
+| **Connector** | **Model Count** |
+| ------------- | --------------- |
+| HubSpot | 11 |
+| Jira | 6 |
+| Zendesk | 4 |
+
 <!--section-end-->
 
 ## How do I use the dbt package?
@@ -33,7 +44,7 @@ The following table provides a detailed list of all models materialized within t
 ### Step 1: Prerequisites
 To use this dbt package, you must have the following:
 
-- At least one of the below support Fivetran connectors syncing data into your destination.
+- At least one of the below support Fivetran connections syncing data into your destination.
     - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot) (specifically deals)
     - [Jira](https://fivetran.com/docs/connectors/applications/jira)
     - [Zendesk Support](https://fivetran.com/docs/connectors/applications/zendesk)
@@ -50,8 +61,8 @@ packages:
 ```
 
 ### Step 3: Define database and schema variables
-#### Single connector
-By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connector>_database` variables to your `dbt_project.yml` file (see below).
+#### Single connection
+By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connection>_database` variables to your `dbt_project.yml` file (see below).
 
 ```yml
 # dbt_project.yml
@@ -66,8 +77,8 @@ vars:
     rag_zendesk_schema: zendesk
     rag_zendesk_database: your_database_name
 ```
-#### Union multiple connectors
-If you have multiple supported connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
+#### Union multiple connections
+If you have multiple supported connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
 
 ```yml
 # dbt_project.yml

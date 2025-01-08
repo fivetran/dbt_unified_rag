@@ -1,3 +1,9 @@
+# dbt_unified_rag version.version
+
+## Documentation
+- Added Quickstart model counts to README. ([#18](https://github.com/fivetran/dbt_unified_rag/pull/18))
+- Corrected references to connectors and connections in the README. ([#18](https://github.com/fivetran/dbt_unified_rag/pull/18))
+
 # dbt_unified_rag v0.1.0-a4
 [PR #13](https://github.com/fivetran/dbt_unified_rag/pull/13) includes the following updates: 
 

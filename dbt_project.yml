@@ -29,6 +29,10 @@ vars:
     hubspot_contact: "{{ source('rag_hubspot', 'contact') }}"
     hubspot_deal: "{{ source('rag_hubspot', 'deal') }}"
     hubspot_owner: "{{ source('rag_hubspot', 'owner') }}"
+
+    rag_using_zendesk: true
+    rag_using_jira: true
+    rag__using_hubspot: true
     
 models:
   unified_rag:

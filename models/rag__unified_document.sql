@@ -14,7 +14,7 @@
 {%- set queries = [] -%}
 
 {% for platform in enabled_variables %}
-    {% if var(platform) == true -%}
+    {% if var(platform, true) == true -%}
         {%- set platform_name = platform | replace('rag__using_', '') -%}
         {%- set unique_key_fields = ['document_id', 'platform', 'chunk_index', 'source_relation'] -%}
         {% set select_statement = (

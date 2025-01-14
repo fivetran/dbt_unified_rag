@@ -16,7 +16,7 @@ final as (
 
     select
         cast(deal_document.deal_id as {{ dbt.type_string() }}) as document_id,
-        deal_document.title,
+        coalesce(deal_document.title, grouped.title) as title,
         deal_document.url_reference,
         'hubspot' as platform,
         deal_document.source_relation,

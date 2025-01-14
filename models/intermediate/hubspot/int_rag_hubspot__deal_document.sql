@@ -46,13 +46,7 @@ engagement_detail_prep as (
     select
         deals.deal_id,
         deals.title,
-        {{ unified_rag.coalesce_cast([
-                "case 
-                    when engagements.engagement_type in ('CALL', 'EMAIL', 'NOTE', 'TASK') then engagements.engagement_type
-                    else 'UNKNOWN' 
-                end", 
-                "'UNKNOWN'"
-        ], dbt.type_string()) }} as engagement_type,
+        {{ unified_rag.coalesce_cast(["engagements.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
         {{ dbt.concat(["'https://app.hubspot.com/contacts'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
         deals.source_relation,
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,

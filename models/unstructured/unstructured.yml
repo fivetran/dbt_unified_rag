@@ -7,7 +7,7 @@ models:
       - name: document_id
         description: Equivalent to deal_id.
       - name: title
-        description: The title of the respective HubSpot deal.
+        description: The title of the respective HubSpot deal. If the deal has no title, this is the engagement email subject line or the string 'engagement_note'.
       - name: url_reference
         description: URL reference to the respective deal in HubSpot.
       - name: platform

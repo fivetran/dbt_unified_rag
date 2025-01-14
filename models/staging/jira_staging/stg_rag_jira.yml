@@ -70,7 +70,7 @@ models:
           in the project's workflow).
       - name: status_changed_at
         description: Timestamp of when the status was last changed.
-      - name: issue_name
+      - name: title
         description: Title of the issue.
       - name: time_spent_seconds
         description: The time that was spent working on this issue, in seconds.

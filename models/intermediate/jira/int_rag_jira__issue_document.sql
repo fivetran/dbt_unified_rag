@@ -34,7 +34,7 @@ issue_details as (
 
     select
         issues.issue_id,
-        issues.issue_name,
+        issues.title,
         {% if var('jira_subdomain', default=None) %}
             {{ dbt.concat(["'https://'", "jira_subdomain_value", "'.atlassian.net/browse/'", "issues.issue_key"]) }} as url_reference,
         {% else %}
@@ -66,10 +66,11 @@ final as (
 
     select
         issue_id,
+        title,
         source_relation,
         url_reference,
         {{ dbt.concat([
-            "'# issue : '", "issue_name", "'\\n\\n'",
+            "'# issue : '", "title", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Status : '", "status", "'\\n'",

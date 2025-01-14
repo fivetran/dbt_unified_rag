@@ -13,7 +13,7 @@ with tickets as (
         tickets.ticket_id,
         replace(replace(cast(tickets.url as {{ dbt.type_string() }}), '/api/v2/tickets/', '/agent/tickets/'), '.json', '') as url_reference,
         tickets.source_relation,
-        tickets.subject as ticket_name,
+        tickets.title,
         {{ unified_rag.coalesce_cast(["users.name", "'UNKNOWN'"], dbt.type_string()) }} as user_name,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
         tickets.created_at as created_on,
@@ -29,10 +29,11 @@ with tickets as (
 ), final as (
     select
         ticket_id,
+        title,
         source_relation,
         url_reference,
         {{ dbt.concat([
-            "'# Ticket : '", "ticket_name", "'\\n\\n'",
+            "'# Ticket : '", "title", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Status : '", "status", "'\\n'",

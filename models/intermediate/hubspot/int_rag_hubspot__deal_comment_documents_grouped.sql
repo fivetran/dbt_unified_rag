@@ -10,6 +10,7 @@ grouped_comment_documents as (
     
     select 
       deal_id,
+      title,
       source_relation,
       comment_markdown,
       comment_tokens,
@@ -24,6 +25,7 @@ grouped_comment_documents as (
 
 select 
     deal_id,
+    title,
     source_relation,
     cast({{ dbt_utils.safe_divide('floor(cumulative_length - 1)', var('document_max_tokens', 5000)) }} as {{ dbt.type_int() }}) as chunk_index,
     max(comment_time) as most_recent_chunk_update,
@@ -34,4 +36,4 @@ select
     ) }} as comments_group_markdown,
     sum(comment_tokens) as chunk_tokens
 from grouped_comment_documents
-group by 1,2,3
+group by 1,2,3,4

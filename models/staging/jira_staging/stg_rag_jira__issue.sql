@@ -57,7 +57,7 @@ final as (
         resolution as resolution_id,
         status as status_id,
         cast(status_category_changed as {{ dbt.type_timestamp() }}) as status_changed_at,
-        summary as issue_name,
+        summary as title,
         cast(updated as {{ dbt.type_timestamp() }}) as updated_at,
         work_ratio,
         _fivetran_synced

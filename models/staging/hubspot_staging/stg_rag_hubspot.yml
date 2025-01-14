@@ -85,7 +85,7 @@ models:
         description: The ID of the deal's pipeline stage.
       - name: owner_id
         description: The ID of the deal's owner. 
-      - name: deal_name
+      - name: title
         description: The name you have given this deal.
       - name: description
         description: A brief description of the deal.
@@ -204,7 +204,7 @@ models:
         description: The source of the record if the unioning functionality is being used. If it is not this field will be empty.
       - name: body
         description: The body of the email.
-      - name: email_subject
+      - name: title
         description: The subject line of the logged email.
       - name: email_to_email
         description: The email addresses of the email's recipients.
@@ -222,6 +222,8 @@ models:
         description: Boolean to mark rows that were deleted in the source database.
       - name: engagement_id
         description: The ID of the engagement.
+      - name: title
+        description: The title of the engagement note.
       - name: engagement_type
         description: The type of the engagement.
       - name: body

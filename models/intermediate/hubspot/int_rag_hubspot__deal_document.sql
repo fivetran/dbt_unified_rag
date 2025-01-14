@@ -45,7 +45,7 @@ engagement_detail_prep as (
 
     select
         deals.deal_id,
-        deals.deal_name,
+        deals.title,
         {{ unified_rag.coalesce_cast(["engagements.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
         {{ dbt.concat(["'https://app.hubspot.com/contacts'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
         deals.source_relation,
@@ -77,7 +77,7 @@ engagement_detail_prep as (
 engagement_details as (
     select
         deal_id,
-        deal_name,
+        title,
         url_reference,
         created_on,
         source_relation,
@@ -93,10 +93,11 @@ engagement_markdown as (
 
     select
         deal_id,
+        title,
         source_relation,
         url_reference,
         {{ dbt.concat([
-            "'Deal Name : '", "deal_name", "'\\n\\n'",
+            "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Company Name: '", "company_name", "'\\n'",

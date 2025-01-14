@@ -44,7 +44,7 @@ final as (
         owner_id,
         team_id,
         coalesce(body_preview, body_preview_html, email_text, email_html) as body,
-        email_subject,
+        email_subject as title,
         email_to_email,
         email_from_email,
         email_cc_email

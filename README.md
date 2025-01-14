@@ -36,6 +36,7 @@ Each Quickstart transformation job run materializes the following model counts f
 | HubSpot | 11 |
 | Jira | 6 |
 | Zendesk | 4 |
+| (Combined) | 1 |
 
 <!--section-end-->
 

@@ -124,7 +124,7 @@ comment_markdowns as (
     select
         deal_comment_id,
         deal_id,
-        email_title as title,
+        title,
         source_relation,
         comment_time,
         cast(
@@ -142,7 +142,7 @@ comment_markdowns as (
     select
         deal_comment_id,
         deal_id,
-        engagement_note_title as title,
+        title,
         source_relation,
         comment_time,
         cast(

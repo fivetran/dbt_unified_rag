@@ -1,3 +1,15 @@
+# dbt_unified_rag v0.1.0-a5
+[PR #17](https://github.com/fivetran/dbt_unified_rag/pull/17) includes the following updates:
+
+## Breaking Changes (requires `--full-refresh)
+- Added `title` field to the `rag__unified_document` model and the individual Hubspot, Jira, and Zendesk unstructured `rag_<source>__document` models. This new field reflects:
+  - Zendesk ticket subjects
+  - Jira issue summaries
+  - HubSpot deal names, if available. Otherwise, the email subject or the string `engagement_note`.
+
+## Under the Hood
+- (Maintainers only) Added consistency data validation test for the `rag__unified_document` model.
+ 
 # dbt_unified_rag v0.1.0-a4
 [PR #13](https://github.com/fivetran/dbt_unified_rag/pull/13) includes the following updates: 
 

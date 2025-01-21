@@ -47,7 +47,7 @@ engagement_detail_prep as (
         deals.deal_id,
         deals.title,
         {{ unified_rag.coalesce_cast(["engagements.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
-        {{ dbt.concat(["'https://app.hubspot.com/contacts'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
+        {{ dbt.concat(["'https://app.hubspot.com/contacts/'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
         deals.source_relation,
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,
         {{ unified_rag.coalesce_cast(["contacts.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,

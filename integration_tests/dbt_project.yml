@@ -15,10 +15,6 @@ vars:
   rag_zendesk_schema: "rag_integration_tests_4"
   rag_jira_schema: "rag_integration_tests_4"
 
-  rag__using_jira: True
-  rag__using_zendesk: True
-  rag__using_hubspot: True
-
   rag_hubspot_engagement_identifier: "hubspot_engagement"
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"
   rag_hubspot_engagement_email_identifier: "hubspot_engagement_email"

@@ -16,6 +16,7 @@ final as (
 
     select
         cast(issue_document.issue_id as {{ dbt.type_string() }}) as document_id,
+        issue_document.title,
         issue_document.url_reference,
         'jira' as platform,
         issue_document.source_relation,

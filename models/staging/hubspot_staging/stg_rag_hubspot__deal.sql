@@ -36,7 +36,7 @@ fields as (
 final as (
 
     select
-        deal_name,
+        deal_name as title,
         source_relation,
         cast(closed_date as {{ dbt.type_timestamp() }}) as closed_date,
         cast(created_date as {{ dbt.type_timestamp() }}) as created_date,

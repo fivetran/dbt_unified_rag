@@ -43,7 +43,8 @@ final as (
         occurred_timestamp,
         owner_id,
         team_id,
-        coalesce(note_body_preview, note_body, note_body_preview_html) as body 
+        coalesce(note_body_preview, note_body, note_body_preview_html) as body,
+        'engagement_note' as title
     from fields  
 )  
 

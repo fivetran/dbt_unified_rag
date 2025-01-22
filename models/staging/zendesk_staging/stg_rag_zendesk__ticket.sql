@@ -54,7 +54,7 @@ final as (
         recipient,
         requester_id,
         status,
-        subject,
+        subject as title,
         problem_id,
         submitter_id,
         ticket_form_id,

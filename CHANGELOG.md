@@ -1,6 +1,29 @@
-# dbt_unified_rag version.version
+# dbt_unified_rag v0.1.0-a5
 
-## Documentation
+## Breaking Changes (requires `--full-refresh)
+- Added `title` field to the `rag__unified_document` model and the individual HubSpot, Jira, and Zendesk unstructured `rag_<source>__document` models. ([#17](https://github.com/fivetran/dbt_unified_rag/pull/17))
+- This field draws from other pre-existing fields. Its addition therefore includes the following **breaking changes** in upstream staging and intermediate models:
+  - Zendesk:
+    - `stg_rag_zendesk__ticket`: The ticket `subject` field has been renamed to `title`.
+    - `int_rag_zendesk__ticket_document`: The ticket `subject` field has been renamed to `title`.
+  - Jira:
+    - `stg_rag_jira__issue`: The `issue_name` field (aliased from `summary`) has been renamed to `title`.
+    - `int_rag_jira__issue_document`: The `issue_name` field has been renamed to `title`.
+  - HubSpot:
+    - `stg_rag_hubspot__deal`: The `deal_name` field has been renamed to `title`.
+    - `int_rag_hubspot__deal_document`: The `deal_name` field has been renamed to `title`.
+    - `stg_rag_hubspot__engagement_email`: The `email_subject` field has been renamed to `title`.
+    - `int_rag_hubspot__deal_comment_document`: The `email_subject` field has been renamed to `title`.
+    - `stg_rag_hubspot__engagement_note`: The `title` field (value=`"engagement_note"`) has been added.
+    - `int_rag_hubspot__deal_comment_documents_grouped`: The `title` (value=`"engagement_note"`) field has been added.
+
+## Bug Fix
+- Fixed the HubSpot `url_reference` field to create a valid URL. Previously, we were missing a crucial `/` and therefore created an invalid URL. ([#17](https://github.com/fivetran/dbt_unified_rag/pull/17))
+
+## Under the Hood
+- (Maintainers only) Added consistency data validation test for the `rag__unified_document` model. ([#17](https://github.com/fivetran/dbt_unified_rag/pull/17))
+ 
+ ## Documentation
 - Added Quickstart model counts to README. ([#18](https://github.com/fivetran/dbt_unified_rag/pull/18))
 - Corrected references to connectors and connections in the README. ([#18](https://github.com/fivetran/dbt_unified_rag/pull/18))
 

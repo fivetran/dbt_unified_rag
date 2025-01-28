@@ -9,7 +9,7 @@ with base as (
             schema_variable='rag_hubspot_schema', 
             default_database=target.database,
             default_schema='rag_hubspot',
-            default_variable='hubspot_eengagement_note',
+            default_variable='hubspot_engagement_note',
             union_schema_variable='rag_hubspot_union_schemas',
             union_database_variable='rag_hubspot_union_databases'
         )

@@ -1,6 +1,26 @@
+# dbt_unified_rag v0.1.0-a6
+
+## Bug Fixes (requires `--full-refresh`)
+- Applied `coalesce_cast` macro to all relevant fields that are being concatenated into `comment_markdown`, as any concatenation in Snowflake with a null value returns null. We coalesced 'UNKNOWN' on a string field, and '1970-01-01 00:00:00' on a timestamp field to ensure Snowflake returns chunks of texts for all comments with null components.
+- Fields are now coalesced in these intermediate models:
+  - Hubspot
+    - `int_rag_hubspot__deal_comment_document`: `email_title` and `body` (string fields), `comment_time` (timestamp field).
+    - `int_rag_hubspot__deal_document`: `title` (string field) and `created_on` (timestamp field).
+  - Jira
+    - `int_rag_jira__issue_comment_document`: `comment_body` (string field) and `comment_time` (timestamp field).
+    - `int_rag_jira__issue_document`: `title` (string field) and `created_on` (timestamp field).
+  - Zendesk
+    - `int_rag_zendesk__ticket_comment_document`: `comment_body` (string field) and `comment_time` (timestamp field).
+    - `int_rag_zendesk__ticket_document`: `title` (string field) and `created_on` (timestamp field).
+- Corrected syntax errors for the `default_variable` in `stg_rag_hubspot__engagement_email` and `stg_rag_hubspot__engagement_note`.
+- Updated joins to ensure `engagement_deal` is the base in the `int_rag_hubspot__deal_comment_document` CTEs.
+
+## Under the Hood
+- Updated Hubspot seed files to ensure proper joins on end models.
+
 # dbt_unified_rag v0.1.0-a5
 
-## Breaking Changes (requires `--full-refresh)
+## Breaking Changes (requires `--full-refresh`)
 - Added `title` field to the `rag__unified_document` model and the individual HubSpot, Jira, and Zendesk unstructured `rag_<source>__document` models. ([#17](https://github.com/fivetran/dbt_unified_rag/pull/17))
 - This field draws from other pre-existing fields. Its addition therefore includes the following **breaking changes** in upstream staging and intermediate models:
   - Zendesk:

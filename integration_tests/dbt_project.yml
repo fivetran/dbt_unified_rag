@@ -5,8 +5,8 @@ version: '0.1.0'
 
 profile: "integration_tests"
 
-# models:
-  # +schema: "unified_rag_{{ var('directed_schema','dev') }}"
+models:
+  +schema: "unified_rag_{{ var('directed_schema','dev') }}"
 
 vars:
   consistency_test_exclude_fields: ['title'] # for now

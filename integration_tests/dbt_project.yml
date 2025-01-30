@@ -11,9 +11,9 @@ models:
 vars:
   consistency_test_exclude_fields: ['title'] # for now
   
-  rag_hubspot_schema: "rag_integration_tests_5"
-  rag_zendesk_schema: "rag_integration_tests_5"
-  rag_jira_schema: "rag_integration_tests_5"
+  rag_hubspot_schema: "rag_integration_tests_03"
+  rag_zendesk_schema: "rag_integration_tests_03"
+  rag_jira_schema: "rag_integration_tests_03"
 
   rag_hubspot_engagement_identifier: "hubspot_engagement"
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"

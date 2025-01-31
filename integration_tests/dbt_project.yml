@@ -44,7 +44,7 @@ vars:
   rag_zendesk_ticket_comment_identifier: "zendesk_ticket_comment"
   rag_zendesk_user_identifier: "zendesk_user"
 
-  document_max_tokens: 50
+  document_max_tokens: 250
 
 seeds:
   rag_integration_tests:

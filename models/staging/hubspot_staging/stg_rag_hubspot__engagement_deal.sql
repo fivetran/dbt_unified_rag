@@ -38,6 +38,7 @@ final as (
     select
         engagement_id,
         deal_id,
+        engagement_type,
         source_relation
     from fields  
 )  

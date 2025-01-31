@@ -14,6 +14,8 @@
     - `int_rag_zendesk__ticket_document`: `title` (string field) and `created_on` (timestamp field).
 - Corrected syntax errors for the `default_variable` in `stg_rag_hubspot__engagement_email` and `stg_rag_hubspot__engagement_note`.
 - Updated joins to ensure `engagement_deal` is the base in the `int_rag_hubspot__deal_comment_document` CTEs.
+- Added `most_recent_document` CTEs to `int_rag_*__deal_comment_documents_grouped` models in Hubspot, Jira and Zendesk to ensure we only bring in the `most_recent_chunk_update` by document.
+- Brought in `engagement_type` from the Hubspot `engagement_deal` source to produce proper chunk records in the `rag__unified_document`. Added filters on `email` and `note` types in `int_rag_hubspot__deal_comment_document` when creating email and note chunk records.
 
 ## Under the Hood
 - Updated Hubspot seed files to ensure proper joins on end models.

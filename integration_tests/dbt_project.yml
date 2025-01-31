@@ -5,15 +5,25 @@ version: '0.1.0'
 
 profile: "integration_tests"
 
+# models:
+#   +schema: "unified_rag_{{ var('directed_schema','dev') }}"
 models:
-  +schema: "unified_rag_{{ var('directed_schema','dev') }}"
+  unified_rag:
+    +schema: unified_rag
+    intermediate:
+      +materialized: view
+    unstructured:
+      +materialized: view
+    staging:
+      +materialized: view
+      +schema: unified_rag_source
 
 vars:
   consistency_test_exclude_fields: ['title'] # for now
   
-  rag_hubspot_schema: "rag_integration_tests_5"
-  rag_zendesk_schema: "rag_integration_tests_5"
-  rag_jira_schema: "rag_integration_tests_5"
+  rag_hubspot_schema: "rag_integration_tests_04"
+  rag_zendesk_schema: "rag_integration_tests_04"
+  rag_jira_schema: "rag_integration_tests_04"
 
   rag_hubspot_engagement_identifier: "hubspot_engagement"
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"
@@ -121,6 +131,8 @@ seeds:
         _fivetran_synced: timestamp
         property_hs_createdate: timestamp
         property_hs_timestamp: timestamp
+        property_hs_email_to_email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
+        property_hs_email_from_email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
     hubspot_engagement_note:
       +column_types:
         engagement_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"

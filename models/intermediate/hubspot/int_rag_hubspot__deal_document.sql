@@ -96,13 +96,13 @@ engagement_markdown as (
         title,
         source_relation,
         url_reference,
-        {{ dbt.concat([
+        cast( {{ dbt.concat([
             "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Company Name: '", "company_name", "'\\n'",
             "'Engagement Type: '", "engagement_type", "'\\n'"
-        ]) }} as comment_markdown
+        ]) }} as {{ dbt.type_string() }}) as comment_markdown
     from engagement_details
 ),
 

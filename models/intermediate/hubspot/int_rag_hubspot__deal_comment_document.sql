@@ -95,6 +95,11 @@ email_comment_details as (
     left join engagement_emails
         on engagement_deals.engagement_id = engagement_emails.engagement_id
         and engagement_deals.source_relation = engagement_emails.source_relation
+    where not (engagement_emails.commenter_email is null
+        and engagement_emails.commenter_name is null
+        and engagement_emails.title is null
+        and engagement_emails.created_timestamp is null
+        and engagement_emails.body is null)
 ),
 
 note_comment_details as (
@@ -116,6 +121,10 @@ note_comment_details as (
     left join engagement_notes
         on engagement_deals.engagement_id = engagement_notes.engagement_id
         and engagement_deals.source_relation = engagement_notes.source_relation
+    where not (engagement_notes.owner_email is null
+        and engagement_notes.owner_name is null
+        and engagement_notes.created_timestamp is null
+        and engagement_notes.body is null)
 ),
 
 
@@ -154,7 +163,6 @@ comment_markdowns as (
             ]) }} as {{ dbt.type_string() }})
             as comment_markdown
     from note_comment_details
-
 ), 
 
 comments_tokens as (

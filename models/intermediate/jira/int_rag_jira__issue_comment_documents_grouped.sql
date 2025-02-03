@@ -44,7 +44,7 @@ select
     ) }} as comments_group_markdown,
     sum(comment_tokens) as chunk_tokens
 from grouped_comment_documents
-join most_recent_document
+inner join most_recent_document
     on grouped_comment_documents.issue_id = most_recent_document.issue_id
     and grouped_comment_documents.source_relation = most_recent_document.source_relation
 group by 1,2,3,4

@@ -1,6 +1,43 @@
+# dbt_unified_rag v0.1.0-a6
+
+## Bug Fixes (requires `--full-refresh`)
+- Applied `coalesce_cast` macro to all relevant fields that are being concatenated into `comment_markdown`, as any concatenation in Snowflake with a null value returns null. We coalesced 'UNKNOWN' on a string field, and '1970-01-01 00:00:00' on a timestamp field to ensure Snowflake returns chunks of texts for all comments with null components.
+- Fields are now coalesced in these intermediate models:
+  - Hubspot
+    - `int_rag_hubspot__deal_comment_document`: 
+      - `email_title` (string) 
+      - `body` (string)
+      - `comment_time` (timestamp)
+    - `int_rag_hubspot__deal_document`: 
+      - `title` (string)
+      - `created_on` (timestamp)
+  - Jira
+    - `int_rag_jira__issue_comment_document`:
+      - `comment_body` (string)
+      - `comment_time` (timestamp)
+    - `int_rag_jira__issue_document`: 
+      - `title` (string)
+      - `created_on` (timestamp)
+  - Zendesk
+    - `int_rag_zendesk__ticket_comment_document`: 
+      - `comment_body` (string)
+      - `comment_time` (timestamp)
+    - `int_rag_zendesk__ticket_document`:
+      - `title` (string) 
+      - `created_on` (timestamp)
+
+- Corrected syntax errors for the `default_variable` in `stg_rag_hubspot__engagement_email` and `stg_rag_hubspot__engagement_note`.
+- Updated joins to ensure `engagement_deal` is the base in the `int_rag_hubspot__deal_comment_document` CTEs.
+- Added `most_recent_document` CTE to `int_rag_*__deal_comment_documents_grouped` models in Hubspot, Jira and Zendesk to correctly bring in the `most_recent_chunk_update` by document.
+- Brought in `engagement_type` from the Hubspot `engagement_deal` source to produce proper chunk records in the `rag__unified_document`. 
+- Added filters on `email` and `note` types in `int_rag_hubspot__deal_comment_document` when creating email and note chunk records.
+
+## Under the Hood
+- Updated Hubspot seed files to ensure proper joins on end models.
+
 # dbt_unified_rag v0.1.0-a5
 
-## Breaking Changes (requires `--full-refresh)
+## Breaking Changes (requires `--full-refresh`)
 - Added `title` field to the `rag__unified_document` model and the individual HubSpot, Jira, and Zendesk unstructured `rag_<source>__document` models. ([#17](https://github.com/fivetran/dbt_unified_rag/pull/17))
 - This field draws from other pre-existing fields. Its addition therefore includes the following **breaking changes** in upstream staging and intermediate models:
   - Zendesk:

@@ -13,10 +13,10 @@ with tickets as (
         tickets.ticket_id,
         replace(replace(cast(tickets.url as {{ dbt.type_string() }}), '/api/v2/tickets/', '/agent/tickets/'), '.json', '') as url_reference,
         tickets.source_relation,
-        tickets.title,
+        {{ unified_rag.coalesce_cast(["tickets.title", "'UNKNOWN'"], dbt.type_string()) }} as title,
         {{ unified_rag.coalesce_cast(["users.name", "'UNKNOWN'"], dbt.type_string()) }} as user_name,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
-        tickets.created_at as created_on,
+        {{ unified_rag.coalesce_cast(["tickets.created_at", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} as created_on,
         {{ unified_rag.coalesce_cast(["tickets.status", "'UNKNOWN'"], dbt.type_string()) }} as status,
         {{ unified_rag.coalesce_cast(["tickets.priority", "'UNKNOWN'"], dbt.type_string()) }} as priority
     from tickets

@@ -45,14 +45,14 @@ engagement_detail_prep as (
 
     select
         deals.deal_id,
-        deals.title,
+        {{ unified_rag.coalesce_cast(["deals.title", "'UNKNOWN'"], dbt.type_string()) }} as title,
         {{ unified_rag.coalesce_cast(["engagements.engagement_type", "'UNKNOWN'"], dbt.type_string()) }} as engagement_type,
         {{ dbt.concat(["'https://app.hubspot.com/contacts/'", "deals.portal_id", "'/record/0-3/'", "deals.deal_id"]) }} as url_reference,
         deals.source_relation,
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,
         {{ unified_rag.coalesce_cast(["contacts.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
         {{ unified_rag.coalesce_cast(["companies.company_name", "'UNKNOWN'"], dbt.type_string()) }} as company_name,
-        deals.created_date AS created_on 
+        {{ unified_rag.coalesce_cast(["deals.created_date", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} AS created_on 
     from deals
     left join engagement_deals
         on deals.deal_id = engagement_deals.deal_id
@@ -96,13 +96,13 @@ engagement_markdown as (
         title,
         source_relation,
         url_reference,
-        {{ dbt.concat([
+        cast( {{ dbt.concat([
             "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Company Name: '", "company_name", "'\\n'",
             "'Engagement Type: '", "engagement_type", "'\\n'"
-        ]) }} as comment_markdown
+        ]) }} as {{ dbt.type_string() }}) as comment_markdown
     from engagement_details
 ),
 

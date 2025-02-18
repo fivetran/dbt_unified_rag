@@ -21,7 +21,7 @@ fields as (
     select 
         {{
             fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(source('rag_hubspot','contact')),
+                source_columns=adapter.get_columns_in_relation(source('rag_hubspot','owner')),
                 staging_columns=get_hubspot_owner_columns()
             )
         }}

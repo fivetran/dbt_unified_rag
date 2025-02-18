@@ -35,7 +35,7 @@ models:
   unified_rag:
     +schema: unified_rag
     intermediate:
-      +materialized: ephemeral
+      +materialized: view
     unstructured:
       +materialized: view
     staging:

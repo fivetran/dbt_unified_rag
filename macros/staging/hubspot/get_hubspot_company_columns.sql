@@ -13,7 +13,8 @@
     {"name": "property_city", "datatype": dbt.type_string(), "alias": "city"},
     {"name": "property_state", "datatype": dbt.type_string(), "alias": "state"},
     {"name": "property_country", "datatype": dbt.type_string(), "alias": "country"},
-    {"name": "property_annualrevenue", "datatype": dbt.type_int(), "alias": "company_annual_revenue"}
+    {"name": "property_annualrevenue", "datatype": dbt.type_int(), "alias": "company_annual_revenue"},
+    {"name": "portal_id", "datatype": dbt.type_int()}
 ] %}
 
 {{ return(columns) }}

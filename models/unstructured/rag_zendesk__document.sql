@@ -24,7 +24,7 @@ with ticket_document as (
             "grouped.comments_group_markdown"]) }}
             as chunk
     from ticket_document
-    join grouped
+    inner join grouped
         on grouped.ticket_id = ticket_document.ticket_id
         and grouped.source_relation = ticket_document.source_relation
 )

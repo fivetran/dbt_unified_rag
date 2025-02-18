@@ -29,7 +29,7 @@ final as (
             "grouped.comments_group_markdown"]) }}
             as chunk
     from issue_document
-    join grouped
+    inner join grouped
         on grouped.issue_id = issue_document.issue_id
         and grouped.source_relation = issue_document.source_relation
 )

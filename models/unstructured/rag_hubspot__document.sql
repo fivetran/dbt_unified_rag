@@ -29,7 +29,7 @@ final as (
             "grouped.comments_group_markdown"]) }}
             as chunk
     from deal_document
-    join grouped
+    join grouped -- should this be a left join?
         on grouped.deal_id = deal_document.deal_id
         and grouped.source_relation = deal_document.source_relation
 )

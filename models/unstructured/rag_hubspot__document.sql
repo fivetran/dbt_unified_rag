@@ -26,10 +26,10 @@ final as (
         {{ dbt.concat([
             "deal_document.comment_markdown",
             "'\\n\\n## COMMENTS\\n\\n'",
-            "grouped.comments_group_markdown"]) }}
+            "coalesce(grouped.comments_group_markdown, '')"]) }}
             as chunk
     from deal_document
-    join grouped
+    left join grouped
         on grouped.deal_id = deal_document.deal_id
         and grouped.source_relation = deal_document.source_relation
 )

@@ -1,59 +1,29 @@
-{{ config(enabled=var('rag__using_hubspot', True)) }}
+{{ config(enabled = var('rag__using_hubspot', True)) }}
 
-with base as (
-    
-    {{
-        fivetran_utils.union_data(
-            table_identifier='company', 
-            database_variable='rag_hubspot_database', 
-            schema_variable='rag_hubspot_schema', 
-            default_database=target.database,
-            default_schema='rag_hubspot',
-            default_variable='hubspot_company',
-            union_schema_variable='rag_hubspot_union_schemas',
-            union_database_variable='rag_hubspot_union_databases'
-        )
-    }}
-),
+WITH FINAL AS (
 
-fields as (
-
-    select 
-        {{
-            fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(source('rag_hubspot','company')),
-                staging_columns=get_hubspot_company_columns()
-            )
-        }}
-
-        {{ fivetran_utils.source_relation(
-            union_schema_variable='rag_hubspot_union_schemas', 
-            union_database_variable='rag_hubspot_union_databases') 
-        }}
-    from base
-),
-
-final as (
-
-    select
-        company_id,
-        source_relation,
-        is_company_deleted,
-        cast(_fivetran_synced as {{ dbt.type_timestamp() }}) as _fivetran_synced,
-        company_name,
-        description,
-        created_date,
-        industry,
-        street_address,
-        street_address_2,
-        city,
-        state,
-        country,
-        company_annual_revenue 
-        
-    from fields
-
-) 
-
-select *
-from final
+    SELECT
+        {{ dbt_utils.star(
+            from = ref('stg_rag_hubspot__company_fields'),
+            except = ['id', '_fivetran_synced', 'is_deleted', 'property_name', 'property_description', 'property_createdate', 'property_industry', 'property_address', 'property_address_2', 'property_city', 'property_state', 'property_country', 'property_annualrevenue' ]
+        ) }},
+        id AS company_id,
+        CAST(_fivetran_synced AS {{ dbt.type_timestamp() }}) AS _fivetran_synced,
+        is_deleted AS is_company_deleted,
+        property_name AS company_name,
+        property_description AS description,
+        property_createdate AS created_date,
+        property_industry AS industry,
+        property_address AS street_address,
+        property_address_2 AS street_address_2,
+        property_city AS city,
+        property_state AS state,
+        property_country AS country,
+        property_annualrevenue AS company_annual_revenue
+    FROM
+        {{ ref('stg_rag_hubspot__company_fields') }}
+)
+SELECT
+    *
+FROM
+    FINAL

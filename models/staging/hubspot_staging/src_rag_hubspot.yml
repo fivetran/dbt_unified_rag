@@ -269,3 +269,16 @@ sources:
             description: The type of owner.
           - name: updated_at
             description: Timestamp representing when the owner was last updated.
+
+      - name: deal_company
+        identifier: "{{ var('rag_hubspot_deal_company_identifier', 'deal_company')}}"
+        description: Each record represents a 'link' between a deal and a company.
+        config:
+          enabled: "{{ var('rag_hubspot_sales_enabled', true) and var('rag_hubspot_company_enabled', true) and var('rag_hubspot_deal_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: deal_id
+            description: The ID of the related contact.
+          - name: company
+            description: The ID of the related company.

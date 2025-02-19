@@ -41,6 +41,11 @@ engagement_deals as (
     from {{ ref('stg_rag_hubspot__engagement_deal') }}
 ),
 
+owners AS (
+    select *
+    from {{ ref('stg_rag_hubspot__owner') }}
+),
+
 engagement_detail_prep as (
 
     select
@@ -52,7 +57,8 @@ engagement_detail_prep as (
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,
         {{ unified_rag.coalesce_cast(["contacts.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
         {{ unified_rag.coalesce_cast(["companies.company_name", "'UNKNOWN'"], dbt.type_string()) }} as company_name,
-        {{ unified_rag.coalesce_cast(["deals.created_date", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} AS created_on 
+        {{ unified_rag.coalesce_cast(["deals.created_date", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} AS created_on,
+        {{ dbt.concat(["coalesce(owners.first_name, '')", "' '", "coalesce(owners.last_name, '')", "' ('", "coalesce(owners.owner_email, '')", "')'"]) }} AS owner_details
     from deals
     left join engagement_deals
         on deals.deal_id = engagement_deals.deal_id
@@ -72,6 +78,9 @@ engagement_detail_prep as (
     left join companies
         on engagement_companies.company_id = companies.company_id
         and engagement_companies.source_relation = companies.source_relation
+    left join owners
+        on deals.owner_id  = owners.owner_id
+        and deals.source_relation = owners.source_relation
 ), 
 
 engagement_details as (
@@ -84,7 +93,8 @@ engagement_details as (
         {{ fivetran_utils.string_agg(field_to_agg="distinct engagement_type", delimiter="', '") }} as engagement_type,
         {{ fivetran_utils.string_agg(field_to_agg="distinct contact_name", delimiter="', '") }} as contact_name,
         {{ fivetran_utils.string_agg(field_to_agg="distinct created_by", delimiter="', '") }} as created_by,
-        {{ fivetran_utils.string_agg(field_to_agg="distinct company_name", delimiter="', '") }} as company_name
+        {{ fivetran_utils.string_agg(field_to_agg="distinct company_name", delimiter="', '") }} as company_name,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct owner_details", delimiter="', '") }} as owner_details
     from engagement_detail_prep
     group by 1,2,3,4,5
 ),
@@ -101,7 +111,8 @@ engagement_markdown as (
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Company Name: '", "company_name", "'\\n'",
-            "'Engagement Type: '", "engagement_type", "'\\n'"
+            "'Engagement Type: '", "engagement_type", "'\\n'",
+            "'Deal Owner: '", "owner_details", "'\\n'"
         ]) }} as {{ dbt.type_string() }}) as comment_markdown
     from engagement_details
 ),

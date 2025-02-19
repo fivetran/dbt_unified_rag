@@ -1,11 +1,9 @@
 {{ config(enabled=var('rag__using_hubspot', True)) }}
 
-{% set base_table = ref('stg_rag_hubspot__owner_base') if var('rag_hubspot_union_schemas', []) != [] or var('rag_hubspot_union_databases', []) != [] else source('rag_hubspot', 'owner') %}
-
 with base as (
     
     select *
-    from {{ base_table }}
+    from {{ ref('stg_rag_hubspot__owner_base') }}
 ),
 
 fields as (
@@ -13,7 +11,7 @@ fields as (
     select 
         {{
             fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(base_table),
+                source_columns=adapter.get_columns_in_relation(ref('stg_rag_hubspot__owner_base')),
                 staging_columns=get_hubspot_owner_columns()
             )
         }}

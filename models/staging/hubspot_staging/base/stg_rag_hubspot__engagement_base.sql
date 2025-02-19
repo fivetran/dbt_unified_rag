@@ -1,4 +1,4 @@
-{{ config(enabled=var('rag__using_hubspot', True) and (var('rag_hubspot_union_schemas', []) != [] or var('rag_hubspot_union_databases', []) != [])) }}
+{{ config(enabled=var('rag__using_hubspot', True)) }}
 
 {{
     fivetran_utils.union_data(

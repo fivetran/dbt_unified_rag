@@ -21,7 +21,7 @@ final as (
         'hubspot' as platform,
         deal_document.source_relation,
         grouped.most_recent_chunk_update,
-        grouped.chunk_index,
+        coalesce(grouped.chunk_index, 0) as chunk_index,
         grouped.chunk_tokens as chunk_tokens_approximate,
         {{ dbt.concat([
             "deal_document.comment_markdown",

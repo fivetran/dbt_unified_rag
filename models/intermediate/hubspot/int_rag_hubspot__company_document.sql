@@ -1,3 +1,5 @@
+{{ config(enabled=var('rag__using_hubspot', True)) }}
+
 WITH owners AS (
     SELECT
         *,

@@ -21,6 +21,7 @@ vars:
   rag_hubspot_engagement_company_identifier: "hubspot_engagement_company"
   rag_hubspot_engagement_contact_identifier: "hubspot_engagement_contact"
   rag_hubspot_engagement_deal_identifier: "hubspot_engagement_deal"
+  rag_hubspot_engagement_deal_company: "hubspot_deal_company"
   rag_hubspot_company_identifier: "hubspot_company"
   rag_hubspot_contact_identifier: "hubspot_contact"
   rag_hubspot_owner_identifier: "hubspot_owner"

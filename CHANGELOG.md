@@ -7,6 +7,7 @@
     - **10 more models if Hubspot is enabled**
     - **5 more models if Jira is enabled**
     - **3 more models if Zendsk is enabled**
+- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source.
 
 # dbt_unified_rag v0.1.0-a6
 

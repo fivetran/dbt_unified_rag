@@ -8,11 +8,21 @@
     - **10 more models if Hubspot is enabled**
     - **5 more models if Jira is enabled**
     - **3 more models if Zendsk is enabled**
-- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source.
+- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source. Previously, this erroneously looked at the columns from the HubSpot `contact` table.
 
 ## Feature Updates
-- Adjusted joins in the `rag_hubspot__document` model so as to not exclude deals without comments. This may increase the volume of data in this model and the downstream `rag__unified_document` end model.
-  - For HubSpot deals without comments, the `most_recent_chunk_update` and `update_date` fields will reflect the deal creation date. The `chunk_index` and `chunk_tokens_approximate` fields will be `0`.
+- Adjusted joins to persist records without any comments to each document model. This may increase the volume of data in each model:
+  - `rag_hubspot__document`: HubSpot deals without comments are now included.
+  - `rag_jira__document`: Jira issues without comments are now included.
+  - `rag_zendesk__document`: Zendesk tickets without comments are now included.
+  - `rag__unified_document`: Includes all of the above.
+- For each record without any comments, the `most_recent_chunk_update` and `update_date` fields will reflect the deal/issue/ticket creation date. The `chunk_index` and `chunk_tokens_approximate` fields will be `0`.
+
+## Under the Hood
+- Added the `created_on` field to the following intermediate models to support the above inclusion of comment-less document records.
+  - `int_rag_hubspot__deal_document`
+  - `int_rag_jira__issue_document`
+  - `int_rag_zendesk__ticket_document`
 
 # dbt_unified_rag v0.1.0-a6
 

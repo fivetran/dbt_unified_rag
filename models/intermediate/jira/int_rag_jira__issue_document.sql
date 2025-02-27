@@ -69,6 +69,7 @@ final as (
         title,
         source_relation,
         url_reference,
+        created_on,
         {{ dbt.concat([
             "'# issue : '", "title", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",

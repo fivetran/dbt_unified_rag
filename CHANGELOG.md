@@ -1,5 +1,5 @@
 # dbt_unified_rag v0.1.0-a7
-[PR #25](https://github.com/fivetran/dbt_unified_rag/pull/25) introduces the following updates:
+[PR #25](https://github.com/fivetran/dbt_unified_rag/pull/25) introduces the following updates that **require a full refresh**.
 
 ## Bug Fixes 
 - Fixed an issue in which [unioned](https://github.com/fivetran/dbt_unified_rag?tab=readme-ov-file#union-multiple-connections) source connections were producing null models.
@@ -12,6 +12,7 @@
 
 ## Feature Updates
 - Adjusted joins in the `rag_hubspot__document` model so as to not exclude deals without comments. This may increase the volume of data in this model and the downstream `rag__unified_document` end model.
+  - For HubSpot deals without comments, the `most_recent_chunk_update` and `update_date` fields will reflect the deal creation date. The `chunk_index` and `chunk_tokens_approximate` fields will be `0`.
 
 # dbt_unified_rag v0.1.0-a6
 

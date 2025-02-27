@@ -20,9 +20,9 @@ final as (
         deal_document.url_reference,
         'hubspot' as platform,
         deal_document.source_relation,
-        grouped.most_recent_chunk_update,
+        coalesce(grouped.most_recent_chunk_update, deal_document.created_on) as most_recent_chunk_update,
         coalesce(grouped.chunk_index, 0) as chunk_index,
-        grouped.chunk_tokens as chunk_tokens_approximate,
+        coalesce(grouped.chunk_tokens, 0) as chunk_tokens_approximate,
         {{ dbt.concat([
             "deal_document.comment_markdown",
             "'\\n\\n## COMMENTS\\n\\n'",

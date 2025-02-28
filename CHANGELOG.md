@@ -3,7 +3,7 @@
 
 ## Bug Fixes 
 - Fixed an issue in which [unioned](https://github.com/fivetran/dbt_unified_rag?tab=readme-ov-file#union-multiple-connections) source connections were producing null models.
-  - The solution required the addition of a base staging model layer. For each staging model, there is a `*_base` counterpart in  which we are running our `union_data` macro. This framework is necessary to the cooperation of our unioning and column-filling macros, which ensure the models do not fail if you are missing an expected column.
+  - The solution required the addition of a base staging model layer. For each staging model, there is a `*_base` counterpart in which we are running our `union_data` macro. This framework is necessary to the cooperation of our unioning and column-filling macros, which ensure the models do not fail if you are missing an expected column.
   - For each connector type, this adds:
     - **10 more models if Hubspot is enabled**
     - **5 more models if Jira is enabled**

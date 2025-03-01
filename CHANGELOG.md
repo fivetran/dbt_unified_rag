@@ -1,5 +1,5 @@
 # dbt_unified_rag v0.1.0-a7
-[PR #25](https://github.com/fivetran/dbt_unified_rag/pull/25) introduces the following updates that **require a full refresh**.
+This release introduces the following updates that **require a full refresh**.
 
 ## Bug Fixes 
 - Fixed an issue in which [unioned](https://github.com/fivetran/dbt_unified_rag?tab=readme-ov-file#union-multiple-connections) source connections were producing null models.
@@ -8,7 +8,7 @@
     - **10 more models if Hubspot is enabled**
     - **5 more models if Jira is enabled**
     - **3 more models if Zendsk is enabled**
-- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source. Previously, this erroneously looked at the columns from the HubSpot `contact` table.
+- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source. Previously, this erroneously looked at the columns from the HubSpot `contact` table. ([#23](https://github.com/fivetran/dbt_unified_rag/pull/23))
 
 ## Feature Updates
 - Adjusted joins to persist records without any comments to each document model. This may increase the volume of data in each model:

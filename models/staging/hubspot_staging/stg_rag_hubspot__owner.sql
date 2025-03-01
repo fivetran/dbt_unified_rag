@@ -2,18 +2,8 @@
 
 with base as (
     
-    {{
-        fivetran_utils.union_data(
-            table_identifier='owner', 
-            database_variable='rag_hubspot_database', 
-            schema_variable='rag_hubspot_schema', 
-            default_database=target.database,
-            default_schema='rag_hubspot',
-            default_variable='hubspot_owner',
-            union_schema_variable='rag_hubspot_union_schemas',
-            union_database_variable='rag_hubspot_union_databases'
-        )
-    }}
+    select *
+    from {{ ref('stg_rag_hubspot__owner_base') }}
 ),
 
 fields as (
@@ -21,7 +11,7 @@ fields as (
     select 
         {{
             fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(source('rag_hubspot','owner')),
+                source_columns=adapter.get_columns_in_relation(ref('stg_rag_hubspot__owner_base')),
                 staging_columns=get_hubspot_owner_columns()
             )
         }}

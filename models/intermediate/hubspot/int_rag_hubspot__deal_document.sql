@@ -96,6 +96,7 @@ engagement_markdown as (
         title,
         source_relation,
         url_reference,
+        created_on,
         cast( {{ dbt.concat([
             "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",

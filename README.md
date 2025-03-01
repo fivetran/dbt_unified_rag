@@ -33,9 +33,9 @@ Each Quickstart transformation job run materializes the following model counts f
 
 | **Connector** | **Model Count** |
 | ------------- | --------------- |
-| HubSpot | 11 |
-| Jira | 6 |
-| Zendesk | 4 |
+| HubSpot | 21 |
+| Jira | 11 |
+| Zendesk | 7 |
 | (Combined) | 1 |
 
 <!--section-end-->
@@ -58,7 +58,7 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: 0.1.0-a6
+    version: 0.1.0-a7
 ```
 
 ### Step 3: Define database and schema variables

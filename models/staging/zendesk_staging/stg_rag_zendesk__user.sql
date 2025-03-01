@@ -2,18 +2,8 @@
 
 with base as (
 
-    {{
-        fivetran_utils.union_data(
-            table_identifier='user', 
-            database_variable='rag_zendesk_database', 
-            schema_variable='rag_zendesk_schema', 
-            default_database=target.database,
-            default_schema='rag_zendesk',
-            default_variable='zendesk_user',
-            union_schema_variable='rag_zendesk_union_schemas',
-            union_database_variable='rag_zendesk_union_databases'
-        )
-    }}
+    select *
+    from {{ ref('stg_rag_zendesk__user_base') }}
 
 ),
 
@@ -22,7 +12,7 @@ fields as (
     select
         {{
             fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(source('rag_zendesk','user')),
+                source_columns=adapter.get_columns_in_relation(ref('stg_rag_zendesk__user_base')),
                 staging_columns=get_zendesk_user_columns()
             )
         }}

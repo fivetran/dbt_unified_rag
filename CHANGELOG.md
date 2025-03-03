@@ -25,7 +25,7 @@ This release introduces the following updates that **require a full refresh**.
   - `int_rag_zendesk__ticket_document`
   
 ## Contributors
-- [@levonkorganyan](https://github.com/JustMaris) ([#23](https://github.com/fivetran/dbt_unified_rag/pull/23))
+- [@levonkorganyan](https://github.com/levonkorganyan) ([#23](https://github.com/fivetran/dbt_unified_rag/pull/23))
 
 # dbt_unified_rag v0.1.0-a6
 

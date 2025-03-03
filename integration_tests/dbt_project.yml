@@ -9,8 +9,8 @@ models:
   +schema: "unified_rag_{{ var('directed_schema','dev') }}"
 
 vars:
-  consistency_test_exclude_fields: ['title'] # for now
-  
+  consistency_test_exclude_fields: []
+
   rag_hubspot_schema: "rag_integration_tests_04"
   rag_zendesk_schema: "rag_integration_tests_04"
   rag_jira_schema: "rag_integration_tests_04"

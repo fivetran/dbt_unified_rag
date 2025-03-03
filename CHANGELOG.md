@@ -1,3 +1,32 @@
+# dbt_unified_rag v0.1.0-a7
+This release introduces the following updates that **require a full refresh**.
+
+## Bug Fixes 
+- Fixed an issue in which [unioned](https://github.com/fivetran/dbt_unified_rag?tab=readme-ov-file#union-multiple-connections) source connections were producing null models. ([#25](https://github.com/fivetran/dbt_unified_rag/pull/25))
+  - The solution required the addition of a base staging model layer. For each staging model, there is a `*_base` counterpart in which we are running our `union_data` macro. This framework is necessary to the cooperation of our unioning and column-filling macros, which ensure the models do not fail if you are missing an expected column.
+  - For each connector type, this adds:
+    - **10 more models if Hubspot is enabled**
+    - **5 more models if Jira is enabled**
+    - **3 more models if Zendsk is enabled**
+- Updated `stg_rag_hubspot__owner` to correctly find columns from the owner source. Previously, this erroneously looked at the columns from the HubSpot `contact` table. ([#23](https://github.com/fivetran/dbt_unified_rag/pull/23))
+
+## Feature Updates
+- Adjusted joins to persist records without any comments to each document model ([#25](https://github.com/fivetran/dbt_unified_rag/pull/25)). This may increase the volume of data in each model:
+  - `rag_hubspot__document`: HubSpot deals without comments are now included.
+  - `rag_jira__document`: Jira issues without comments are now included.
+  - `rag_zendesk__document`: Zendesk tickets without comments are now included.
+  - `rag__unified_document`: Includes all of the above.
+- For each record without any comments, the `most_recent_chunk_update` and `update_date` fields will reflect the deal/issue/ticket creation date. The `chunk_index` and `chunk_tokens_approximate` fields will be `0`. ([#25](https://github.com/fivetran/dbt_unified_rag/pull/25))
+
+## Under the Hood
+- Added the `created_on` field to the following intermediate models to support the above inclusion of comment-less document records. ([#25](https://github.com/fivetran/dbt_unified_rag/pull/25))
+  - `int_rag_hubspot__deal_document`
+  - `int_rag_jira__issue_document`
+  - `int_rag_zendesk__ticket_document`
+  
+## Contributors
+- [@levonkorganyan](https://github.com/JustMaris) ([#23](https://github.com/fivetran/dbt_unified_rag/pull/23))
+
 # dbt_unified_rag v0.1.0-a6
 
 ## Bug Fixes (requires `--full-refresh`)

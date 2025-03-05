@@ -56,6 +56,7 @@ engagement_detail_prep as (
         deals.source_relation,
         {{ unified_rag.coalesce_cast(["contacts.contact_name", "'UNKNOWN'"], dbt.type_string()) }} as contact_name,
         {{ unified_rag.coalesce_cast(["contacts.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
+        {{ unified_rag.coalesce_cast(["companies.company_id", "'UNKNOWN'"], dbt.type_string()) }} as company_id,
         {{ unified_rag.coalesce_cast(["companies.company_name", "'UNKNOWN'"], dbt.type_string()) }} as company_name,
         {{ unified_rag.coalesce_cast(["deals.created_date", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} AS created_on,
         {{ dbt.concat(["coalesce(owners.first_name, '')", "' '", "coalesce(owners.last_name, '')", "' ('", "coalesce(owners.owner_email, '')", "')'"]) }} AS owner_details
@@ -94,6 +95,7 @@ engagement_details as (
         {{ fivetran_utils.string_agg(field_to_agg="distinct contact_name", delimiter="', '") }} as contact_name,
         {{ fivetran_utils.string_agg(field_to_agg="distinct created_by", delimiter="', '") }} as created_by,
         {{ fivetran_utils.string_agg(field_to_agg="distinct company_name", delimiter="', '") }} as company_name,
+        {{ fivetran_utils.string_agg(field_to_agg="distinct company_id", delimiter="', '") }} as company_ids,
         {{ fivetran_utils.string_agg(field_to_agg="distinct owner_details", delimiter="', '") }} as owner_details
     from engagement_detail_prep
     group by 1,2,3,4,5
@@ -106,6 +108,7 @@ engagement_markdown as (
         title,
         source_relation,
         url_reference,
+        company_ids,
         cast( {{ dbt.concat([
             "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",

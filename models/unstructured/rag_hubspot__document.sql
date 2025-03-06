@@ -18,7 +18,7 @@ final as (
         cast(deal_document.deal_id as {{ dbt.type_string() }}) as document_id,
         coalesce(deal_document.title, grouped.title) as title,
         deal_document.url_reference,
-        deal_document.company_ids,
+        deal_document.companies,
         'hubspot' as platform,
         deal_document.source_relation,
         grouped.most_recent_chunk_update,

@@ -1,24 +1,38 @@
-{% macro create_json(columns) %}
-    {%- set json_function = {
-        'bigquery': 'TO_JSON_STRING',
-        'snowflake': 'OBJECT_CONSTRUCT',
-        'redshift': 'json_build_object',
-        'databricks': 'to_json'
-    }[target.type] -%}
-    {%- set json_expression = json_function + '(' -%}
-    {%- for column in columns -%}
-        {%- set json_expression = json_expression + "'" + column + "', " + column -%}
-        {%- if not loop.last -%}
-            {%- set json_expression = json_expression + ', ' -%}
-        {%- endif -%}
-    {%- endfor -%}
-    {%- set json_expression = json_expression + ')' -%}
-
-    {%- if target.type == 'snowflake' -%}
-        CAST({{ json_expression }} AS STRING)
-    {%- elif target.type == 'redshift' -%}
-        {{ json_expression }}::VARCHAR
-    {%- else -%}
-        {{ json_expression }}
-    {%- endif -%}
-{% endmacro %}
+{% macro create_json(columns) -%}
+    {% if target.type == 'bigquery' -%}
+        TO_JSON_STRING(
+            STRUCT(
+                {%- for column in columns -%}
+                    {{ column }} AS {{ column }}
+                    {%- if not loop.last -%}, {% endif -%}
+                {%- endfor -%}
+            )
+        )
+    {% elif target.type == 'snowflake' -%}
+        CAST(
+            OBJECT_CONSTRUCT(
+                {%- for column in columns -%}
+                    '{{ column }}', {{ column }}
+                    {%- if not loop.last -%}, {% endif -%}
+                {%- endfor -%}
+            )
+            AS STRING
+        )
+    {% elif target.type == 'redshift' -%}
+        json_build_object(
+            {%- for column in columns -%}
+                '{{ column }}', {{ column }}
+                {%- if not loop.last -%}, {% endif -%}
+            {%- endfor -%}
+        )::VARCHAR
+    {% elif target.type == 'databricks' -%}
+        to_json(
+            named_struct(
+                {%- for column in columns -%}
+                    '{{ column }}', {{ column }}
+                    {%- if not loop.last -%}, {% endif -%}
+                {%- endfor -%}
+            )
+        )
+    {% endif -%}
+{% endmacro -%}

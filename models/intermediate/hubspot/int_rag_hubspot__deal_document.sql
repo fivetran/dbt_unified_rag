@@ -110,23 +110,23 @@ engagement_details as (
 engagement_markdown as (
 
     select
-        deal_id,
-        title,
-        source_relation,
-        url_reference,
-        {{ dbt.concat([ 
-            "'['",
-            dbt.listagg("cc.company_desc", "','"),
-            "']'"
-        ]) }} AS companies,
+        ed.deal_id,
+        ed.title,
+        ed.source_relation,
+        ed.url_reference,
         cast( {{ dbt.concat([
             "'Deal Name : '", "title", "'\\n\\n'",
             "'Created By : '", "contact_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
-            "'Company Name: '", "company_name", "'\\n'",
+            "'Company Name: '", "ed.company_name", "'\\n'",
             "'Engagement Type: '", "engagement_type", "'\\n'",
             "'Deal Owner: '", "owner_details", "'\\n'"
-        ]) }} as {{ dbt.type_string() }}) as comment_markdown
+        ]) }} as {{ dbt.type_string() }}) as comment_markdown,
+        {{ dbt.concat([ 
+            "'['",
+            dbt.listagg("cc.company_desc", "','"),
+            "']'"
+        ]) }} AS companies
     from engagement_details ed
     left join deal_company dc
         on dc.deal_id = ed.deal_id
@@ -134,6 +134,7 @@ engagement_markdown as (
     left join companies cc
         on dc.company_id = cc.company_id
         and dc.source_relation = cc.source_relation
+    group by 1,2,3,4,5
 ),
 
 engagement_tokens as (

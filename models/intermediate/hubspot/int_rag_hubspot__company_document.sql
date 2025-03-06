@@ -39,15 +39,16 @@ deal_company AS (
 ),
 deal_descriptions AS (
     SELECT
-        DISTINCT deals.deal_id,
-        deals.source_relation,
-        {{ dbt.concat([ "'  - {'", "'deal_name: '", "deals.title", "' // '", "'deal_owner_name: '", "owners.safe_first_name", "' '", "owners.safe_last_name", "' // '", "'deal_owner_email: '", "owners.safe_email", "' // '", "'deal_closed_date: '", "deals.safe_close_date", "'}'" ]) }} AS deal_description,
-        deals.closed_date
+        DISTINCT deal_id,
+        source_relation,
+        safe_close_date AS closed_date,
+                --{{ dbt.concat([ "'  - {'", "'deal_name: '", "deals.title", "' // '", "'deal_owner_name: '", "owners.safe_first_name", "' '", "owners.safe_last_name", "' // '", "'deal_owner_email: '", "owners.safe_email", "' // '", "'deal_closed_date: '", "deals.safe_close_date", "'}'" ]) }} AS deal_description,
+        {{ create_json(['deal_id', 'title', 'safe_close_date']) }} AS deal_description
     FROM
         deals
-        JOIN owners
-        ON owners.owner_id = deals.owner_id
-        AND owners.source_relation = deals.source_relation
+        --JOIN owners
+        --ON owners.owner_id = deals.owner_id
+        --AND owners.source_relation = deals.source_relation
 ),
 company_with_deal_description AS (
     SELECT

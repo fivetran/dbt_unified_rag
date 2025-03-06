@@ -15,7 +15,7 @@ contacts as (
 companies as (
     select 
         *,
-        {{ create_json(['company_id']) }} AS company_desc
+        {{ create_json(['company_id', 'company_name']) }} AS company_desc
     from {{ ref('stg_rag_hubspot__company') }}
 ), 
 

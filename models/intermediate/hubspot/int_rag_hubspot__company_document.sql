@@ -54,11 +54,11 @@ company_with_deal_description AS (
     SELECT
         company.company_id AS company_id,
         company.source_relation AS source_relation,
-        {{ dbt.listagg(
-            measure = "dd.deal_description",
-            delimiter_text = "'\\n'",
-            order_by_clause = "order by dd.closed_date"
-        ) }} AS deal_descriptions
+        {{ dbt.concat([ 
+            "'['",
+            dbt.listagg("dd.deal_description", "','", "order by dd.closed_date"),
+            "']'"
+        ]) }} AS deal_descriptions
     FROM
         company
         LEFT JOIN deal_company dc

@@ -282,3 +282,18 @@ sources:
             description: The ID of the related contact.
           - name: company
             description: The ID of the related company.
+      
+      - name: team
+        identifier: "{{ var('rag_hubspot_deal_company_identifier', 'team')}}"
+        description: Each record represents a team.
+        config:
+          enabled: "{{ var('rag_hubspot_team_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: '{{ doc("_fivetran_synced") }}'
+          - name: _fivetran_deleted
+            description: '{{ doc("_fivetran_deleted") }}'
+          - name: id
+            description: The ID of the team.
+          - name: name
+            description: The name of the team.

@@ -279,3 +279,16 @@ models:
       - name: owner_email
         description: The email address of the owner.
 
+  - name: stg_rag_hubspot__team
+    description: Each record represents a team in Hubspot.
+    columns:
+      - name: _fivetran_synced
+        description: '{{ doc("_fivetran_synced") }}'
+      - name: _fivetran_deleted
+        description: Boolean to mark rows that were deleted in the source database.
+      - name: id
+        description: The id of the team.
+      - name: name
+        description: Name of the team.
+      - name: source_relation
+        description: The source of the record if the unioning functionality is being used. If it is not this field will be empty.

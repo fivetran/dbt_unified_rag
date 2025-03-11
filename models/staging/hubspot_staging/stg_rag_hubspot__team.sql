@@ -1,4 +1,11 @@
 {{ config(enabled=var('rag__using_hubspot', True)) }}
+{% set hubspot_team_columns = [
+    {"name": "_fivetran_synced", "datatype": dbt.type_timestamp()},
+    {"name": "_fivetran_deleted", "datatype": dbt.type_boolean()},
+    {"name": "id", "datatype": dbt.type_int()},
+    {"name": "name", "datatype": dbt.type_string()}
+] %}
+
 
 with base as (
     
@@ -22,12 +29,7 @@ fields as (
         {{
             fivetran_utils.fill_staging_columns(
                 source_columns=adapter.get_columns_in_relation(source('rag_hubspot','team')),
-                staging_columns= [
-                    {"name": "_fivetran_synced", "datatype": dbt.type_timestamp()},
-                    {"name": "_fivetran_deleted", "datatype": dbt.type_boolean()},
-                    {"name": "id", "datatype": dbt.type_int()},
-                    {"name": "name", "datatype": dbt.type_string()}
-                ]
+                staging_columns= hubspot_team_columns
             )
         }}
 
@@ -44,7 +46,7 @@ final as (
         id,
         name,
         source_relation,
-        _fivetran_deleted
+        _fivetran_deleted,
         cast(_fivetran_synced as {{ dbt.type_timestamp() }}) as _fivetran_synced,
     from fields 
 ) 

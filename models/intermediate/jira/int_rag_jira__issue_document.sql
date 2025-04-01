@@ -34,6 +34,7 @@ issue_details as (
 
     select
         issues.issue_id,
+        issues.issue_key,
         {{ unified_rag.coalesce_cast(["issues.title", "'UNKNOWN'"], dbt.type_string()) }} as title,
         {% if var('jira_subdomain', default=None) %}
             {{ dbt.concat(["'https://'", "jira_subdomain_value", "'.atlassian.net/browse/'", "issues.issue_key"]) }} as url_reference,
@@ -70,7 +71,7 @@ final as (
         source_relation,
         url_reference,
         {{ dbt.concat([
-            "'# issue : '", "title", "'\\n\\n'",
+            "'# issue ('", "issue_key", "') : '", "title", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Status : '", "status", "'\\n'",

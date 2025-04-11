@@ -1,4 +1,24 @@
-WITH engagement_emails AS (
+{{ config(enabled=var('rag__using_hubspot', True)) }} 
+
+WITH contacts AS (
+    SELECT
+        *
+    FROM
+        {{ ref('stg_rag_hubspot__contact') }}
+),
+engagement_contacts AS (
+    SELECT
+        *
+    FROM
+        {{ ref('stg_rag_hubspot__engagement_contact') }}
+),
+owners AS (
+    SELECT
+        *
+    FROM
+        {{ ref('stg_rag_hubspot__owner') }}
+),
+engagement_emails AS (
     SELECT
         engagement_email.engagement_id,
         engagement_email.source_relation,
@@ -48,6 +68,8 @@ engagement_notes AS (
 ),
 email_comment_details AS (
     SELECT
+        source_relation,
+        engagement_id,
         {{ unified_rag.coalesce_cast(
             ["engagement_emails.commenter_email", "'UNKNOWN'"],
             dbt.type_string()
@@ -70,13 +92,11 @@ email_comment_details AS (
         ) }} AS comment_body
     FROM
         engagement_emails
-    WHERE
-        LOWER(
-            engagement_emails.engagement_type
-        ) = 'email'
 ),
 note_comment_details AS (
     SELECT
+        source_relation,
+        engagement_id,
         {{ unified_rag.coalesce_cast(
             ["engagement_notes.owner_email", "'UNKNOWN'"],
             dbt.type_string()
@@ -96,13 +116,10 @@ note_comment_details AS (
         ) }} AS comment_body
     FROM
         engagement_notes
-    WHERE
-        LOWER(
-            engagement_deals.engagement_type
-        ) = 'note'
-),
+)
 SELECT
     source_relation,
+    engagement_id,
     comment_time,
     CAST(
         {{ dbt.concat([ "'Email subject: '", "email_title", "'\\n'", "'### message from '", "commenter_name", "' ('", "commenter_email", "')\\n'", "'##### sent @ '", "comment_time", "'\\n'", "comment_body" ]) }} AS {{ dbt.type_string() }}
@@ -112,6 +129,7 @@ FROM
 UNION ALL
 SELECT
     source_relation,
+    engagement_id,
     comment_time,
     CAST(
         {{ dbt.concat([ "'Engagement type: Note'", "'\\n'", "'### message from '", "commenter_name", "' ('", "commenter_email", "')\\n'", "'##### sent @ '", "comment_time", "'\\n'", "comment_body" ]) }} AS {{ dbt.type_string() }}

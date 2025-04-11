@@ -59,12 +59,12 @@ sources:
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
           - name: timestamp
-            description: > 
+            description: >
               This field marks the note's time of occurrence and determines where the note sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
           - name: property_hubspot_owner_id
-            description: > 
+            description: >
               The ID of the owner associated with the note. This field determines the user listed as the note creator on the record timeline.
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
@@ -90,12 +90,12 @@ sources:
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
           - name: timestamp
-            description: > 
+            description: >
               This field marks the email's time of occurrence and determines where the email sits on the record timeline. You can use either a Unix timestamp in milliseconds or UTC format. 
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
           - name: property_hubspot_owner_id
-            description: > 
+            description: >
               The ID of the owner associated with the email. This field determines the user listed as the email creator on the record timeline.
 
               PLEASE NOTE: This field will only be populated for connectors utilizing the HubSpot v3 API version. For the pre HubSpot v3 versions, this value may be found within the parent `engagement` table.
@@ -132,7 +132,7 @@ sources:
             description: The ID of the related engagement.
 
       - name: engagement_contact
-        identifier: "{{ var('rag_hubspot_engagement_contact_identifier', 'engagement_contact')}}" 
+        identifier: "{{ var('rag_hubspot_engagement_contact_identifier', 'engagement_contact')}}"
         description: Each record represents a 'link' between a contact and an engagement.
         config:
           enabled: "{{ var('hubspot_sales_enabled', true) and var('hubspot_engagement_enabled', true) and var('hubspot_engagement_contact_enabled', true) }}"
@@ -142,7 +142,7 @@ sources:
           - name: contact_id
             description: The ID of the related contact.
           - name: engagement_id
-            description: The ID of the related engagement.        
+            description: The ID of the related engagement.
 
       - name: company
         identifier: "{{ var('rag_hubspot_company_identifier', 'company')}}"
@@ -196,7 +196,7 @@ sources:
           - name: deal_pipeline_stage_id
             description: The ID of the deal's pipeline stage.
           - name: owner_id
-            description: The ID of the deal's owner. 
+            description: The ID of the deal's owner.
           - name: property_dealname
             description: The name you have given this deal.
           - name: property_description
@@ -211,8 +211,8 @@ sources:
       - name: contact
         identifier: "{{ var('rag_hubspot_contact_identifier', 'contact')}}"
         freshness:
-          warn_after: {count: 84, period: hour}
-          error_after: {count: 168, period: hour}
+          warn_after: { count: 84, period: hour }
+          error_after: { count: 168, period: hour }
         description: Each record represents a contact in Hubspot.
         config:
           enabled: "{{ var('rag_hubspot_marketing_enabled', true) and var('rag_hubspot_contact_enabled', true) }}"
@@ -282,7 +282,7 @@ sources:
             description: The ID of the related contact.
           - name: company
             description: The ID of the related company.
-      
+
       - name: team
         identifier: "{{ var('rag_hubspot_deal_company_identifier', 'team')}}"
         description: Each record represents a team.
@@ -297,3 +297,18 @@ sources:
             description: The ID of the team.
           - name: name
             description: The name of the team.
+
+      - name: ticket
+        identifier: "{{ var('rag_hubspot_ticket_identifier', 'ticket')}}"
+        config:
+          enabled: True
+
+      - name: ticket_company
+        identifier: "{{ var('rag_hubspot_ticket_company_identifier', 'ticket_company')}}"
+        config:
+          enabled: True
+
+      - name: ticket_engagement
+        identifier: "{{ var('rag_hubspot_ticket_engagement_identifier', 'ticket_engagement')}}"
+        config:
+          enabled: True

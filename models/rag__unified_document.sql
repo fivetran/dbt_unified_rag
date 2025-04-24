@@ -1,3 +1,5 @@
+{{ config(enabled=False) }}
+
 {{
     config(
         materialized='table' if unified_rag.is_databricks_sql_warehouse() else 'incremental',

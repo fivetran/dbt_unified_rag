@@ -18,18 +18,19 @@ WITH owners AS (
     FROM
         {{ ref('stg_rag_hubspot__owner') }}
 ),
+company AS (
+    SELECT
+        *
+    FROM
+        {{ ref('stg_rag_hubspot__company') }}
+),
+{%- if var('should_include_deal', True) %}
 deals AS (
     SELECT
         *,
         COALESCE({{ cast('closed_date', dbt.type_string()) }}, 'not closed yet') AS safe_close_date
     FROM
         {{ ref('stg_rag_hubspot__deal') }}
-),
-company AS (
-    SELECT
-        *
-    FROM
-        {{ ref('stg_rag_hubspot__company') }}
 ),
 deal_company AS (
     SELECT
@@ -67,11 +68,16 @@ company_with_deal_description AS (
         1,
         2
 )
+{%- endif %}
 SELECT
+    {%- if var('should_include_deal', True) %}
     cdd.deal_descriptions AS deals,
+    {%- endif %}
     company.*
 FROM
     company
+    {%- if var('should_include_deal', True) %}
     JOIN company_with_deal_description cdd
     ON cdd.company_id = company.company_id
     AND cdd.source_relation = company.source_relation
+    {%- endif %}

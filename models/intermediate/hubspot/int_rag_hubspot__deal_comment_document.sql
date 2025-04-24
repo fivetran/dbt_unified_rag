@@ -1,4 +1,8 @@
-{{ config(enabled=var('rag__using_hubspot', True)) }}
+{% set model_enabled = (
+        var('rag__using_hubspot', True)
+        and not var('should_exclude_deal', False)
+) %}
+{{ config(enabled=model_enabled) }}
 
 with engagement_deals as (
 

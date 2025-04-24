@@ -1,6 +1,6 @@
 {% set model_enabled = (
         var('rag__using_hubspot', True)
-        and not var('should_exclude_deal', False)
+        and var('should_include_deal', True)
 ) %}
 {{ config(enabled=model_enabled) }}
 

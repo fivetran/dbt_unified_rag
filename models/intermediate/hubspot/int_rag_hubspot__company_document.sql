@@ -23,9 +23,9 @@ company AS (
         *
     FROM
         {{ ref('stg_rag_hubspot__company') }}
-),
+)
 {%- if var('should_include_deal', True) %}
-deals AS (
+,deals AS (
     SELECT
         *,
         COALESCE({{ cast('closed_date', dbt.type_string()) }}, 'not closed yet') AS safe_close_date

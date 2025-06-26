@@ -1,3 +1,30 @@
+# dbt_unified_rag v0.1.0-a8
+
+[PR #26](https://github.com/fivetran/dbt_unified_rag/pull/26) includes the following updates:
+
+## Breaking Change for dbt Core < 1.9.6
+
+> *Note: This is not relevant to Fivetran Quickstart users.*
+
+Migrated `freshness` from a top-level source property to a source `config` in alignment with [recent updates](https://github.com/dbt-labs/dbt-core/issues/11506) from dbt Core. This will resolve the following deprecation warning that users running dbt >= 1.9.6 may have received:
+
+```
+[WARNING]: Deprecated functionality
+Found `freshness` as a top-level property of `rag_hubspot` in file
+`models/staging/hubspot_staging/src_rag_hubspot.yml`. The `freshness` top-level property should be moved
+into the `config` of `rag_hubspot`.
+```
+
+**IMPORTANT:** Users running dbt Core < 1.9.6 will not be able to utilize freshness tests in this release or any subsequent releases, as older versions of dbt will not recognize freshness as a source `config` and therefore not run the tests.
+
+If you are using dbt Core < 1.9.6 and want to continue running Unified RAG freshness tests, please elect **one** of the following options:
+  1. (Recommended) Upgrade to dbt Core >= 1.9.6
+  2. Do not upgrade your installed version of the `unified_rag` package. Pin your dependency on v0.1.0-a7 in your `packages.yml` file.
+  3. Utilize a dbt [override](https://docs.getdbt.com/reference/resource-properties/overrides) to overwrite the package's sources and apply freshness via the previous release top-level property route.
+
+## Under the Hood
+- Updates to ensure integration tests use latest version of dbt.
+
 # dbt_unified_rag v0.1.0-a7
 This release introduces the following updates that **require a full refresh**.
 

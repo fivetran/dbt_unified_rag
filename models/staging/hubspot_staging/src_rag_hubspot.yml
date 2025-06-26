@@ -210,11 +210,11 @@ sources:
 
       - name: contact
         identifier: "{{ var('rag_hubspot_contact_identifier', 'contact')}}"
-        freshness:
-          warn_after: {count: 84, period: hour}
-          error_after: {count: 168, period: hour}
         description: Each record represents a contact in Hubspot.
         config:
+          freshness:
+            warn_after: {count: 84, period: hour}
+            error_after: {count: 168, period: hour}
           enabled: "{{ var('rag_hubspot_marketing_enabled', true) and var('rag_hubspot_contact_enabled', true) }}"
         columns:
           - name: _fivetran_deleted

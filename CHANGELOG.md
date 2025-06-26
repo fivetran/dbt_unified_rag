@@ -1,6 +1,6 @@
 # dbt_unified_rag v0.1.0-a8
 
-[PR #26](https://github.com/fivetran/dbt_unified_rag/pull/26) includes the following updates:
+[PR #28](https://github.com/fivetran/dbt_unified_rag/pull/28) includes the following updates:
 
 ## Breaking Change for dbt Core < 1.9.6
 

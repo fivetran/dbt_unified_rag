@@ -129,3 +129,5 @@ seeds:
         _fivetran_synced: timestamp
         property_hs_createdate: timestamp
         property_hs_timestamp: timestamp
+flags:
+  send_anonymous_usage_stats: False

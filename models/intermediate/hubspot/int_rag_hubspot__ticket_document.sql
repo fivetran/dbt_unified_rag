@@ -1,4 +1,8 @@
-{{ config(enabled = var('rag__using_hubspot', True)) }}
+{% set model_enabled = (
+        var('rag__using_hubspot', True)
+        and var('should_include_ticket', True)
+) %}
+{{ config(enabled=model_enabled) }}
 
 WITH tickets AS (
 

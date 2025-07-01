@@ -1,4 +1,8 @@
-{{ config(enabled = var('rag__using_hubspot', True)) }}
+{% set model_enabled = (
+        var('rag__using_hubspot', True)
+        and var('should_include_ticket', True)
+) %}
+{{ config(enabled=model_enabled) }}
 
 {% set hubspot_ticket_engagement_columns = [ {"name": "_fivetran_synced", "datatype": dbt.type_timestamp()}, {"name": "_fivetran_deleted", "datatype": dbt.type_boolean()}, {"name": "category", "datatype": dbt.type_string()}, {"name": "ticket_id", "datatype": dbt.type_int()}, {"name": "engagement_id", "datatype": dbt.type_int()}, {"name": "engagement_type", "datatype": dbt.type_string()} ] %}
 WITH base AS (

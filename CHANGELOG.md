@@ -8,6 +8,10 @@
   - Removed all `accepted_values` tests.
   - Moved `loaded_at_field: _fivetran_synced` under the `config:` block in `src_unified_rag.yml`.
 
+## Under the Hood
+- Updated conditions in `.github/workflows/auto-release.yml`.
+- Added `.github/workflows/generate-docs.yml`.
+
 # dbt_unified_rag v0.1.0-a8
 
 [PR #28](https://github.com/fivetran/dbt_unified_rag/pull/28) includes the following updates:

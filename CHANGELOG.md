@@ -1,4 +1,4 @@
-# dbt_unified_rag v0.2.0
+# dbt_unified_rag v0.1.0-a9
 [PR #31](https://github.com/fivetran/dbt_unified_rag/pull/31) includes the following updates:
 
 ### dbt Fusion Compatibility Updates

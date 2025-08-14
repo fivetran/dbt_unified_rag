@@ -6,6 +6,9 @@ sources:
     database: "{% if target.type != 'spark'%}{{ var('rag_zendesk_database', target.database) }}{% endif %}"
     loader: fivetran
 
+    config:
+      loaded_at_field: _fivetran_synced
+
     tables:
       - name: ticket
         identifier: "{{ var('rag_zendesk_ticket_identifier', 'ticket')}}"
@@ -95,7 +98,6 @@ sources:
         identifier: "{{ var('rag_zendesk_user_identifier', 'user') }}"
         description: Zendesk Support has three types of users, end-users (your customers), agents, and administrators.
         config:
-          loaded_at_field: _fivetran_synced
           freshness: null
         columns:
           - name: id

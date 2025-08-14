@@ -5,7 +5,6 @@ sources:
     schema: "{{ var('rag_jira_schema', 'jira') }}"
     database: "{% if target.type != 'spark'%}{{ var('rag_jira_database', target.database) }}{% endif %}"
     loader: fivetran
-    loaded_at_field: _fivetran_synced
 
     tables:
       - name: comment
@@ -113,6 +112,7 @@ sources:
         identifier: "{{ var('rag_jira_priority_identifier', 'priority')}}"
         description: Table of issue priority levels (global).
         config:
+          loaded_at_field: _fivetran_synced
           enabled: "{{ var('jira_using_priorities', true) }}"
         columns:
           - name: id

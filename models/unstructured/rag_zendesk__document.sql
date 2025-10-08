@@ -11,19 +11,20 @@ with ticket_document as (
 ), final as (
     select
         cast(ticket_document.ticket_id as {{ dbt.type_string() }}) as document_id,
+        ticket_document.title,
         ticket_document.url_reference,
         'zendesk' as platform,
         ticket_document.source_relation,
-        grouped.most_recent_chunk_update,
-        grouped.chunk_index,
-        grouped.chunk_tokens as chunk_tokens_approximate,
+        coalesce(grouped.most_recent_chunk_update, ticket_document.created_on) as most_recent_chunk_update,
+        coalesce(grouped.chunk_index, 0) as chunk_index,
+        coalesce(grouped.chunk_tokens, 0) as chunk_tokens_approximate,
         {{ dbt.concat([
             "ticket_document.ticket_markdown",
             "'\\n\\n## COMMENTS\\n\\n'",
-            "grouped.comments_group_markdown"]) }}
+            "coalesce(grouped.comments_group_markdown, '')"]) }}
             as chunk
     from ticket_document
-    join grouped
+    left join grouped
         on grouped.ticket_id = ticket_document.ticket_id
         and grouped.source_relation = ticket_document.source_relation
 )

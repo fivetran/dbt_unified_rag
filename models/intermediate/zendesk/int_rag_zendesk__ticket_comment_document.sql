@@ -15,8 +15,8 @@ with ticket_comments as (
         ticket_comments.source_relation,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as commenter_email,
         {{ unified_rag.coalesce_cast(["users.name", "'UNKNOWN'"], dbt.type_string()) }} as commenter_name,
-        ticket_comments.created_at as comment_time,
-        ticket_comments.body as comment_body
+        {{ unified_rag.coalesce_cast(["ticket_comments.created_at", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} as comment_time,
+        {{ unified_rag.coalesce_cast(["ticket_comments.body", "'UNKNOWN'"], dbt.type_string()) }} as comment_body
     from ticket_comments
     left join users
         on ticket_comments.user_id = users.user_id

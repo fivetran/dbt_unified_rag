@@ -44,7 +44,7 @@ models:
         description: When this record was created
       - name: type
         description: The type of this ticket, possible values are problem, incident, question or task
-      - name: subject
+      - name: title
         description: The value of the subject field for this ticket
       - name: description
         description: Read-only first comment on the ticket

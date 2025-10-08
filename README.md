@@ -5,11 +5,14 @@
         href="https://github.com/fivetran/dbt_unified_rag/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
     <a alt="dbt-core">
-        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<2.0.0-orange.svg" /></a>
+        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_,<2.0.0-orange.svg" /></a>
     <a alt="Maintained?">
         <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
+    <a alt="Fivetran Quickstart Compatible"
+        href="https://fivetran.com/docs/transformations/dbt/quickstart">
+        <img src="https://img.shields.io/badge/Fivetran_Quickstart_Compatible%3F-yes-green.svg" /></a>
 </p>
 
 ## What does this dbt package do?
@@ -26,6 +29,18 @@ The following table provides a detailed list of all models materialized within t
 | **Table**                 | **Description**                                                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [rag__unified_document](https://fivetran.github.io/dbt_unified_rag/#!/model/model.unified_rag.rag__unified_document)  | Each record represents a chunk of text prepared for semantic-search and additional fields for use in LLM workflows.   |
+
+### Materialized Models
+
+Each Quickstart transformation job run materializes the following model counts for each selected connector. The total model count represents all staging, intermediate, and final models, materialized as `view`, `table`, or `incremental`:
+
+| **Connector** | **Model Count** |
+| ------------- | --------------- |
+| HubSpot | 21 |
+| Jira | 11 |
+| Zendesk | 7 |
+| (Combined) | 1 |
+
 <!--section-end-->
 
 ## How do I use the dbt package?
@@ -33,7 +48,7 @@ The following table provides a detailed list of all models materialized within t
 ### Step 1: Prerequisites
 To use this dbt package, you must have the following:
 
-- At least one of the below support Fivetran connectors syncing data into your destination.
+- At least one of the below support Fivetran connections syncing data into your destination.
     - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot) (specifically deals)
     - [Jira](https://fivetran.com/docs/connectors/applications/jira)
     - [Zendesk Support](https://fivetran.com/docs/connectors/applications/zendesk)
@@ -46,12 +61,12 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: 0.1.0-a4
+    version: 0.1.0-a9
 ```
 
 ### Step 3: Define database and schema variables
-#### Single connector
-By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connector>_database` variables to your `dbt_project.yml` file (see below).
+#### Single connection
+By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connection>_database` variables to your `dbt_project.yml` file (see below).
 
 ```yml
 # dbt_project.yml
@@ -66,8 +81,8 @@ vars:
     rag_zendesk_schema: zendesk
     rag_zendesk_database: your_database_name
 ```
-#### Union multiple connectors
-If you have multiple supported connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
+#### Union multiple connections
+If you have multiple supported connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
 
 ```yml
 # dbt_project.yml
@@ -129,19 +144,17 @@ vars:
 ```
 </details>
 
-
 ### (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
 <details><summary>Expand for details</summary>
 <br>
-    
+
 Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core setup guides](https://fivetran.com/docs/transformations/dbt#setupguide).
 </details>
-
 
 ## Does this package have dependencies?
 This dbt package is dependent on the following dbt packages. These dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
 > IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
-    
+
 ```yml
 packages:
     - package: fivetran/fivetran_utils

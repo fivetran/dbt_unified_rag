@@ -34,7 +34,7 @@ issue_details as (
 
     select
         issues.issue_id,
-        issues.issue_name,
+        {{ unified_rag.coalesce_cast(["issues.title", "'UNKNOWN'"], dbt.type_string()) }} as title,
         {% if var('jira_subdomain', default=None) %}
             {{ dbt.concat(["'https://'", "jira_subdomain_value", "'.atlassian.net/browse/'", "issues.issue_key"]) }} as url_reference,
         {% else %}
@@ -43,7 +43,7 @@ issue_details as (
         issues.source_relation,
         {{ unified_rag.coalesce_cast(["users.user_display_name", "'UNKNOWN'"], dbt.type_string()) }} as user_name,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
-        issues.created_at AS created_on,
+        {{ unified_rag.coalesce_cast(["issues.created_at", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} as created_on,
         {{ unified_rag.coalesce_cast(["statuses.status_name", "issues.status_id", "'UNKNOWN'"], dbt.type_string()) }} as status,
         {% if var('jira_using_priorities', True) %}
             {{ unified_rag.coalesce_cast(["priorities.priority_name", "issues.priority_id", "'UNKNOWN'"], dbt.type_string()) }} as priority
@@ -66,10 +66,12 @@ final as (
 
     select
         issue_id,
+        title,
         source_relation,
         url_reference,
+        created_on,
         {{ dbt.concat([
-            "'# issue : '", "issue_name", "'\\n\\n'",
+            "'# issue : '", "title", "'\\n\\n'",
             "'Created By : '", "user_name", "' ('", "created_by", "')\\n'",
             "'Created On : '", "created_on", "'\\n'",
             "'Status : '", "status", "'\\n'",

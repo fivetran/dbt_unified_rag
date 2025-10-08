@@ -5,14 +5,15 @@ version: '0.1.0'
 
 profile: "integration_tests"
 
-vars:
-  rag_hubspot_schema: "rag_integration_tests_4"
-  rag_zendesk_schema: "rag_integration_tests_4"
-  rag_jira_schema: "rag_integration_tests_4"
+models:
+  +schema: "unified_rag_{{ var('directed_schema','dev') }}"
 
-  rag__using_jira: True
-  rag__using_zendesk: True
-  rag__using_hubspot: True
+vars:
+  consistency_test_exclude_fields: []
+
+  rag_hubspot_schema: "rag_integration_tests_04"
+  rag_zendesk_schema: "rag_integration_tests_04"
+  rag_jira_schema: "rag_integration_tests_04"
 
   rag_hubspot_engagement_identifier: "hubspot_engagement"
   rag_hubspot_engagement_note_identifier: "hubspot_engagement_note"
@@ -33,9 +34,11 @@ vars:
   rag_zendesk_ticket_comment_identifier: "zendesk_ticket_comment"
   rag_zendesk_user_identifier: "zendesk_user"
 
-  document_max_tokens: 50
+  document_max_tokens: 250
 
 seeds:
+  +docs:
+    show: False
   rag_integration_tests:
     +quote_columns: "{{ true if target.type == 'redshift' else false }}"
     +column_types:
@@ -120,9 +123,15 @@ seeds:
         _fivetran_synced: timestamp
         property_hs_createdate: timestamp
         property_hs_timestamp: timestamp
+        property_hs_email_to_email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
+        property_hs_email_from_email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar' }}"
     hubspot_engagement_note:
       +column_types:
         engagement_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
         _fivetran_synced: timestamp
         property_hs_createdate: timestamp
         property_hs_timestamp: timestamp
+flags:
+  send_anonymous_usage_stats: False
+
+  use_colors: True

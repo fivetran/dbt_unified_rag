@@ -20,8 +20,8 @@ comment_details as (
         issue_comments.source_relation,
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as commenter_email,
         {{ unified_rag.coalesce_cast(["users.user_display_name", "'UNKNOWN'"], dbt.type_string()) }} as commenter_name,
-        issue_comments.created_at as comment_time,
-        issue_comments.body as comment_body
+        {{ unified_rag.coalesce_cast(["issue_comments.created_at", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} as comment_time,
+        {{ unified_rag.coalesce_cast(["issue_comments.body", "'UNKNOWN'"], dbt.type_string()) }} as comment_body
     from issue_comments
     left join users
         on issue_comments.author_user_id = users.user_id

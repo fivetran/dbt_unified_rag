@@ -1,7 +1,11 @@
 # dbt_unified_rag v0.1.0
 
 ## Under the Hood
-Addition of the `version: 2` tag within the `src_rag_hubspot.yml` file. ([#16](https://github.com/fivetran/dbt_unified_rag/pull/16))
+- Addition of the `version: 2` tag within the `src_rag_hubspot.yml` file. ([#16](https://github.com/fivetran/dbt_unified_rag/pull/16))
+- Resolved a dbt Fusion error around `{% set abc = abc.append(...) %}`, as this syntax is valid only in dbt Core. We have opted for `do` instead of `set`. ([#32](https://github.com/fivetran/dbt_unified_rag/pull/32))
+
+## Contributors
+- [@b-per](https://github.com/b-per) ([#32](https://github.com/fivetran/dbt_unified_rag/pull/32))
 
 # dbt_unified_rag v0.1.0-a9
 [PR #31](https://github.com/fivetran/dbt_unified_rag/pull/31) includes the following updates:

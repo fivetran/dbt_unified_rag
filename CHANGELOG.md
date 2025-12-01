@@ -1,3 +1,10 @@
+# dbt_unified_rag v0.2.0
+
+[PR #35](https://github.com/fivetran/dbt_unified_rag/pull/35) includes the following updates:
+
+## Features
+  - Increases the required dbt version upper limit to v3.0.0
+
 # dbt_unified_rag v0.1.0
 
 This is the initial release of the Unified RAG dbt package!

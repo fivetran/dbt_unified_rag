@@ -22,8 +22,9 @@ This dbt package transforms data from Fivetran's Unified Rag connector into anal
 
 - Number of materialized models¹: 40
 - Connector documentation
-  - [Unified Rag connector documentation](https://fivetran.com/docs/connectors/applications/unified-rag)
-  - [Unified Rag ERD](https://fivetran.com/docs/connectors/applications/unified-rag#schemainformation)
+  - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot#hubspot)
+  - [Jira](https://fivetran.com/docs/connectors/applications/jira#jira)
+  - [Zendesk](https://fivetran.com/docs/connectors/applications/zendesk#zendesksupport)
 - dbt package documentation
   - [GitHub repository](https://github.com/fivetran/dbt_unified_rag)
   - [dbt Docs](https://fivetran.github.io/dbt_unified_rag/#!/overview)

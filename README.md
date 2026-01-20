@@ -1,4 +1,5 @@
-# Unified RAG dbt Package ([Docs](https://fivetran.github.io/dbt_unified_rag/))
+<!--section="unified-rag_transformation_model"-->
+# Unified RAG dbt Package
 
 <p align="left">
     <a alt="License"
@@ -11,41 +12,56 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
     <a alt="Fivetran Quickstart Compatible"
-        href="https://fivetran.com/docs/transformations/dbt/quickstart">
+        href="https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement/quickstart">
         <img src="https://img.shields.io/badge/Fivetran_Quickstart_Compatible%3F-yes-green.svg" /></a>
 </p>
 
+This dbt package transforms data from Fivetran's Unified RAG connector into analytics-ready tables.
+
+## Resources
+
+- Number of materialized models¹: 40
+- Connector documentation
+  - [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot#hubspot)
+  - [Jira](https://fivetran.com/docs/connectors/applications/jira#jira)
+  - [Zendesk](https://fivetran.com/docs/connectors/applications/zendesk#zendesksupport)
+- dbt package documentation
+  - [GitHub repository](https://github.com/fivetran/dbt_unified_rag)
+  - [dbt Docs](https://fivetran.github.io/dbt_unified_rag/#!/overview)
+  - [DAG](https://fivetran.github.io/dbt_unified_rag/#!/overview?g_v=1)
+  - [Changelog](https://github.com/fivetran/dbt_unified_rag/blob/main/CHANGELOG.md)
+
 ## What does this dbt package do?
+This package enables you to generate unstructured document data for Retrieval Augmented Generation (RAG) applications and combine data from HubSpot deals, Jira issues, and Zendesk tickets. It creates enriched models with metrics focused on text chunks prepared for semantic search and LLM workflows.
 
-<!--section="unified_rag_transformation_model"-->
-The main focus of this dbt package is to generate an end model that contains the below relevant unstructured document data to be used for Retrieval Augmented Generation (RAG) applications leveraging Large Language Models (LLMs):
-- [HubSpot](https://fivetran.com/docs/connectors/applications/hubspot): Deals
-- [Jira](https://fivetran.com/docs/connectors/applications/jira): Issues
-- [Zendesk](https://fivetran.com/docs/connectors/applications/zendesk): Tickets  
+Note: Redshift destinations are not currently supported due to the stringent character limitations within string datatypes. If you would like Redshift destinations to be supported, please comment within our logged [Feature Request](https://github.com/fivetran/dbt_unified_rag/issues/3).
 
-The following table provides a detailed list of all models materialized within this package by default. 
-> TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_unified_rag/#!/overview).
+### Output schema
+Final output tables are generated in the following target schema:
 
-| **Table**                 | **Description**                                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [rag__unified_document](https://fivetran.github.io/dbt_unified_rag/#!/model/model.unified_rag.rag__unified_document)  | Each record represents a chunk of text prepared for semantic-search and additional fields for use in LLM workflows.   |
+```
+<your_database>.<connector/schema_name>_unified_rag
+```
 
-### Materialized Models
+### Final output tables
 
-Each Quickstart transformation job run materializes the following model counts for each selected connector. The total model count represents all staging, intermediate, and final models, materialized as `view`, `table`, or `incremental`:
+By default, this package materializes the following final tables:
 
-| **Connector** | **Model Count** |
-| ------------- | --------------- |
-| HubSpot | 21 |
-| Jira | 11 |
-| Zendesk | 7 |
-| (Combined) | 1 |
+| Table | Description |
+| :---- | :---- |
+| [rag__unified_document](https://fivetran.github.io/dbt_unified_rag/#!/model/model.unified_rag.rag__unified_document) | Prepares text content from multiple data sources into searchable chunks that enable natural language queries through AI chatbots, making your data easily accessible through conversational questions. <br></br>**Example Analytics Questions:**<ul><li>What features are customers requesting most frequently?</li><li>What topics are mentioned most during sales or deal discussions?</li><li>What common issues or themes appear across support conversations?</li></ul>|
 
-<!--section-end-->
+¹ Each Quickstart transformation job run materializes these models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+
+---
 
 ## How do I use the dbt package?
+You can either add this dbt package in the Fivetran dashboard or import it into your dbt project:
 
-### Step 1: Prerequisites
+- To add the package in the Fivetran dashboard, follow our [Quickstart guide](https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement).
+- To add the package to your dbt project, follow the setup instructions in the dbt package's [README file](https://github.com/fivetran/dbt_unified_rag/blob/main/README.md#how-do-i-use-the-dbt-package) to use this package.
+
+## Prerequisites
 To use this dbt package, you must have the following:
 
 - At least one of the below support Fivetran connections syncing data into your destination.
@@ -55,7 +71,9 @@ To use this dbt package, you must have the following:
 - A **Snowflake**, **BigQuery**, **Databricks**, or **PostgreSQL** destination.
     - Redshift destinations are not currently supported due to the stringent character limitations within string datatypes. If you would like Redshift destinations to be supported, please comment within our logged [Feature Request](https://github.com/fivetran/dbt_unified_rag/issues/3).
 
-### Step 2: Install the package
+<!--section-end-->
+
+### Install the package
 Include the following package_display_name package version in your `packages.yml` file:
 > TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yml
@@ -64,7 +82,7 @@ packages:
     version: [">=0.2.0", "<0.3.0"]
 ```
 
-### Step 3: Define database and schema variables
+### Define database and schema variables
 #### Single connection
 By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connection>_database` variables to your `dbt_project.yml` file (see below).
 
@@ -102,7 +120,7 @@ The native `source.yml` connection set up in the package will not function when 
 
 To connect your multiple schema/database sources to the package models, follow the steps outlined in the [Union Data Defined Sources Configuration](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source) section of the Fivetran Utils documentation for the union_data macro. This will ensure a proper configuration and correct visualization of connections in the DAG.
 
-### Step 4: Enabling/Disabling Models
+### Enabling/Disabling Models
 This package takes into consideration that not every account will have leverage every supported connector type. If you do not leverage all of the supported connector types, you are able to disable the respective dependent models using the below variables in your `dbt_project.yml`.
 
 ```yml
@@ -112,7 +130,7 @@ vars:
     rag__using_zendesk: False # by default this is assumed to be True
 ```
 
-### (Optional) Step 5: Additional configurations
+### (Optional) Additional configurations
 #### Customizing Chunk Size for Vectorization
 The `rag__unified_document` and upstream platform specific `*__document` models were developed to limit approximate chunk sizes to 5,000 tokens, optimized for OpenAI models. However, you can adjust this limit by setting the max_tokens variable in your `dbt_project.yml`:
 ```yml
@@ -144,11 +162,11 @@ vars:
 ```
 </details>
 
-### (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
+### (Optional) Orchestrate your models with Fivetran Transformations for dbt Core™
 <details><summary>Expand for details</summary>
 <br>
 
-Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core setup guides](https://fivetran.com/docs/transformations/dbt#setupguide).
+Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core setup guides](https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement#setupguide).
 </details>
 
 ## Does this package have dependencies?
@@ -163,14 +181,19 @@ packages:
     - package: dbt-labs/dbt_utils
       version: [">=1.0.0", "<2.0.0"]
 ```
+
+<!--section="unified-rag_maintenance"-->
 ## How is this package maintained and can I contribute?
+
 ### Package Maintenance
-The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/unified_rag/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_unified_rag/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package only maintains the [latest version](https://hub.getdbt.com/fivetran/unified_rag/latest/) of the package. We highly recommend you stay consistent with the latest version of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_unified_rag/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
 
 ### Contributions
 A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions.
 
-We highly encourage and welcome contributions to this package. Check out [this dbt Discourse article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package.
+We highly encourage and welcome contributions to this package. Learn how to contribute to a package in dbt's [Contributing to an external dbt package article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657).
+
+<!--section-end-->
 
 ## Are there any resources available?
 - If you have questions or want to reach out for help, refer to the [GitHub Issue](https://github.com/fivetran/dbt_unified_rag/issues/new/choose) section to find the right avenue of support for you.

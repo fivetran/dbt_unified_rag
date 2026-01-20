@@ -1,5 +1,5 @@
 <!--section="unified-rag_transformation_model"-->
-# Unified Rag dbt Package
+# Unified RAG dbt Package
 
 <p align="left">
     <a alt="License"
@@ -16,7 +16,7 @@
         <img src="https://img.shields.io/badge/Fivetran_Quickstart_Compatible%3F-yes-green.svg" /></a>
 </p>
 
-This dbt package transforms data from Fivetran's Unified Rag connector into analytics-ready tables.
+This dbt package transforms data from Fivetran's Unified RAG connector into analytics-ready tables.
 
 ## Resources
 

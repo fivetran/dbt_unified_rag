@@ -55,12 +55,6 @@ By default, this package materializes the following final tables:
 
 ---
 
-## How do I use the dbt package?
-You can either add this dbt package in the Fivetran dashboard or import it into your dbt project:
-
-- To add the package in the Fivetran dashboard, follow our [Quickstart guide](https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement).
-- To add the package to your dbt project, follow the setup instructions in the dbt package's [README file](https://github.com/fivetran/dbt_unified_rag/blob/main/README.md#how-do-i-use-the-dbt-package) to use this package.
-
 ## Prerequisites
 To use this dbt package, you must have the following:
 
@@ -70,6 +64,12 @@ To use this dbt package, you must have the following:
     - [Zendesk Support](https://fivetran.com/docs/connectors/applications/zendesk)
 - A **Snowflake**, **BigQuery**, **Databricks**, or **PostgreSQL** destination.
     - Redshift destinations are not currently supported due to the stringent character limitations within string datatypes. If you would like Redshift destinations to be supported, please comment within our logged [Feature Request](https://github.com/fivetran/dbt_unified_rag/issues/3).
+
+## How do I use the dbt package?
+You can either add this dbt package in the Fivetran dashboard or import it into your dbt project:
+
+- To add the package in the Fivetran dashboard, follow our [Quickstart guide](https://fivetran.com/docs/transformations/data-models/quickstart-management#quickstartmanagement).
+- To add the package to your dbt project, follow the setup instructions in the dbt package's [README file](https://github.com/fivetran/dbt_unified_rag/blob/main/README.md#how-do-i-use-the-dbt-package) to use this package.
 
 <!--section-end-->
 

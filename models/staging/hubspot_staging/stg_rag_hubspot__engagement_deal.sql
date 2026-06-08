@@ -16,10 +16,7 @@ fields as (
             )
         }}
 
-        {{ fivetran_utils.source_relation(
-            union_schema_variable='rag_hubspot_union_schemas', 
-            union_database_variable='rag_hubspot_union_databases') 
-        }}
+        {{ fivetran_utils.apply_source_relation(package_name='unified_rag') }}
     from base
 ),
 

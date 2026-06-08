@@ -66,46 +66,44 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: [">=0.2.0", "<0.3.0"]
+    version: [">=0.3.0", "<0.4.0"]
 ```
 
 ### Define database and schema variables
-#### Single connection
-By default, this package looks for your HubSpot, Jira, and/or Zendesk data in your target database. If this is not where your data is stored, add the relevant `<connection>_database` variables to your `dbt_project.yml` file (see below).
+#### Option A: Single connection
+By default, this package runs using your destination and the `unified_rag` schema. If this is not where your Unified RAG data is (for example, if your Unified RAG schema is named `unified_rag_fivetran`), add the following configuration to your root `dbt_project.yml` file:
+
+```yml
+vars:
+    unified_rag_database: your_destination_name
+    unified_rag_schema: your_schema_name
+```
+
+#### Option B: Union multiple connections
+If you have multiple Unified RAG connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. For each source table, the package will union all of the data together and pass the unioned table into the transformations. The `source_relation` column in each model indicates the origin of each record.
+
+To use this functionality, you will need to set the `unified_rag_sources` variable in your root `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
 
 vars:
-    rag_hubspot_schema: hubspot
-    rag_hubspot_database: your_database_name
+  unified_rag:
+    unified_rag_sources:
+      - database: connection_1_destination_name # Required
+        schema: connection_1_schema_name # Required
+        name: connection_1_source_name # Required only if following the step in the following subsection
 
-    rag_jira_schema: jira
-    rag_jira_database: your_database_name
-
-    rag_zendesk_schema: zendesk
-    rag_zendesk_database: your_database_name
-```
-#### Union multiple connections
-If you have multiple supported connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the source_relation column of each model. To use this functionality, you will need to set either the `<package_name>_union_schemas` OR `<package_name>_union_databases` variables (cannot do both) in your root `dbt_project.yml` file. Below are the variables and examples for each connector:
-
-```yml
-# dbt_project.yml
-
-vars:
-    rag_hubspot_union_schemas: ['hubspot_rag_test_one', 'hubspot_rag_test_two']
-    rag_hubspot_union_databases: ['hubspot_rag_test_one', 'hubspot_rag_test_two']
-
-    rag_jira_union_schemas: ['jira_rag_test_one', 'jira_rag_test_two']
-    rag_jira_union_databases: ['jira_rag_test_one', 'jira_rag_test_two']
-
-    rag_zendesk_union_schemas: ['zendesk_rag_test_one', 'zendesk_rag_test_two']
-    rag_zendesk_union_databases: ['zendesk_rag_test_one', 'zendesk_rag_test_two']
+      - database: connection_2_destination_name
+        schema: connection_2_schema_name
+        name: connection_2_source_name
 ```
 
-The native `source.yml` connection set up in the package will not function when the union schema/database feature is utilized. Although the data will be correctly combined, you will not observe the sources linked to the package models in the Directed Acyclic Graph (DAG). This happens because the package includes only one defined `source.yml`.
+> Previous versions of this package employed two separate, mutually exclusive variables for unioning: `unified_rag_union_schemas` and `unified_rag_union_databases`. While these variables are still supported, `unified_rag_sources` is the recommended variable to configure.
 
-To connect your multiple schema/database sources to the package models, follow the steps outlined in the [Union Data Defined Sources Configuration](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source) section of the Fivetran Utils documentation for the union_data macro. This will ensure a proper configuration and correct visualization of connections in the DAG.
+#### Optional: Incorporate unioned sources into DAG
+
+If you use [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt#transformationsfordbtcore) and are unioning multiple Unified RAG connections, you can define your sources in a property `.yml` file, [using this as a template](https://github.com/fivetran/dbt_unified_rag/blob/main/models/staging/src_unified_rag.yml). Set the variable `has_defined_sources: true` under the Unified RAG namespace in your `dbt_project.yml`. Otherwise, your Unified RAG connections won't appear in your DAG. See the `union_connections` macro [documentation](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#optional-union-connections-defined-sources-configuration) for full configuration details.
 
 ### Enabling/Disabling Models
 This package takes into consideration that not every account will have leverage every supported connector type. If you do not leverage all of the supported connector types, you are able to disable the respective dependent models using the below variables in your `dbt_project.yml`.
@@ -146,6 +144,14 @@ If an individual source table has a different name than the package expects, add
 
 vars:
     rag_<default_source_table_name>_identifier: your_table_name 
+```
+
+#### Source casing for case-sensitive destinations
+By default, the package applies case-insensitive comparisons when resolving `source_relation` values. If your destination is case-sensitive and you want downstream transformations to respect the exact casing of your source database and schema names, set the following variable:
+
+```yml
+vars:
+    fivetran_using_source_casing: true
 ```
 </details>
 

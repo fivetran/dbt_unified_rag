@@ -136,5 +136,4 @@ seeds:
         property_hs_timestamp: timestamp
 flags:
   send_anonymous_usage_stats: False
-
   use_colors: True

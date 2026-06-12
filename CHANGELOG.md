@@ -10,7 +10,7 @@
 | All models | `source_relation` column (when using a single Unified Rag schema) | Empty string (`''`) | `<database>.<schema>` |  |
 
 ## Feature Updates
-- Introduces the new (recommended) `unified_rag_sources` variable for more robust union data configuration. The old `unified_rag_union_schemas` and `unified_rag_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_unified_rag/tree/main#define-database-and-schema-variables) for specific details.
+- Introduces the new (recommended) `rag_*_sources` variable for more robust union data configuration. The old `rag_*_union_schemas` and `rag_*_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_unified_rag/tree/main#define-database-and-schema-variables) for specific details.
 
 ## Under the Hood
 - Adds the `fivetran_using_source_casing` variable for case-sensitive destination support. When enabled, downstream transformations respect source casing to ensure consistent results. See the [Additional Configurations](https://github.com/fivetran/dbt_unified_rag/#source-casing-for-case-sensitive-destinations) section of the README for details.

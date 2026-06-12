@@ -88,22 +88,39 @@ To use this functionality, you will need to set the `unified_rag_sources` variab
 # dbt_project.yml
 
 vars:
-  unified_rag:
-    unified_rag_sources:
-      - database: connection_1_destination_name # Required
-        schema: connection_1_schema_name # Required
-        name: connection_1_source_name # Required only if following the step in the following subsection
+  rag_hubspot_sources:
+    - database: connection_1_destination_name # Required
+      schema: connection_1_schema_name # Required
+      name: connection_1_source_name # Required only if following the step in the following subsection
 
-      - database: connection_2_destination_name
-        schema: connection_2_schema_name
-        name: connection_2_source_name
+    - database: connection_2_destination_name
+      schema: connection_2_schema_name
+      name: connection_2_source_name
+
+  rag_jira_sources:
+    - database: connection_1_destination_name # Required
+      schema: connection_1_schema_name # Required
+      name: connection_1_source_name # Required only if following the step in the following subsection
+
+    - database: connection_2_destination_name
+      schema: connection_2_schema_name
+      name: connection_2_source_name
+
+  rag_zendesk_sources:
+    - database: connection_1_destination_name # Required
+      schema: connection_1_schema_name # Required
+      name: connection_1_source_name # Required only if following the step in the following subsection
+
+    - database: connection_2_destination_name
+      schema: connection_2_schema_name
+      name: connection_2_source_name
 ```
 
-> Previous versions of this package employed two separate, mutually exclusive variables for unioning: `unified_rag_union_schemas` and `unified_rag_union_databases`. While these variables are still supported, `unified_rag_sources` is the recommended variable to configure.
+> Previous versions of this package employed two separate, mutually exclusive variables for unioning: `rag_*_union_schemas` and `rag_*_union_databases`. While these variables are still supported, `rag_*_sources` is the recommended variable to configure.
 
 #### Optional: Incorporate unioned sources into DAG
 
-If you use [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt#transformationsfordbtcore) and are unioning multiple Unified RAG connections, you can define your sources in a property `.yml` file, [using this as a template](https://github.com/fivetran/dbt_unified_rag/blob/main/models/staging/src_unified_rag.yml). Set the variable `has_defined_sources: true` under the Unified RAG namespace in your `dbt_project.yml`. Otherwise, your Unified RAG connections won't appear in your DAG. See the `union_connections` macro [documentation](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#optional-union-connections-defined-sources-configuration) for full configuration details.
+If you use [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt#transformationsfordbtcore) and are unioning multiple Unified RAG connections, you can define your sources in a property `.yml` file. Set the variable `has_defined_sources: true` under the Unified RAG namespace in your `dbt_project.yml`. Otherwise, your Unified RAG connections won't appear in your DAG. See the `union_connections` macro [documentation](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#optional-union-connections-defined-sources-configuration) for full configuration details.
 
 ### Enabling/Disabling Models
 This package takes into consideration that not every account will have leverage every supported connector type. If you do not leverage all of the supported connector types, you are able to disable the respective dependent models using the below variables in your `dbt_project.yml`.

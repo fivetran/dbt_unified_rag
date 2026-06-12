@@ -1,5 +1,7 @@
 {{ config(enabled=var('rag__using_jira', True)) }}
 
+{% if var('rag_jira_union_schemas', []) | length > 0 or var('rag_jira_union_databases', []) | length > 0 %}
+
 {{
     fivetran_utils.union_data(
         table_identifier='comment', 
@@ -12,3 +14,15 @@
         union_database_variable='rag_jira_union_databases'
     )
 }}
+
+{% else %}
+
+{{
+    fivetran_utils.union_connections(
+        connection_dictionary='rag_jira_sources',
+        single_source_name='rag_jira',
+        single_table_name='comment'
+    )
+}}
+
+{% endif %}

@@ -8,6 +8,7 @@ sources:
 
     config:
       loaded_at_field: _fivetran_synced
+      enabled: "{{ var('rag_zendesk_sources', []) == [] }}"
 
     tables:
       - name: ticket

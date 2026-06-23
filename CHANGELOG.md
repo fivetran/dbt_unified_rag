@@ -1,3 +1,21 @@
+# dbt_unified_rag v0.3.0
+
+[PR #40](https://github.com/fivetran/dbt_unified_rag/pull/40) includes the following updates:
+
+## Schema/Data Changes (--full-refresh required after upgrading)
+**1 total change • 1 possible breaking change**
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ------------- | ----------- | --- | --- | ----- |
+| All models | `source_relation` column (when using a single Unified Rag schema) | Empty string (`''`) | `<database>.<schema>` |  |
+
+## Feature Updates
+- Introduces the new (recommended) `rag_*_sources` variable for more robust union data configuration. The old `rag_*_union_schemas` and `rag_*_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_unified_rag/tree/main#define-database-and-schema-variables) for specific details.
+
+## Under the Hood
+- Adds the `fivetran_using_source_casing` variable for case-sensitive destination support. When enabled, downstream transformations respect source casing to ensure consistent results. See the [Additional Configurations](https://github.com/fivetran/dbt_unified_rag/#source-casing-for-case-sensitive-destinations) section of the README for details.
+- Introduces `fivetran_utils.partition_by_source_relation` to conditionally include `source_relation` in partition clauses only when multiple sources are configured.
+
 # dbt_unified_rag v0.2.0
 
 [PR #35](https://github.com/fivetran/dbt_unified_rag/pull/35) includes the following updates:

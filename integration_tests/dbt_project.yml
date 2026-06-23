@@ -1,7 +1,7 @@
 config-version: 2
 
 name: "rag_integration_tests"
-version: '0.2.0'
+version: '0.3.0'
 
 profile: "integration_tests"
 
@@ -43,7 +43,7 @@ seeds:
   +docs:
     show: False
   rag_integration_tests:
-    +quote_columns: "{{ true if target.type == 'redshift' else false }}"
+    +quote_columns: "{{ target.type == 'redshift' or var('fivetran_using_source_casing', false) }}"
     +column_types:
       _fivetran_synced: timestamp
     jira_comment:
@@ -136,5 +136,4 @@ seeds:
         property_hs_timestamp: timestamp
 flags:
   send_anonymous_usage_stats: False
-
   use_colors: True

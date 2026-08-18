@@ -1,3 +1,11 @@
+# dbt_unified_rag v0.3.1
+
+[PR #42](https://github.com/fivetran/dbt_unified_rag/pull/42) includes the following updates:
+
+## Feature Updates
+- Adds DuckDB as a supported destination.
+
+
 # dbt_unified_rag v0.3.0
 
 [PR #40](https://github.com/fivetran/dbt_unified_rag/pull/40) includes the following updates:

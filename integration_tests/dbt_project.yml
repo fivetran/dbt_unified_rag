@@ -53,6 +53,7 @@ seeds:
         issue_id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"
         updated: timestamp
         _fivetran_synced: timestamp
+        body: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks', 'databricks-sql') else 'varchar(65535)' }}"
     jira_issue:
       +column_types:
         id: "{{ 'int64' if target.type == 'bigquery' else 'bigint' }}"

@@ -56,9 +56,11 @@ issue_details as (
         and issues.source_relation = users.source_relation
     left join statuses
         on issues.status_id = statuses.status_id
+        and issues.source_relation = statuses.source_relation
     {% if var('jira_using_priorities', True) %}
-    left join priorities 
+    left join priorities
         on issues.priority_id = priorities.priority_id
+        and issues.source_relation = priorities.source_relation
     {% endif %}
 ), 
 

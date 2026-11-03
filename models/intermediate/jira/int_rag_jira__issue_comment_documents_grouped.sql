@@ -15,7 +15,7 @@ grouped_comment_documents as (
         comment_tokens,
         comment_time,
         sum(comment_tokens) over (
-            partition by issue_id 
+            partition by issue_id {{ fivetran_utils.partition_by_source_relation(package_name='rag_jira') }}
             order by comment_time
             rows between unbounded preceding and current row
         ) as cumulative_length

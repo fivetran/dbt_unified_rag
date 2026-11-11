@@ -81,10 +81,10 @@ engagement_details as (
         url_reference,
         created_on,
         source_relation,
-        {{ fivetran_utils.string_agg(field_to_agg="distinct engagement_type", delimiter="', '") }} as engagement_type,
-        {{ fivetran_utils.string_agg(field_to_agg="distinct contact_name", delimiter="', '") }} as contact_name,
-        {{ fivetran_utils.string_agg(field_to_agg="distinct created_by", delimiter="', '") }} as created_by,
-        {{ fivetran_utils.string_agg(field_to_agg="distinct company_name", delimiter="', '") }} as company_name
+        {{ dbt.listagg(measure="distinct engagement_type", delimiter_text="', '") }} as engagement_type,
+        {{ dbt.listagg(measure="distinct contact_name", delimiter_text="', '") }} as contact_name,
+        {{ dbt.listagg(measure="distinct created_by", delimiter_text="', '") }} as created_by,
+        {{ dbt.listagg(measure="distinct company_name", delimiter_text="', '") }} as company_name
     from engagement_detail_prep
     group by 1,2,3,4,5
 ),

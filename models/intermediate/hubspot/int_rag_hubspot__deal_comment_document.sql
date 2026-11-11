@@ -45,7 +45,7 @@ engagement_emails as (
         engagement_email.email_to_email,
         engagement_email.email_cc_email,
         engagement_email.email_from_email as commenter_email,
-        {{ fivetran_utils.string_agg(field_to_agg="contacts.contact_name", delimiter="','") }} as commenter_name
+        {{ dbt.listagg(measure="contacts.contact_name", delimiter_text="','") }} as commenter_name
     from {{ ref('stg_rag_hubspot__engagement_email') }} engagement_email
     left join engagement_contacts
         on engagement_email.engagement_id = engagement_contacts.engagement_id 

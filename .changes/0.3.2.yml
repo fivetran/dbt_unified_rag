@@ -1,4 +1,5 @@
 version: 0.3.2
+pr_number: 47
 under_the_hood:
   - title: Documentation accuracy
     description: Syncs the staging model yml documentation with the columns the models output. No model output changes in this release.

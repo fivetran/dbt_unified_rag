@@ -1,8 +1,16 @@
 version: 0.3.2
 pr_number: 47
 under_the_hood:
-  - title: Documentation accuracy
-    description: Syncs the staging model yml documentation with the columns the models output. No model output changes in this release.
-    details:
-      - "Documents `_fivetran_synced` across the `stg_rag_jira__*` and `stg_rag_zendesk__*` staging models, `external_id` and `problem_id` in `stg_rag_zendesk__ticket`, and `engagement_type` in `stg_rag_hubspot__engagement_deal`."
-      - "Removes documentation for columns the models no longer output: `is_facebook_comment`, `is_tweet`, and `is_voice_comment` from `stg_rag_zendesk__ticket_comment`, `locale` from `stg_rag_zendesk__user`, and the Fivetran metadata columns from the `stg_rag_hubspot__engagement_company`, `stg_rag_hubspot__engagement_contact`, `stg_rag_hubspot__engagement_deal`, `stg_rag_hubspot__engagement_email`, and `stg_rag_hubspot__engagement_note` models."
+- title: Documentation accuracy
+  description: Syncs the staging model yml documentation with the columns the models
+    output. No model output changes in this release.
+  details:
+  - Documents `_fivetran_synced` across the `stg_rag_jira__*` and `stg_rag_zendesk__*`
+    staging models, `external_id` and `problem_id` in `stg_rag_zendesk__ticket`, and
+    `engagement_type` in `stg_rag_hubspot__engagement_deal`.
+  - 'Removes documentation for columns the models no longer output: `is_facebook_comment`,
+    `is_tweet`, and `is_voice_comment` from `stg_rag_zendesk__ticket_comment`, `locale`
+    from `stg_rag_zendesk__user`, and the Fivetran metadata columns from the `stg_rag_hubspot__engagement_company`,
+    `stg_rag_hubspot__engagement_contact`, `stg_rag_hubspot__engagement_deal`, `stg_rag_hubspot__engagement_email`,
+    and `stg_rag_hubspot__engagement_note` models.'
+date: '2026-11-12'

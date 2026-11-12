@@ -3,6 +3,12 @@ version: 2
 models:
   - name: stg_rag_jira__comment
     description: Table of comments made on issues.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - comment_id
     columns:
       - name: comment_id 
         description: Unique ID of the comment.
@@ -25,6 +31,12 @@ models:
 
   - name: stg_rag_jira__issue
     description: Table of all issues in your organization's Jira (captures soft deletes).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - issue_id
     columns:
       - name: issue_id
         description: Unique ID of the issue. 
@@ -85,6 +97,12 @@ models:
 
   - name: stg_rag_jira__priority
     description: Table of issue priority levels (global).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - priority_id
     columns:
       - name: priority_id
         description: Unique ID of the priority level.
@@ -97,6 +115,12 @@ models:
 
   - name: stg_rag_jira__status
     description: Table of project-level statuses (which may have the same umbrella `status_category`).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - status_id
     columns:
       - name: status_id
         description: Unique ID of the project status.

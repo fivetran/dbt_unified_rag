@@ -3,6 +3,12 @@ version: 2
 models:
   - name: stg_rag_zendesk__ticket_comment
     description: Ticket comments represent the conversation between requesters, collaborators, and agents. Comments can be public or private.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - ticket_comment_id
     columns:
       - name: ticket_comment_id
         description: Automatically assigned when the comment is created
@@ -31,6 +37,12 @@ models:
     description: >
       Tickets are the means through which your end users (customers) communicate with agents in Zendesk Support. Tickets can 
       originate from a number of channels, including email, Help Center, chat, phone call, Twitter, Facebook, or the API.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - ticket_id
     columns:
       - name: ticket_id
         description: Automatically assigned when the ticket is created
@@ -89,6 +101,12 @@ models:
 
   - name: stg_rag_zendesk__user
     description: Zendesk Support has three types of users, end-users (your customers), agents, and administrators.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - user_id
     columns:
       - name: user_id
         description: Automatically assigned when the user is created

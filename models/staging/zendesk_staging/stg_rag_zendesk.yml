@@ -16,12 +16,8 @@ models:
         description: The ticket id associated with this comment
       - name: user_id
         description: The id of the comment author
-      - name: is_facebook_comment
-        description: Boolean field indicating if the comment is a facebook comment
-      - name: is_tweet
-        description: Boolean field indicating if the comment is a twitter tweet
-      - name: is_voice_comment
-        description: Boolean field indicating if the comment is a voice comment
+      - name: _fivetran_synced
+        description: '{{ doc("_fivetran_synced") }}'
       - name: _fivetran_deleted
         description: Boolean created by Fivetran to indicate whether the record has been deleted.
       - name: source_relation
@@ -82,6 +78,12 @@ models:
         description: The address of the source the ticket was created from
       - name: source_to_name
         description: The name of the source the ticket was created from  
+      - name: problem_id
+        description: For tickets of type `incident`, the ID of the `problem` ticket that this incident is linked to.
+      - name: external_id
+        description: A unique identifier you can use to link Zendesk Support tickets to local records.
+      - name: _fivetran_synced
+        description: '{{ doc("_fivetran_synced") }}'
       - name: _fivetran_deleted
         description: Boolean created by Fivetran to indicate whether the record has been deleted.
       - name: source_relation
@@ -118,8 +120,8 @@ models:
         description: The time the user was last updated.
       - name: last_login_at
         description: Last time the user signed in to Zendesk Support or made an API request using an API token or basic authentication.
-      - name: locale 
-        description: The user's locale. A BCP-47 compliant tag for the locale. If both "locale" and "locale_id" are present on create or update, "locale_id" is ignored and only "locale" is used.
+      - name: _fivetran_synced
+        description: '{{ doc("_fivetran_synced") }}'
       - name: _fivetran_deleted
         description: Boolean created by Fivetran to indicate whether the record has been deleted.
       - name: source_relation

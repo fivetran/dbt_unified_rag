@@ -16,7 +16,7 @@ This dbt package transforms data from Fivetran's Unified RAG connector into anal
   - [DAG](https://fivetran.github.io/dbt_unified_rag/#!/overview?g_v=1)
   - [Changelog](https://github.com/fivetran/dbt_unified_rag/blob/main/CHANGELOG.md)
 - dbt Core™ supported versions
-  - `>=1.3.0, <3.0.0`
+  - `>=1.10.0, <3.0.0`
 
 ## What does this dbt package do?
 This package enables you to generate unstructured document data for Retrieval Augmented Generation (RAG) applications and combine data from HubSpot deals, Jira issues, and Zendesk tickets. It creates enriched models with metrics focused on text chunks prepared for semantic search and LLM workflows.
@@ -66,7 +66,7 @@ Include the following package_display_name package version in your `packages.yml
 ```yml
 packages:
   - package: fivetran/unified_rag
-    version: [">=0.3.0", "<0.4.0"]
+    version: [">=0.4.0", "<0.5.0"]
 ```
 
 ### Define database and schema variables

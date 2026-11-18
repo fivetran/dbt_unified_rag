@@ -1,3 +1,16 @@
+# dbt_unified_rag v0.4.0
+
+[PR #48](https://github.com/fivetran/dbt_unified_rag/pull/48) includes the following updates:
+
+## Feature Update
+- Raises the minimum dbt version to 1.10.0.
+- Adds `dbt_utils.unique_combination_of_columns` tests to staging and end models. If a test fails, please [open an issue](https://github.com/fivetran/dbt_unified_rag/issues/new/choose).
+
+## Under the Hood
+- **Documentation accuracy**: Syncs the staging model yml documentation with the columns the models output. No model output changes in this release.
+  - Documents `_fivetran_synced` across the `stg_rag_jira__*` and `stg_rag_zendesk__*` staging models, `external_id` and `problem_id` in `stg_rag_zendesk__ticket`, and `engagement_type` in `stg_rag_hubspot__engagement_deal`.
+  - Removes documentation for columns the models no longer output: `is_facebook_comment`, `is_tweet`, and `is_voice_comment` from `stg_rag_zendesk__ticket_comment`, `locale` from `stg_rag_zendesk__user`, and the Fivetran metadata columns from the `stg_rag_hubspot__engagement_company`, `stg_rag_hubspot__engagement_contact`, `stg_rag_hubspot__engagement_deal`, `stg_rag_hubspot__engagement_email`, and `stg_rag_hubspot__engagement_note` models.
+
 # dbt_unified_rag v0.3.1
 
 [PR #42](https://github.com/fivetran/dbt_unified_rag/pull/42) includes the following updates:

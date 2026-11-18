@@ -163,8 +163,6 @@ models:
               - engagement_id
               - company_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: company_id
         description: The ID of the related company.
       - name: engagement_id
@@ -182,8 +180,6 @@ models:
               - engagement_id
               - contact_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: contact_id
         description: The ID of the related contact.
       - name: engagement_id
@@ -201,12 +197,12 @@ models:
               - engagement_id
               - deal_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: deal_id
         description: The ID of the related contact.
       - name: engagement_id
         description: The ID of the related engagement.
+      - name: engagement_type
+        description: One of NOTE, EMAIL, TASK, MEETING, or CALL, the type of the engagement.
       - name: source_relation
         description: The source of the record if the unioning functionality is being used. If it is not this field will be empty.
 
@@ -219,10 +215,6 @@ models:
               - source_relation
               - engagement_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
-      - name: _fivetran_deleted
-        description: Boolean to mark rows that were deleted in the source database.
       - name: engagement_id
         description: The ID of the engagement.
       - name: engagement_type
@@ -269,10 +261,6 @@ models:
               - source_relation
               - engagement_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
-      - name: _fivetran_deleted
-        description: Boolean to mark rows that were deleted in the source database.
       - name: engagement_id
         description: The ID of the engagement.
       - name: title

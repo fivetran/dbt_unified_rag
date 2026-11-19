@@ -5,16 +5,22 @@ new_features:
 - description: Adds `dbt_utils.unique_combination_of_columns` tests to staging and
     end models. If a test fails, please [open an issue](https://github.com/fivetran/dbt_unified_rag/issues/new/choose).
 under_the_hood:
-- title: Documentation accuracy
-  description: Syncs the staging model yml documentation with the columns the models
-    output. No model output changes in this release.
-  details:
-  - Documents `_fivetran_synced` across the `stg_rag_jira__*` and `stg_rag_zendesk__*`
-    staging models, `external_id` and `problem_id` in `stg_rag_zendesk__ticket`, and
-    `engagement_type` in `stg_rag_hubspot__engagement_deal`.
-  - 'Removes documentation for columns the models no longer output: `is_facebook_comment`,
-    `is_tweet`, and `is_voice_comment` from `stg_rag_zendesk__ticket_comment`, `locale`
-    from `stg_rag_zendesk__user`, and the Fivetran metadata columns from the `stg_rag_hubspot__engagement_company`,
+- description: Removes `_fivetran_synced` from the `stg_rag_hubspot__engagement_company`,
     `stg_rag_hubspot__engagement_contact`, `stg_rag_hubspot__engagement_deal`, `stg_rag_hubspot__engagement_email`,
-    and `stg_rag_hubspot__engagement_note` models.'
+    and `stg_rag_hubspot__engagement_note` models of the `stg_rag_hubspot.yml` file.
+- description: Removes `_fivetran_deleted` from the `stg_rag_hubspot__engagement_email`
+    and `stg_rag_hubspot__engagement_note` models of the `stg_rag_hubspot.yml` file.
+- description: Adds `engagement_type` to the `stg_rag_hubspot__engagement_deal` model
+    of the `stg_rag_hubspot.yml` file.
+- description: Adds `_fivetran_synced` to the `stg_rag_jira__comment`, `stg_rag_jira__issue`,
+    `stg_rag_jira__priority`, `stg_rag_jira__status`, and `stg_rag_jira__user` models
+    of the `stg_rag_jira.yml` file.
+- description: Adds `_fivetran_synced` to the `stg_rag_zendesk__ticket`, `stg_rag_zendesk__ticket_comment`,
+    and `stg_rag_zendesk__user` models of the `stg_rag_zendesk.yml` file.
+- description: Adds `external_id` and `problem_id` to the `stg_rag_zendesk__ticket`
+    model of the `stg_rag_zendesk.yml` file.
+- description: Removes `is_facebook_comment`, `is_tweet`, and `is_voice_comment` from
+    the `stg_rag_zendesk__ticket_comment` model of the `stg_rag_zendesk.yml` file.
+- description: Removes `locale` from the `stg_rag_zendesk__user` model of the `stg_rag_zendesk.yml`
+    file.
 date: '2026-11-18'

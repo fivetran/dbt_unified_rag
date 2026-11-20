@@ -3,6 +3,12 @@ version: 2
 models:
   - name: stg_rag_hubspot__company
     description: Each record represents a company in Hubspot.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - company_id
     columns:
       - name: _fivetran_synced
         description: '{{ doc("_fivetran_synced") }}'
@@ -35,6 +41,12 @@ models:
 
   - name: stg_rag_hubspot__contact
     description: Each record represents a contact in Hubspot.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - contact_id
     columns:
       - name: is_contact_deleted
         description: '{{ doc("is_deleted") }}'
@@ -70,6 +82,12 @@ models:
 
   - name: stg_rag_hubspot__deal
     description: Each record represents a deal in Hubspot.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - deal_id
     columns:
       - name: is_deal_deleted
         description: '{{ doc("is_deleted") }}'
@@ -103,7 +121,7 @@ models:
     columns:
       - name: engagement_id
         description: The ID of the engagement.
-        tests:
+        data_tests:
           - not_null
           - unique
       - name: engagement_type
@@ -137,9 +155,14 @@ models:
 
   - name: stg_rag_hubspot__engagement_company
     description: Each record represents a 'link' between a company and an engagement.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - engagement_id
+              - company_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: company_id
         description: The ID of the related company.
       - name: engagement_id
@@ -149,9 +172,14 @@ models:
 
   - name: stg_rag_hubspot__engagement_contact
     description: Each record represents a 'link' between a contact and an engagement.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - engagement_id
+              - contact_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: contact_id
         description: The ID of the related contact.
       - name: engagement_id
@@ -161,23 +189,32 @@ models:
 
   - name: stg_rag_hubspot__engagement_deal
     description: Each record represents a 'link' between a deal and an engagement.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - engagement_id
+              - deal_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
       - name: deal_id
         description: The ID of the related contact.
       - name: engagement_id
         description: The ID of the related engagement.
+      - name: engagement_type
+        description: One of NOTE, EMAIL, TASK, MEETING, or CALL, the type of the engagement.
       - name: source_relation
         description: The source of the record if the unioning functionality is being used. If it is not this field will be empty.
 
   - name: stg_rag_hubspot__engagement_email
     description: Each record represents an EMAIL engagement event.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - engagement_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
-      - name: _fivetran_deleted
-        description: Boolean to mark rows that were deleted in the source database.
       - name: engagement_id
         description: The ID of the engagement.
       - name: engagement_type
@@ -217,11 +254,13 @@ models:
 
   - name: stg_rag_hubspot__engagement_note
     description: Each record represents a NOTE engagement event.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - engagement_id
     columns:
-      - name: _fivetran_synced
-        description: '{{ doc("_fivetran_synced") }}'
-      - name: _fivetran_deleted
-        description: Boolean to mark rows that were deleted in the source database.
       - name: engagement_id
         description: The ID of the engagement.
       - name: title
@@ -255,6 +294,12 @@ models:
 
   - name: stg_rag_hubspot__owner
     description: Each record represents an owner/user in Hubspot.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - owner_id
     columns:
       - name: _fivetran_synced
         description: '{{ doc("_fivetran_synced") }}'

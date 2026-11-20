@@ -3,6 +3,13 @@ version: 2
 models:
   - name: rag_hubspot__document
     description: Each record represents a HubSpot Deal, enriched with data about it's relevant engagement notes, company, contact, and owner information.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - document_id
+              - chunk_index
     columns:
       - name: document_id
         description: Equivalent to deal_id.
@@ -25,6 +32,13 @@ models:
 
   - name: rag_jira__document
     description: Each record represents a Jira Issue, enriched with data about the issue status, priority, and user information.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - document_id
+              - chunk_index
     columns:
       - name: document_id
         description: Equivalent to issue_id.
@@ -47,6 +61,13 @@ models:
 
   - name: rag_zendesk__document
     description: Each record represents a Zendesk ticket, enriched with data about it's tags, assignees, requester, submitter, organization and group.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - document_id
+              - chunk_index
     columns:
       - name: document_id
         description: Equivalent to ticket_id.

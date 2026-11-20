@@ -6,7 +6,7 @@ models:
     columns:
       - name: unique_id
         description: Unique identifier of the table represented as a combination of document_id, platform, chunk_index, and source_relation fields.
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: document_id

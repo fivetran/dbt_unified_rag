@@ -148,7 +148,7 @@ models:
     columns:
       - name: user_id  
         description: Unique ID of the user. 
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: email

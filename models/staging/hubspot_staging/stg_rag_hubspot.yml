@@ -121,7 +121,7 @@ models:
     columns:
       - name: engagement_id
         description: The ID of the engagement.
-        tests:
+        data_tests:
           - not_null
           - unique
       - name: engagement_type

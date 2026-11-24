@@ -45,7 +45,7 @@ issue_details as (
         {{ unified_rag.coalesce_cast(["users.email", "'UNKNOWN'"], dbt.type_string()) }} as created_by,
         {{ unified_rag.coalesce_cast(["issues.created_at", "'1970-01-01 00:00:00'"], dbt.type_timestamp()) }} as created_on,
         {{ unified_rag.coalesce_cast(["statuses.status_name", "issues.status_id", "'UNKNOWN'"], dbt.type_string()) }} as status,
-        {% if var('jira_using_priorities', True) %}
+        {% if var('rag_jira_using_priorities', True) %}
             {{ unified_rag.coalesce_cast(["priorities.priority_name", "issues.priority_id", "'UNKNOWN'"], dbt.type_string()) }} as priority
         {% else %}
             {{ unified_rag.coalesce_cast(["issues.priority_id", "'UNKNOWN'"], dbt.type_string()) }} as priority
@@ -56,9 +56,11 @@ issue_details as (
         and issues.source_relation = users.source_relation
     left join statuses
         on issues.status_id = statuses.status_id
-    {% if var('jira_using_priorities', True) %}
-    left join priorities 
+        and issues.source_relation = statuses.source_relation
+    {% if var('rag_jira_using_priorities', True) %}
+    left join priorities
         on issues.priority_id = priorities.priority_id
+        and issues.source_relation = priorities.source_relation
     {% endif %}
 ), 
 

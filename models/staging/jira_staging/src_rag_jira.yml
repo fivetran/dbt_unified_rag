@@ -116,7 +116,7 @@ sources:
         identifier: "{{ var('rag_jira_priority_identifier', 'priority')}}"
         description: Table of issue priority levels (global).
         config:
-          enabled: "{{ var('jira_using_priorities', true) and var('rag_jira_sources', []) == [] }}"
+          enabled: "{{ var('rag_jira_using_priorities', true) and var('rag_jira_sources', []) == [] }}"
         columns:
           - name: id
             description: Unique ID of the priority level.

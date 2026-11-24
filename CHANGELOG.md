@@ -6,8 +6,15 @@
 - **Breaking change**: Raises the minimum dbt version to 1.10.0.
 - Adds `dbt_utils.unique_combination_of_columns` tests to staging and end models. If a test fails, please [open an issue](https://github.com/fivetran/dbt_unified_rag/issues/new/choose).
 
+## Bug Fix
+- Fixes comment chunking and Jira status and priority joins to respect `source_relation`, so records no longer mix across unioned connections.
+- Fixes `rag_jira_using_priorities` so that disabling it no longer causes the `int_rag_jira__issue_document` model to error.
+
 ## Under the Hood
 - Updates yml column documentation to match model output.
+
+## Contributors
+- [@porkedchop](https://github.com/porkedchop) ([PR #45](https://github.com/fivetran/dbt_unified_rag/pull/45)) — Bishop Kammeraad: Reported and fixed the `source_relation` scoping issue.
 
 # dbt_unified_rag v0.3.1
 
